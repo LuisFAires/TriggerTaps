@@ -2,27 +2,25 @@ const sprites = new Image();
 sprites.src = "./img/sprites.png";
 
 const canvas = document.querySelector('canvas');
-canvas.height = window.innerHeight - 100;
+canvas.height = window.innerHeight - 50;
 canvas.width = window.innerWidth;
 const context = canvas.getContext("2d");
 
-const players = {
-    first:{
+const players = {// Stores both players current sprites info, status and functions to draw, animate and reset them.
+    first:{ //Stores first player info and draw and reset functions.
         status: "standing",
         name: "First",
         sourceX: 0,
         sourceY: 1,
-        positionX: window.innerWidth / 2 - 350,
-        positionY: window.innerHeight / 2 - 96,
+        positionX: canvas.width / 2 - 350,
+        positionY: canvas.height / 2 - 48,
         draw(){
-            players.first.positionX = window.innerWidth / 2 - 350;
-            players.first.positionY = window.innerHeight / 2 - 96;
             context.drawImage(
                 sprites,
-                players.first.sourceX, players.first.sourceY, //Posição inicio
-                48, 48, //Tamanho recorte
-                players.first.positionX, players.first.positionY, //Posição impressão
-                96, 96 //Tamanho da impressão
+                players.first.sourceX, players.first.sourceY, //Start position
+                48, 48, //Sprite size
+                players.first.positionX, players.first.positionY, //On frame position
+                96, 96 //On frame size
             );
         },
         reset(){
@@ -31,22 +29,20 @@ const players = {
             players.first.sourceY = 1;
         }
     },
-    second:{
+    second:{//Stores second player info and draw and reset functions.
         status: "standing",
         name: "Second",
         sourceX: 0,
         sourceY: 49,
-        positionX: window.innerWidth / 2 + 350,
-        positionY: window.innerHeight / 2,
+        positionX: canvas.width / 2 + 254,
+        positionY: canvas.height / 2 - 48,
         draw(){
-            players.second.positionX = window.innerWidth / 2 + 254;
-            players.second.positionY = window.innerHeight / 2 - 96;
             context.drawImage(
                 sprites,
-                players.second.sourceX, players.second.sourceY, //Posição inicio
-                48, 48, //Tamanho recorte
-                players.second.positionX , players.second.positionY, //Posição impressão
-                96, 96 //Tamanho da impressão
+                players.second.sourceX, players.second.sourceY, //Start position
+                48, 48, //Sprite size
+                players.second.positionX , players.second.positionY, //On frame position
+                96, 96 //On frame size
             );
         },
         reset(){
@@ -55,7 +51,7 @@ const players = {
             players.second.sourceY = 49;
         }
     },
-    doWithdraw(player){
+    doWithdraw(player){ //Makes the player withdraw the gun.
         if(player.status == "standing"){
             if(player.sourceX < 240){
                 player.sourceX += 48;
@@ -66,7 +62,7 @@ const players = {
             console.log(player.name+" player can't withdraw.\nPlayer status: "+player.status);
         }
     },
-    undoWithdraw(player){
+    undoWithdraw(player){//Makes the player keep the gun.
         if(player.status == "withdraw"){
             if(player.sourceX > 0){
                 player.sourceX -= 48;
@@ -77,7 +73,7 @@ const players = {
             console.log(player.name+" player can't undo withdraw.\nPlayer status: "+player.status);
         }
     },
-    shoot(shooter){
+    shoot(shooter){//Makes the player shoot
         if(remaingTimer > 0){
             return;
         }else if(shooter.status == "withdraw"){
@@ -94,7 +90,7 @@ const players = {
             console.log(shooter.name+" player can't shoot.\nPlayer status: "+shooter.status);
         }
     },
-    die(dead){
+    die(dead){//Makes the player die
         if(remaingTimer > 0){
             return;
         }else if(dead.status == "withdraw"){
@@ -108,18 +104,17 @@ const players = {
             console.log(dead.name+" player can't die.\nPlayer status: "+dead.status);
         }
     },
-    action(shooter, dead){
+    action(shooter, dead){//Calls the shoot and die functions together so they do not conflict each other.
         this.shoot(shooter);
         this.die(dead);
     }
 }
 
 const screens = { 
-    menu:{
+    menu:{ //Draw buttons and put both players to standing status reseting them.
         name: "menu",
         update(){
             drawEveryFrameObjects();
-            //draw buttons and put both players to standing status
             context.drawImage(sprites, 289, 0, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
             if(players.first.status == "withdraw"){
                 players.undoWithdraw(players.first)
@@ -133,14 +128,14 @@ const screens = {
             }
         }
     },
-    game:{
+    game:{ //Just responsible to update on game frames.
         name: "game",
         update(){
             drawEveryFrameObjects();
             drawEveryGameUpdate();
         },
     },
-    end:{
+    end:{ //Updates frames and gives the user the result
         name: "end",
         update(){
             drawEveryFrameObjects();
@@ -166,11 +161,9 @@ var currentScreen;
 changeCurrenScreen(screens.menu);
 var mode;
 var then;
-var now;
 var remaingTimer;
-var player2Time;
 
-function drawEveryFrameObjects(){
+function drawEveryFrameObjects(){ //Clears the frame, draws the backgorund and characters.
     context.clearRect(0,0, canvas.width, canvas.height);
     //background
     context.drawImage(sprites, 0, 288, 700, 230,(canvas.width / 2 - 350), (canvas.height / 2 - 130), 700, 230);
@@ -178,7 +171,7 @@ function drawEveryFrameObjects(){
     players.second.draw();
 }
 
-function drawEveryGameUpdate(){
+function drawEveryGameUpdate(){ //Calls the functions that update the sprites to animate.
     if(players.first.status == "standing"){
         players.doWithdraw(players.first);
     }
@@ -193,8 +186,8 @@ function drawEveryGameUpdate(){
     drawTimer();
 }
 
-function drawTimer(){
-    now = Date.now()
+function drawTimer(){ //Draws the timer when the game start
+    let now = Date.now()
     remaingTimer = then - now;
     if(remaingTimer > 2000){
         context.drawImage(sprites, 289, 144, 48, 48,(canvas.width / 2 - 24), (canvas.height / 2 - 24), 48, 48)
@@ -210,12 +203,12 @@ function drawTimer(){
     }
 }
 
-function changeCurrenScreen(newScreen){
+function changeCurrenScreen(newScreen){ //Changes the current screen, sets the timer and set when the second player will shoot on singleplayer mode.
     currentScreen = newScreen;
     if(currentScreen.name == "game"){
         then = Date.now()+3000;
         if(mode == "single"){
-            player2Time = randomIntFromInterval(-500, -100)
+            let player2Time = randomIntFromInterval(-500, -100)
             setTimeout(() => {
                 if(players.second.status != "dead"){
                     players.action(players.second, players.first);
@@ -227,11 +220,11 @@ function changeCurrenScreen(newScreen){
     }
 }
 
-function randomIntFromInterval(min, max) { // min and max included 
+function randomIntFromInterval(min, max) { //Generates random unmber (min and max included).
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-var updateInterval = setInterval(() => { 
+var updateInterval = setInterval(() => {//Updates the frames and sets the frame rate. 
     //console.log("player1\nX: "+players.first.sourceX+"\n"+"Y: "+players.first.sourceY+"\nplayer2\nX: "+players.second.sourceX+"\n"+"Y: "+players.second.sourceY);
     //console.log(currentScreen.name);
     //console.log("first: "+players.first.status+"\nsecond: "+players.second.status);
@@ -259,35 +252,21 @@ document.addEventListener('keydown', function(event){
 	}
 });
 
-document.addEventListener('mousedown', function(event){
-    if(currentScreen.name == "menu"){
-        if(event.clientX < window.innerWidth / 2){
-            console.log("1 player");
-            mode = "single";
-            changeCurrenScreen(screens.game);
-        }else{
-            console.log("2 players");
-            mode = "multi";
-            changeCurrenScreen(screens.game);
-        }
-    }else if(currentScreen.name == "game"){
-        if(mode == "single"){
-            players.action(players.first, players.second);
-        }else if(mode == "multi"){
-            if(event.clientX < window.innerWidth / 2){
-                players.action(players.first, players.second);
-            }else{
-                players.action(players.second, players.first);
-            }
-        }
-    }if(currentScreen.name == "end"){
-        //changeCurrenScreen(screens.menu);
-    }
-});
+//Adds event listener for touchstart or mousedown.
+if(('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0)){
+    document.addEventListener('touchstart', function(event){
+        userInput(event.targetTouches[0].clientX, event.targetTouches[0].clientY);
+    });
+}else{
+    document.addEventListener('mousedown', function(event){
+        userInput(event.clientX, event.clientY);
+    });
+}
 
-document.addEventListener('touchstart', function(event){
+function userInput(X, Y){//Receives mouse and touch inputs
+    //console.log(X+" "+Y);
     if(currentScreen.name == "menu"){
-        if(event.targetTouches[0].clientX < window.innerWidth / 2){
+        if(X < canvas.width / 2){
             console.log("1 player");
             mode = "single";
             changeCurrenScreen(screens.game);
@@ -300,18 +279,24 @@ document.addEventListener('touchstart', function(event){
         if(mode == "single"){
             players.action(players.first, players.second);
         }else if(mode == "multi"){
-            if(event.targetTouches[0].clientX < window.innerWidth / 2){
+            if(X < canvas.width / 2){
                 players.action(players.first, players.second);
             }else{
                 players.action(players.second, players.first);
             }
         }
-    }if(currentScreen.name == "end"){
-        //changeCurrenScreen(screens.menu);
+    }else if(currentScreen.name == "end"){
+        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
+            changeCurrenScreen(screens.menu);
+        }
     }
-});
+}
 
 window.addEventListener('resize', function(event) {
-    canvas.height = window.innerHeight - 100;
+    canvas.height = window.innerHeight - 50;
     canvas.width = window.innerWidth;
+    players.first.positionX = canvas.width / 2 - 350;
+    players.first.positionY = canvas.height / 2 - 48;
+    players.second.positionX = canvas.width / 2 + 254;
+    players.second.positionY = canvas.height / 2 - 48;
 }, true);
