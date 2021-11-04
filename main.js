@@ -285,6 +285,32 @@ document.addEventListener('mousedown', function(event){
     }
 });
 
+document.addEventListener('touchstart', function(event){
+    if(currentScreen.name == "menu"){
+        if(event.targetTouches[0].clientX < window.innerWidth / 2){
+            console.log("1 player");
+            mode = "single";
+            changeCurrenScreen(screens.game);
+        }else{
+            console.log("2 players");
+            mode = "multi";
+            changeCurrenScreen(screens.game);
+        }
+    }else if(currentScreen.name == "game"){
+        if(mode == "single"){
+            players.action(players.first, players.second);
+        }else if(mode == "multi"){
+            if(event.targetTouches[0].clientX < window.innerWidth / 2){
+                players.action(players.first, players.second);
+            }else{
+                players.action(players.second, players.first);
+            }
+        }
+    }if(currentScreen.name == "end"){
+        //changeCurrenScreen(screens.menu);
+    }
+});
+
 window.addEventListener('resize', function(event) {
     canvas.height = window.innerHeight - 100;
     canvas.width = window.innerWidth;
