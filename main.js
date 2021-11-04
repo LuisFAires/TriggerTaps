@@ -1,8 +1,14 @@
 const sprites = new Image();
 sprites.src = "./img/sprites.png";
 
+const gunfire = new Audio();
+gunfire.src = "./sound/gunfire.mp3";
+
+const countdown = new Audio();
+countdown.src = "./sound/countdown.wav"
+
 const canvas = document.querySelector('canvas');
-canvas.height = window.innerHeight - 50;
+canvas.height = window.innerHeight - window.innerHeight / 100 * 16;
 canvas.width = window.innerWidth;
 const context = canvas.getContext("2d");
 
@@ -190,13 +196,13 @@ function drawTimer(){ //Draws the timer when the game start
     let now = Date.now()
     remaingTimer = then - now;
     if(remaingTimer > 2000){
-        context.drawImage(sprites, 288, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 288, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 1000){
-        context.drawImage(sprites, 336, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 336, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 0){
-        context.drawImage(sprites, 384, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 384, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > -500){
-        context.drawImage(sprites, 432, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 432, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }
     if(remaingTimer > -500){
         //console.log(remaingTimer);
@@ -206,6 +212,7 @@ function drawTimer(){ //Draws the timer when the game start
 function changeCurrenScreen(newScreen){ //Changes the current screen, sets the timer and set when the second player will shoot on singleplayer mode.
     currentScreen = newScreen;
     if(currentScreen.name == "game"){
+        countdown.play();
         then = Date.now()+3000;
         if(mode == "single"){
             let player2Time = randomIntFromInterval(-500, -100)
@@ -215,7 +222,11 @@ function changeCurrenScreen(newScreen){ //Changes the current screen, sets the t
                 }
             }, 3000 - (player2Time));
         }
-    }else if(currentScreen.name == "menu"){
+    }else if(currentScreen.name == "end"){
+        countdown.pause();
+        countdown.currentTime = 0;
+        gunfire.play();
+    } else if(currentScreen.name == "menu"){
         mode = null;
     }
 }
@@ -294,9 +305,11 @@ function userInput(X, Y){//Receives mouse and touch inputs
 
 window.addEventListener('resize', function(event) {
     canvas.height = window.innerHeight - 50;
-    canvas.width = window.innerWidth;
+    canvas.width = window.innerHeight - window.innerHeight / 100 * 16;
     players.first.positionX = canvas.width / 2 - 350;
     players.first.positionY = canvas.height / 2 - 48;
     players.second.positionX = canvas.width / 2 + 254;
     players.second.positionY = canvas.height / 2 - 48;
 }, true);
+
+screen.orientation.onchange = () => { window.location.reload() }
