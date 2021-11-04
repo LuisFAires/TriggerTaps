@@ -214,11 +214,14 @@ function changeCurrenScreen(newScreen){
     currentScreen = newScreen;
     if(currentScreen.name == "game"){
         then = Date.now()+3000;
-    }if(mode == "single"){
-        player2Time = randomIntFromInterval(-500, -100)
-        setTimeout(() => {
-            players.action(players.second, players.first);
-        }, 3000 - (player2Time));
+        if(mode == "single"){
+            player2Time = randomIntFromInterval(-500, -100)
+            setTimeout(() => {
+                if(players.second.status != "dead"){
+                    players.action(players.second, players.first);
+                }
+            }, 3000 - (player2Time));
+        }
     }else if(currentScreen.name == "menu"){
         mode = null;
     }
