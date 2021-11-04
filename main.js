@@ -98,9 +98,9 @@ const players = {// Stores both players current sprites info, status and functio
             changeCurrenScreen(screens.end);
             dead.sourceX = 0;
             dead.sourceY += 193 
-        }else if(dead.sourceX < 192){
+        }else if(dead.status == "dead" && dead.sourceX < 192){
             dead.sourceX += 48;
-        }else{
+        }else if(dead.status != "dead"){
             console.log(dead.name+" player can't die.\nPlayer status: "+dead.status);
         }
     },
@@ -190,13 +190,13 @@ function drawTimer(){ //Draws the timer when the game start
     let now = Date.now()
     remaingTimer = then - now;
     if(remaingTimer > 2000){
-        context.drawImage(sprites, 289, 144, 48, 48,(canvas.width / 2 - 24), (canvas.height / 2 - 24), 48, 48)
+        context.drawImage(sprites, 288, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 1000){
-        context.drawImage(sprites, 337, 144, 48, 48,(canvas.width / 2 - 24), (canvas.height / 2 - 24), 48, 48)
+        context.drawImage(sprites, 336, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 0){
-        context.drawImage(sprites, 385, 144, 48, 48,(canvas.width / 2 - 24), (canvas.height / 2 - 24), 48, 48)
+        context.drawImage(sprites, 384, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > -500){
-        context.drawImage(sprites, 433, 144, 48, 48,(canvas.width / 2 - 24), (canvas.height / 2 - 24), 48, 48)
+        context.drawImage(sprites, 432, 144, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }
     if(remaingTimer > -500){
         //console.log(remaingTimer);
