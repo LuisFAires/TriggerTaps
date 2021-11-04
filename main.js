@@ -215,7 +215,7 @@ function changeCurrenScreen(newScreen){ //Changes the current screen, sets the t
         countdown.play();
         then = Date.now()+3000;
         if(mode == "single"){
-            let player2Time = randomIntFromInterval(-500, -100)
+            let player2Time = randomIntFromInterval(-300, -150)
             setTimeout(() => {
                 if(players.second.status != "dead"){
                     players.action(players.second, players.first);
