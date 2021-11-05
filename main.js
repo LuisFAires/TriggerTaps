@@ -284,22 +284,22 @@ if(('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.ms
 function userInput(X, Y){//Receives mouse and touch inputs
     //console.log(X+" "+Y);
     if(currentScreen.name == "menu"){
-        if(X < canvas.width / 2){
+        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
             console.log("1 player");
             mode = "single";
             changeCurrenScreen(screens.game);
-        }else{
+        }else if(X > canvas.width / 2 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
             console.log("2 players");
             mode = "multi";
             changeCurrenScreen(screens.game);
         }
     }else if(currentScreen.name == "game"){
-        if(mode == "single"){
+        if(mode == "single" && X > players.first.positionX && X < players.first.positionX + 96 && Y > players.first.positionY && Y < players.first.positionY +96){
             players.action(players.first, players.second);
         }else if(mode == "multi"){
-            if(X < canvas.width / 2){
+            if(X > players.first.positionX && X < players.first.positionX + 96 && Y > players.first.positionY && Y < players.first.positionY +96){
                 players.action(players.first, players.second);
-            }else{
+            }else if(X > players.second.positionX && X < players.second.positionX + 96 && Y > players.second.positionY && Y < players.second.positionY +96){
                 players.action(players.second, players.first);
             }
         }
