@@ -8,7 +8,11 @@ const countdown = new Audio();
 countdown.src = "./sound/countdown.wav"
 
 const canvas = document.querySelector('canvas');
-canvas.height = window.innerHeight - window.innerHeight / 100 * 16;
+if(window.navigator.onLine){
+    canvas.height = window.innerHeight / 100 * 86;
+}else{
+    canvas.height = window.innerHeight
+}
 canvas.width = window.innerWidth;
 const context = canvas.getContext("2d");
 
@@ -212,16 +216,19 @@ function drawTimer(){ //Draws the timer when the game start
 function changeCurrenScreen(newScreen){ //Changes the current screen, sets the timer and set when the second player will shoot on singleplayer mode.
     currentScreen = newScreen;
     if(currentScreen.name == "game"){
-        countdown.play();
-        then = Date.now()+3000;
-        if(mode == "single"){
-            let player2Time = randomIntFromInterval(-300, -150)
-            setTimeout(() => {
-                if(players.second.status != "dead"){
-                    players.action(players.second, players.first);
-                }
-            }, 3000 - (player2Time));
-        }
+        //delays the screen change to prevent "autoplay" issue
+        setTimeout(() =>{
+            countdown.play();
+            then = Date.now()+3000;
+            if(mode == "single"){
+                let player2Time = randomIntFromInterval(-300, -150)
+                setTimeout(() => {
+                    if(players.second.status != "dead"){
+                        players.action(players.second, players.first);
+                    }
+                }, 3000 - (player2Time));
+            }
+        }, 100)       
     }else if(currentScreen.name == "end"){
         countdown.pause();
         countdown.currentTime = 0;
@@ -304,8 +311,12 @@ function userInput(X, Y){//Receives mouse and touch inputs
 }
 
 window.addEventListener('resize', function(event) {
-    canvas.height = window.innerHeight - 50;
-    canvas.width = window.innerHeight - window.innerHeight / 100 * 16;
+    if(window.navigator.onLine){
+        canvas.height = window.innerHeight / 100 * 86;
+    }else{
+        canvas.height = window.innerHeight
+    }
+    canvas.width = window.innerWidth;
     players.first.positionX = canvas.width / 2 - 350;
     players.first.positionY = canvas.height / 2 - 48;
     players.second.positionX = canvas.width / 2 + 254;
