@@ -21,14 +21,14 @@ const players = {// Stores both players current sprites info, status and functio
         status: "standing",
         name: "First",
         sourceX: 0,
-        sourceY: 1,
+        sourceY: 0,
         positionX: canvas.width / 2 - 350,
         positionY: canvas.height / 2 - 48,
         draw(){
             context.drawImage(
                 sprites,
                 players.first.sourceX, players.first.sourceY, //Start position
-                48, 48, //Sprite size
+                96, 96, //Sprite size
                 players.first.positionX, players.first.positionY, //On frame position
                 96, 96 //On frame size
             );
@@ -36,21 +36,21 @@ const players = {// Stores both players current sprites info, status and functio
         reset(){
             players.first.status = "standing";
             players.first.sourceX = 0;
-            players.first.sourceY = 1;
+            players.first.sourceY = 0;
         }
     },
     second:{//Stores second player info and draw and reset functions.
         status: "standing",
         name: "Second",
         sourceX: 0,
-        sourceY: 49,
+        sourceY: 96,
         positionX: canvas.width / 2 + 254,
         positionY: canvas.height / 2 - 48,
         draw(){
             context.drawImage(
                 sprites,
                 players.second.sourceX, players.second.sourceY, //Start position
-                48, 48, //Sprite size
+                96, 96, //Sprite size
                 players.second.positionX , players.second.positionY, //On frame position
                 96, 96 //On frame size
             );
@@ -58,13 +58,13 @@ const players = {// Stores both players current sprites info, status and functio
         reset(){
             players.second.status = "standing";
             players.second.sourceX = 0;
-            players.second.sourceY = 49;
+            players.second.sourceY = 96;
         }
     },
     doWithdraw(player){ //Makes the player withdraw the gun.
         if(player.status == "standing"){
-            if(player.sourceX < 240){
-                player.sourceX += 48;
+            if(player.sourceX < 385){
+                player.sourceX += 96;
             }else{
                 player.status = "withdraw";
             }
@@ -75,7 +75,7 @@ const players = {// Stores both players current sprites info, status and functio
     undoWithdraw(player){//Makes the player keep the gun.
         if(player.status == "withdraw"){
             if(player.sourceX > 0){
-                player.sourceX -= 48;
+                player.sourceX -= 96;
             }else{
                 player.reset();
             }
@@ -89,12 +89,12 @@ const players = {// Stores both players current sprites info, status and functio
         }else if(shooter.status == "withdraw"){
             shooter.status = "shooting";
             shooter.sourceX = 0;
-            shooter.sourceY += 97;
+            shooter.sourceY += 192;
         }else if(shooter.status == "shooting" && shooter.sourceX < 192){
-            shooter.sourceX +=48;
+            shooter.sourceX += 96;
         }else if(shooter.status == "shooting"){
-            shooter.sourceX += 48;
-            shooter.sourceY -= 97;
+            shooter.sourceX += 96;
+            shooter.sourceY -= 192;
             shooter.status = "withdraw";
         }else{
             console.log(shooter.name+" player can't shoot.\nPlayer status: "+shooter.status);
@@ -107,9 +107,9 @@ const players = {// Stores both players current sprites info, status and functio
             dead.status = "dead";
             changeCurrenScreen(screens.end);
             dead.sourceX = 0;
-            dead.sourceY += 193 
-        }else if(dead.status == "dead" && dead.sourceX < 192){
-            dead.sourceX += 48;
+            dead.sourceY += 384 
+        }else if(dead.status == "dead" && dead.sourceX < 385){
+            dead.sourceX += 96;
         }else if(dead.status != "dead"){
             console.log(dead.name+" player can't die.\nPlayer status: "+dead.status);
         }
@@ -125,7 +125,7 @@ const screens = {
         name: "menu",
         update(){
             drawEveryFrameObjects();
-            context.drawImage(sprites, 289, 0, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
+            context.drawImage(sprites, 1344, 0, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
             if(players.first.status == "withdraw"){
                 players.undoWithdraw(players.first)
             }else{
@@ -152,15 +152,15 @@ const screens = {
             drawEveryGameUpdate();
             if(mode == "single"){
                 if(players.first.status == "dead"){
-                    context.drawImage(sprites, 433, 96, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
+                    context.drawImage(sprites, 960, 192, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
                 }else if(players.second.status == "dead"){
-                    context.drawImage(sprites, 289, 96, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
+                    context.drawImage(sprites, 576, 192, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
                 }
             }else if(mode == "multi"){
                 if(players.first.status == "dead"){
-                    context.drawImage(sprites, 433, 48, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
+                    context.drawImage(sprites, 960, 0, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
                 }else if(players.second.status == "dead"){
-                    context.drawImage(sprites, 289, 48, 144, 48,(canvas.width / 2 - 144), (canvas.height / 2 -48),288,96)
+                    context.drawImage(sprites, 576, 0, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
                 }  
             }
         }
@@ -176,7 +176,7 @@ var remaingTimer;
 function drawEveryFrameObjects(){ //Clears the frame, draws the backgorund and characters.
     context.clearRect(0,0, canvas.width, canvas.height);
     //background
-    context.drawImage(sprites, 0, 288, 700, 230,(canvas.width / 2 - 350), (canvas.height / 2 - 130), 700, 230);
+    context.drawImage(sprites, 0, 576, 1400, 460,(canvas.width / 2 - 350), (canvas.height / 2 - 130), 700, 230);
     players.first.draw();
     players.second.draw();
 }
@@ -200,13 +200,13 @@ function drawTimer(){ //Draws the timer when the game start
     let now = Date.now()
     remaingTimer = then - now;
     if(remaingTimer > 2000){
-        context.drawImage(sprites, 288, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 576, 384, 192, 192,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 1000){
-        context.drawImage(sprites, 336, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 768, 384, 192, 192,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > 0){
-        context.drawImage(sprites, 384, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 960, 384, 192, 192,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }else if(remaingTimer > -500){
-        context.drawImage(sprites, 432, 145, 48, 48,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
+        context.drawImage(sprites, 1152, 384, 192, 192,(canvas.width / 2 - 48), (canvas.height / 2 - 48), 96, 96)
     }
     if(remaingTimer > -500){
         //console.log(remaingTimer);
@@ -230,11 +230,13 @@ function changeCurrenScreen(newScreen){ //Changes the current screen, sets the t
             }
         }, 100)       
     }else if(currentScreen.name == "end"){
-        countdown.pause();
-        countdown.currentTime = 0;
         gunfire.play();
     } else if(currentScreen.name == "menu"){
         mode = null;
+        gunfire.pause();
+        gunfire.currentTime = 0;
+        countdown.pause();
+        countdown.currentTime = 0;
     }
 }
 
@@ -284,11 +286,11 @@ if(('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.ms
 function userInput(X, Y){//Receives mouse and touch inputs
     //console.log(X+" "+Y);
     if(currentScreen.name == "menu"){
-        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
+        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 && Y > canvas.height / 2 - 72 && Y < canvas.height / 2 + 72){
             console.log("1 player");
             mode = "single";
             changeCurrenScreen(screens.game);
-        }else if(X > canvas.width / 2 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
+        }else if(X > canvas.width / 2 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 72 && Y < canvas.height / 2 + 72){
             console.log("2 players");
             mode = "multi";
             changeCurrenScreen(screens.game);
@@ -304,7 +306,7 @@ function userInput(X, Y){//Receives mouse and touch inputs
             }
         }
     }else if(currentScreen.name == "end"){
-        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 48 && Y < canvas.height / 2 + 48){
+        if(X > canvas.width / 2 - 144 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 72 && Y < canvas.height / 2 + 72){
             changeCurrenScreen(screens.menu);
         }
     }
@@ -323,4 +325,4 @@ window.addEventListener('resize', function(event) {
     players.second.positionY = canvas.height / 2 - 48;
 }, true);
 
-screen.orientation.onchange = () => { window.location.reload() }
+//screen.orientation.onchange = () => { window.location.reload() }
