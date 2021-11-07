@@ -8,11 +8,7 @@ const countdown = new Audio();
 countdown.src = "./sound/countdown.wav"
 
 const canvas = document.querySelector('canvas');
-if(window.navigator.onLine){
-    canvas.height = window.innerHeight / 100 * 86;
-}else{
-    canvas.height = window.innerHeight
-}
+canvas.height = window.innerHeight
 canvas.width = window.innerWidth;
 const context = canvas.getContext("2d");
 
@@ -332,11 +328,7 @@ function userInput(X, Y){//Receives mouse and touch inputs
 }
 
 window.addEventListener('resize', function(event) {
-    if(window.navigator.onLine){
-        canvas.height = window.innerHeight / 100 * 86;
-    }else{
-        canvas.height = window.innerHeight
-    }
+    canvas.height = window.innerHeight
     canvas.width = window.innerWidth;
     players.first.positionX = canvas.width / 2 - 350;
     players.first.positionY = canvas.height / 2 - 48;
