@@ -125,6 +125,7 @@ const screens = {
         name: "menu",
         update(){
             drawEveryFrameObjects();
+            context.drawImage(sprites, 1344, 384, 96, 96, canvas.width / 2 - 340, canvas.height / 2 - 105, 48, 48);
             context.drawImage(sprites, 1344, 0, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
             if(players.first.status == "withdraw"){
                 players.undoWithdraw(players.first)
@@ -143,6 +144,13 @@ const screens = {
         update(){
             drawEveryFrameObjects();
             drawEveryGameUpdate();
+            if(mode == "single"){
+                context.drawImage(sprites, 1344, 288, 192, 48, players.first.positionX, players.first.positionY - 24, 96, 24)
+                context.drawImage(sprites, 1536, 288, 192, 48, players.second.positionX, players.second.positionY - 24, 96, 24)
+            }else if(mode == "multi"){
+                context.drawImage(sprites, 1344, 192, 192, 48, players.first.positionX, players.first.positionY - 24, 96, 24)
+                context.drawImage(sprites, 1536, 192, 192, 48, players.second.positionX, players.second.positionY - 24, 96, 24)
+            }
         },
     },
     end:{ //Updates frames and gives the user the result
@@ -163,6 +171,13 @@ const screens = {
                     context.drawImage(sprites, 576, 0, 384, 192,(canvas.width / 2 - 144), (canvas.height / 2 -72),288,144)
                 }  
             }
+        }
+    },
+    help:{//Show the instructions
+        name: "help",
+        update(){
+            context.clearRect(0,0, canvas.width, canvas.height);
+            context.drawImage(sprites, 0, 1036, 1400, 460, canvas.width / 2 - 350, canvas.height / 2 - 115, 700, 230)
         }
     }
 }
@@ -294,6 +309,8 @@ function userInput(X, Y){//Receives mouse and touch inputs
             console.log("2 players");
             mode = "multi";
             changeCurrenScreen(screens.game);
+        }else if(X > canvas.width / 2 - 340 && X  < canvas.width / 2 - 292 && Y > canvas.height / 2 - 105 && Y < canvas.height / 2 - 57){
+            changeCurrenScreen(screens.help);
         }
     }else if(currentScreen.name == "game"){
         if(mode == "single" && X > players.first.positionX && X < players.first.positionX + 96 && Y > players.first.positionY && Y < players.first.positionY +96){
@@ -309,6 +326,8 @@ function userInput(X, Y){//Receives mouse and touch inputs
         if(X > canvas.width / 2 - 144 && X < canvas.width / 2 + 144 && Y > canvas.height / 2 - 72 && Y < canvas.height / 2 + 72){
             changeCurrenScreen(screens.menu);
         }
+    }else if(currentScreen.name == "help"){
+        changeCurrenScreen(screens.menu);
     }
 }
 
@@ -324,5 +343,3 @@ window.addEventListener('resize', function(event) {
     players.second.positionX = canvas.width / 2 + 254;
     players.second.positionY = canvas.height / 2 - 48;
 }, true);
-
-//screen.orientation.onchange = () => { window.location.reload() }
