@@ -1,25 +1,34 @@
-# Gun Battle
-![Cowboy shooting](https://luisfaires.github.io/Gun-Battle/img/CowBoyShoot.gif)
+# Gun Battle  
 
-Jogo com temática de faroeste onde os personagens disputam um duelo, vencendo o jogador que tiver o reflexo mais rápido para atirar. É possível jogar sozinho contra um bot ou também testar seu reflexo duelando contra um amigo.
+<img align="center" src="https://luisfaires.github.io/Gun-Battle/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
 
-# Para jogar clique aqui >>> [Gun Battle](https://luisfaires.github.io/Gun-Battle/)
+Western-themed game where the characters fight a duel, The winner is the fastest cowboy to pull the trigger. You can play on your own or duel with a friend in the 2 player mode.
 
-Desenvolvido com JavaScript e HTML5
+### [Click here to play](https://luisfaires.github.io/Gun-Battle/)
 
-Créditos
+### Developed with:  
+![VS Code](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JS](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![GIMP](https://img.shields.io/badge/gimp-5C5543?style=for-the-badge&logo=gimp&logoColor=white)
 
-Código:  
-**Luis Fillipe Aires Souza**  [LinkedIn](https://linkedin.com/in/luisfaires/),  [GitHub](https://github.com/LuisFAires).
+### Inspired by:
+[![Playlist Flappy bird - Dev Soutinho](https://img.shields.io/badge/Playlist_Flappy_bird_--_Dev_Soutinho-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/playlist?list=PLTcmLKdIkOWmeNferJ292VYKBXydGeDej)
+
+### Credits:
+
+Code:  
+[![LinkedIn](https://img.shields.io/badge/Luis_Fillipe_Aires_Souza-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/luisfaires/)
 
 Sprites Cowboy:  
 **Samuel Lee** [Cowboy (Animated Pixel Art)](https://samuellee.itch.io/cow-boy-animated-pixel-art)
 
-Sprites Cenário:  
+Sprites scenery:  
 **CraftPix** [RPG Desert Tileset](https://free-game-assets.itch.io/free-rpg-desert-tileset)
 
-Som Tiro:  
+Gunshot sound:  
 **KuraiWolf** [Light Machine Gun](https://opengameart.org/content/light-machine-gun)
 
-Som Contagem:  
+Countdown sound:  
 **MixKit** [Simple countdown](https://mixkit.co/free-sound-effects/countdown/)
