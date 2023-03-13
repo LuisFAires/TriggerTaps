@@ -1,0 +1,78 @@
+body {
+    font-family: game;
+    color: #4e463c;
+    overflow: hidden;
+    text-align: center;
+    margin: 0;
+    background-color: #deb887;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+#loadingOverlay,
+#rotateOverlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 96%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-size: 50px;
+    flex-direction: column;
+    padding: 0 2%;
+}
+
+/* ANY-POINTER MAY NOT WORK ON ALL BROWSERS*/
+@media (orientation: landscape) or (any-pointer: fine) {
+    #rotateOverlay {
+        display: none;
+    }
+}
+
+canvas {
+    background: #deb887;
+}
+
+div {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#upper {
+    max-height: 40vh;
+}
+
+#upper,
+#bottom {
+    flex-direction: column;
+    padding: 0 2%;
+    width: 96%;
+}
+
+#left,
+#right {
+    min-height: 250px;
+}
+
+.adContainer{
+    height: 100%;
+    width: 100%;
+}
+
+.storeBagde {
+    height: 40px;
+    padding: 0 5px;
+}
+
+#promotion {
+    margin-top: 10px;
+    font-size: 20px;
+    max-width: 650px;
+}

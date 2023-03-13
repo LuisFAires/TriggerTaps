@@ -1,418 +1,570 @@
-const sprites = new Image();
-sprites.src = "./img/sprites.webp";
+const sprites = new Image()
+sprites.src = "./img/sprites.webp"
 
-const gunfire = new Audio();
-gunfire.src = "./sound/gunfire.mp3";
+const gunfire = new Audio()
+gunfire.src = "./sound/gunfire.mp3"
 
-const countdown = new Audio();
-countdown.src = "./sound/countdown.wav"
+const countdown = new Audio()
+countdown.src = "./sound/countdown.mp3"
 
-const audioCtx = new AudioContext();
-const track = audioCtx.createMediaElementSource(gunfire);
-const panner = new StereoPannerNode(audioCtx, {pan: 0});
-track.connect(panner).connect(audioCtx.destination);
+const gameFont = new FontFace("game", "url(PixelOperator-Bold.ttf)");
+document.fonts.add(gameFont);
+gameFont.load()
 
-const canvas = document.querySelector('canvas');
-const context = canvas.getContext("2d");
-let blockInputLeft = false;
-let blockInputRight = false;
-let unblockInputLeftTimeout = false;
-let unblockInputRightTimeout = false;
-let currentScreen;
-let mode;
-let timerEnd;
-let remainingTimer;
-let currentLevel;
+const canvas = document.querySelector('canvas')
+const context = canvas.getContext("2d")
+context.textAlign = "center"
 
-const players = {// Stores both players current sprites info, status and functions to draw, animate and reset them.
-    first:{ //Stores first player info and draw and reset functions.
+let currentScreen
+let mode
+let timerEnd
+let remainingTimer
+let currentLevel
+let timerUpdateInterval
+let frameUpdateInterval
+let playersUpdateInterval
+let initializeInterval
+let gameAssetsLoaded
+let phisicalKeyboard
+
+const players = {
+    first:{
         status: "standing",
-        name: "First",
         sourceX: 0,
         sourceY: 0,
-        positionX: canvas.halfWidth - 350,
-        positionY: canvas.halfHieght - 50,
-        draw(){
-            context.drawImage(
-                sprites,
-                players.first.sourceX, players.first.sourceY, //Start position
-                100, 100, //Sprite size
-                players.first.positionX, players.first.positionY, //On frame position
-                100, 100 //On frame size
-            );
-        },
-        reset(){
-            players.first.status = "standing";
-            players.first.sourceX = 0;
-            players.first.sourceY = 0;
-        }
+        positionX: 25,
+        initialsourceY: 0,
+        moving: false,
+        frozen: false,
+        unfreezeTimeout: undefined,
+        reactionTime: undefined
     },
-    second:{//Stores second player info and draw and reset functions.
+    second:{
         status: "standing",
-        name: "Second",
         sourceX: 0,
         sourceY: 100,
-        positionX: canvas.halfWidth + 250,
-        positionY: canvas.halfHieght - 50,
-        draw(){
-            context.drawImage(
-                sprites,
-                players.second.sourceX, players.second.sourceY, //Start position
-                100, 100, //Sprite size
-                players.second.positionX , players.second.positionY, //On frame position
-                100, 100 //On frame size
-            );
-        },
-        reset(){
-            players.second.status = "standing";
-            players.second.sourceX = 0;
-            players.second.sourceY = 100;
-        }
+        positionX: 525,
+        initialsourceY: 100,
+        moving: false,
+        frozen: false,
+        unfreezeTimeout: undefined,
+        reactionTime: undefined
     },
-    doWithdraw(player){ //Makes the player withdraw the gun.
+    draw(player){
+        context.drawImage(
+            sprites,
+            player.sourceX, player.sourceY, //Sprite start position
+            100, 100, //Sprite size
+            player.positionX , 75, //On frame position
+            100, 100 //On frame size
+        )
+    },
+    reset(player){
+        player.status = "standing"
+        player.sourceX = 0
+        player.sourceY = player.initialsourceY
+        player.moving = false
+        player.frozen = false
+        player.reactionTime = undefined
+    },
+    doWithdraw(player){
         if(player.status == "standing"){
-            if(player.sourceX < 450){
-                player.sourceX += 100;
-            }else{
-                player.status = "withdraw";
+            if(player.sourceX != 500){
+                player.sourceX += 100
+                player.moving = true
+                return
             }
-        }else{
-            console.log(player.name+" player can't withdraw.\nPlayer status: "+player.status);
+            player.status = "withdraw"
+            player.moving = false
         }
     },
-    undoWithdraw(player){//Makes the player keep the gun.
+    undoWithdraw(player){
         if(player.status == "withdraw"){
-            if(player.sourceX > 0){
-                player.sourceX -= 100;
-            }else{
-                player.reset();
+            if(player.sourceX != 0){
+                player.sourceX -= 100
+                player.moving = true
+                return
             }
-        }else{
-            console.log(player.name+" player can't undo withdraw.\nPlayer status: "+player.status);
+            player.status = "standing"
+            player.moving = false
         }
     },
-    shoot(shooter){//Makes the player shoot
-        if(shooter.status == "withdraw"){
-            shooter.status = "shooting";
-            shooter.sourceX = 0;
-            shooter.sourceY += 200;
-        }else if(shooter.status == "shooting" && shooter.sourceX < 400){
-            shooter.sourceX += 100;
-        }else if(shooter.status == "shooting"){
-            shooter.sourceX += 100;
-            shooter.sourceY -= 200;
-            shooter.status = "withdraw";
-        }else{
-            console.log(shooter.name+" player can't shoot.\nPlayer status: "+shooter.status);
+    shoot(shooter){
+        if(shooter.status == "withdraw" || shooter.status == "standing"){
+            shooter.status = "shooting"
+            shooter.sourceX = 0
+            shooter.sourceY += 200
+            shooter.moving = true
+            return
+        }else if(shooter.status == "shooting" && shooter.moving){
+            shooter.sourceX += 100
+            if(shooter.sourceX == 400){
+                shooter.sourceX += 100
+                shooter.sourceY -= 200
+                shooter.status = "withdraw"
+                shooter.moving = false
+            }
         }
     },
-    die(dead){//Makes the player die
-        if(dead.status == "withdraw"){
-            dead.status = "dead";
-            dead.sourceX = 0;
+    die(dead){
+        if(dead.status == "withdraw" || dead.status == "standing"){
+            dead.status = "dead"
+            dead.sourceX = 0
             dead.sourceY += 400 
-        }else if(dead.status == "dead" && dead.sourceX < 400){
-            dead.sourceX += 100;
-        }else if(dead.status != "dead"){
-            console.log(dead.name+" player can't die.\nPlayer status: "+dead.status);
+            dead.moving = true
+            return
+        }
+        if(dead.status == "dead" && dead.moving){
+            dead.sourceX += 100
+            if(dead.sourceX == 400) dead.moving = false
         }
     },
     action(shooter, dead){//Calls the shoot and die functions together so they do not conflict each other.
-        this.shoot(shooter);
-        this.die(dead);
+        players.shoot(shooter)
+        players.die(dead)
     }
 }
 
 const levels = [
-    { min: 280, max: 300, X: 85 },//1
-    { min: 260, max: 280, X: 188 },//2
-    { min: 240, max: 260, X: 291 },//3
-    { min: 220, max: 240, X: 394 },//4
-    { min: 200, max: 220, X: 497 },//5
-    { min: 180, max: 200, X: 600 },//6
-    { min: 160, max: 180, X: 703 },//7
-    { min: 140, max: 160, X: 812 },//8
-    { min: 120, max: 140, X: 915 },//9
-    { min: 100, max: 120}//10
-];
+    { min: 270, max: 500 },//1
+    { min: 225, max: 270 },//2
+    { min: 185, max: 225 },//3
+    { min: 150, max: 185 },//4
+    { min: 120, max: 150 },//5
+    { min: 95, max: 120 },//6
+    { min: 75, max: 95 },//7
+    { min: 60, max: 75 },//8
+    { min: 50, max: 60 },//9
+    { min: 45, max: 40 }//10
+]
 
 const screens = { 
-    menu:{ //Draw buttons and put both players to standing status reseting them.
-        name: "menu",
-        update(){
-            drawEveryFrameObjects();
-            context.drawImage(sprites, 1311, 1636, 53, 69, (canvas.halfWidth - 340), (canvas.halfHieght - 105), 26, 35);
-            context.drawImage(sprites, 600, 400, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-            if(players.first.status == "withdraw"){
-                players.undoWithdraw(players.first);
-            }else{
-                players.first.reset();
-            }
-            if(players.second.status == "withdraw"){
-                players.undoWithdraw(players.second);
-            }else{
-                players.second.reset();
-            }
-        }
-    },
-    game:{ //Just responsible to update on game frames.
+    game:{
         name: "game",
         update(){
-            drawEveryFrameObjects();
-            drawTimer();
-            if(players.first.status == "standing"){
-                players.doWithdraw(players.first);
+            drawEveryFrameObjects()
+            drawTimer()
+            context.font = "24px game"
+            if(players.first.frozen){
+                drawFrozenMsg()
+                context.fillText(lang.frozen, 75, 75)
+            }else{
+                context.fillStyle = "#4e463c"
+                context.fillText((mode == "single" ? lang.you: lang.player+" 1"), 75, 75)
             }
-            if(players.second.status == "standing"){
-                players.doWithdraw(players.second);
+            if(players.second.frozen){
+                drawFrozenMsg()
+                context.fillText(lang.frozen, 575, 75)   
+            }else{
+                context.fillStyle = "#4e463c"
+                context.fillText((mode == "single" ? lang.enemy : lang.player+" 2"), 575, 75)
             }
-            if(mode == "single"){
-                if(blockInputLeft){
-                    context.drawImage(sprites, 47, 1848, 1297, 63, canvas.halfWidth - 315, canvas.halfHieght - 120, 630, 31);
-                    context.drawImage(sprites, 525, 1920, 350, 80, players.first.positionX, players.first.positionY - 24, 105, 24);
-                }else{
-                    context.drawImage(sprites, 809, 1636, 192, 80, (players.first.positionX + 25), players.first.positionY - 24, 58, 24);
-                }
-                context.drawImage(sprites, 1010, 1636, 259, 80, (players.second.positionX + 10), players.second.positionY - 24, 77, 24);
-            }else if(mode == "multi"){
-                if(blockInputLeft){
-                    context.drawImage(sprites, 47, 1848, 1297, 63, canvas.halfWidth - 315, canvas.halfHieght - 120, 630, 31);
-                    context.drawImage(sprites, 525, 1920, 350, 80, players.first.positionX, players.first.positionY - 24, 105, 24);
-                }else{
-                    context.drawImage(sprites, 25, 1636, 350, 80, players.first.positionX, players.first.positionY - 24, 105, 24);
-                }
-                if(blockInputRight){
-                    context.drawImage(sprites, 47, 1848, 1297, 63, canvas.halfWidth - 315, canvas.halfHieght - 120, 630, 31);
-                    context.drawImage(sprites, 525, 1920, 350, 80, players.second.positionX, players.second.positionY - 24, 105, 24);
-                }else{
-                    context.drawImage(sprites, 417, 1636, 350, 80, players.second.positionX, players.second.positionY - 24, 105, 24);
-                }   
+            if(mode == "single" && !players.first.frozen && remainingTimer <= 0 && parseInt(remainingTimer/150)%2 == 0){
+                context.drawImage(sprites, 500, 200, 100, 100, 40, 120, 80, 80)
             }
         },
     },
-    end:{ //Updates frames and gives the user the result
+    end:{
         name: "end",
         update(){
-            drawEveryFrameObjects();
-            if(players.first.status == "shooting"){
-                players.action(players.first, players.second);
-            }else if(players.second.status == "shooting"){
-                players.action(players.second, players.first);
+            document.cookie = "tutorial=done;"
+            drawEveryFrameObjects()
+            let frozenReaction = ((players.first.frozen && !players.first.reactionTime) || (players.second.frozen && !players.second.reactionTime))
+            if(players.first.moving == false && players.second.moving == false){
+                clearInterval(frameUpdateInterval)
+                clearInterval(playersUpdateInterval)
+                clearInterval(timerUpdateInterval)
+                if(frozenReaction) drawFrozenMsg()
             }
-            if(mode == "single"){
-                if(players.first.status == "dead"){
-                    context.drawImage(sprites, 600, 200, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-                }else if(players.second.status == "dead"){
-                    if(currentLevel < 9){
-                        context.drawImage(sprites, 1000, 0, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-                        context.drawImage(sprites, levels[currentLevel].X, 1738, 75, 75,(canvas.halfWidth - 35), (canvas.halfHieght - 37), 20, 20);
-                    }else{
-                        context.drawImage(sprites, 1000, 200, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-                    }
+            context.fillStyle = "#fff"
+            context.fillRect(125, 50, 400, 150)
+            context.fillStyle = "#5e4700"
+            context.fillRect(130, 55, 390, 140)
+            context.fillStyle = "#fff"
+            context.font = "16px game"
+            context.fillStyle = "#fff"
+            if(players.first.frozen && !players.first.reactionTime){
+                context.fillText((mode == "single" ? lang.you : lang.player+" 1")+lang.wasFrozen, 325, 160)
+            }else if(players.first.reactionTime != undefined){
+                context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1)+players.first.reactionTime+"ms", 325, 160)
+            }
+            if(players.second.frozen && !players.second.reactionTime){
+                context.fillText(lang.player+" 2 "+lang.wasFrozen, 325, 180)
+            }else if(players.second.reactionTime != undefined){
+                context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2)+players.second.reactionTime+"ms", 325, 180)
+            }
+            if(currentLevel != 9 || players.first.status == "dead"){
+                if(frozenReaction && parseInt(remainingTimer/50)%2 != 0) drawFrozenMsg()
+                context.font = "25px game"
+                context.fillText(lang.taphere, 325, 125)
+                if(mode == "single"){
+                    context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl+(currentLevel+1)+lang.completed), 325, 95)
+                    return
+                }else{
+                    context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325 , 95)
+                    return
                 }
-            }else if(mode == "multi"){
-                if(players.first.status == "dead"){
-                    context.drawImage(sprites, 600, 0, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-                    context.drawImage(sprites, 188, 1738, 75, 75,(canvas.halfWidth + 2), (canvas.halfHieght - 37), 25, 25);
-                }else if(players.second.status == "dead"){
-                    context.drawImage(sprites, 600, 0, 400, 200, (canvas.halfWidth - 150), (canvas.halfHieght -75), 300, 150);
-                    context.drawImage(sprites, 85, 1738, 75, 75,(canvas.halfWidth + 2), (canvas.halfHieght - 37), 25, 25);
-                }  
+            }else{
+                context.font = "30px game"
+                context.fillText(lang.gameCompleted1, 325, 85)
+                context.fillText(lang.gameCompleted2, 325, 115)
+                context.fillText(lang.gameCompleted3, 325, 140)
+                let colorsSwitch = parseInt(remainingTimer/50)%2 == 0 ? true : false
+                context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
+                context.fillRect(125, 205, 400, 40)
+                context.fillStyle = (colorsSwitch ? "#5e4700" : "#fff")
+                context.fillRect(130, 210, 390, 30)
+                context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
+                context.fillText(lang.shareAchievement, 325, 233)
+                return
             }
         }
     },
-    help:{//Show the instructions
-        name: "help",
+    menu:{
+        name: "menu",
         update(){
-            context.clearRect(0,0, canvas.width, canvas.height);
-            context.drawImage(sprites, 0, 1099, 1400, 500,(canvas.halfWidth - 350), (canvas.halfHieght - 125), 700, 250);
-        }
-    }
-}
-
-function drawEveryFrameObjects(){ //Clears the frame, draws the backgorund and characters.
-    context.clearRect(0,0, canvas.width, canvas.height);
-    //background
-    context.drawImage(sprites, 0, 600, 1400, 499,(canvas.halfWidth - 350), (canvas.halfHieght - 125), 700, 250);
-    players.first.draw();
-    players.second.draw();
-}
-
-function drawTimer(){ //Draws the timer when the game start
-    let now = Date.now()
-    remainingTimer = timerEnd - now;
-    if(remainingTimer > 2000 && remainingTimer < 3000){
-        context.drawImage(sprites, 1001, 400, 200, 200,(canvas.halfWidth - 50), (canvas.halfHieght - 50), 100, 100);
-        context.drawImage(sprites, 291, 1738, 75, 75,(canvas.halfWidth - 26), (canvas.halfHieght - 40), 75, 75);
-    }else if(remainingTimer > 1000 && remainingTimer <= 2000){
-        context.drawImage(sprites, 1001, 400, 200, 200,(canvas.halfWidth - 50), (canvas.halfHieght - 50), 100, 100);
-        context.drawImage(sprites, 188, 1738, 75, 75,(canvas.halfWidth - 26), (canvas.halfHieght - 40), 75, 75);
-    }else if(remainingTimer > 0 && remainingTimer <= 1000){
-        context.drawImage(sprites, 1001, 400, 200, 200,(canvas.halfWidth - 50), (canvas.halfHieght - 50), 100, 100);
-        context.drawImage(sprites, 85, 1738, 75, 75,(canvas.halfWidth - 26), (canvas.halfHieght - 40), 75, 75);
-    }else if(remainingTimer > -500 && remainingTimer <= 0){
-        context.drawImage(sprites, 1200, 400, 200, 200,(canvas.halfWidth - 50), (canvas.halfHieght - 50), 100, 100);
-        context.drawImage(sprites, 1018, 1738, 286, 75,(canvas.halfWidth - 47), (canvas.halfHieght - 11), 95, 25);
-    }
-}
-
-function changeCurrentScreen(newScreen){ //Changes the current screen, sets the timer and set when the second player will shoot on singleplayer mode.
-    audioCtx.resume()
-    //prevents gunfire to be double played when the user use two fingers to tap repeatedly
-    if(newScreen == currentScreen){
-        return
-    };
-    remainingTimer = null;
-    if(newScreen.name == "game"){
-        timerEnd = Date.now()+3500;
-        //delays the screen change to prevent "autoplay" issue
-        setTimeout(() =>{
-            countdown.currentTime = 0;
-            countdown.play();
-            if(mode == "single"){
-                let enemyTime = randomIntFromInterval(levels[currentLevel].min, levels[currentLevel].max);
-                setTimeout(() => {
-                    if(players.second.status != "dead"){
-                        players.action(players.second, players.first);
-                        setTimeout(changeCurrentScreen, 500, screens.end)
-                        //changeCurrentScreen(screens.end);
-                    }
-                }, 3000 + enemyTime);
+            drawEveryFrameObjects()
+            context.fillStyle = "#4e463c"
+            context.font = "50px game"
+            context.fillText("?", 65, 63)
+            context.drawImage(sprites, 500, 300, 100, 100, 565, 25, 55, 55)
+            context.fillStyle = "#fff"
+            context.fillRect(125, 50, 400, 150)
+            context.fillStyle = "#5e4700"
+            context.fillRect(130, 55, 190, 140)
+            context.fillRect(330, 55, 190, 140)
+            context.fillStyle = "#fff"
+            context.font = "37px game"
+            context.fillText("1", 225, 120)
+            context.fillText("2", 425, 120)
+            context.fillText(lang.player, 225, 150)
+            context.fillText(lang.players, 425, 150)
+            if(phisicalKeyboard){
+                context.font = "16px  game"
+                context.fillText(lang.press+" F", 225, 170)
+                context.fillText(lang.press+" J", 425, 170)
+                context.fillStyle = "#4e463c"
+                context.fillText(lang.press+" H", 65, 75)
             }
-        }, 500)       
-    }else if(newScreen.name == "end"){
-        gunfire.currentTime = 0;
-        if(players.first.status == "shooting"){
-            panner.pan.value = -0.75;
-        }else{
-            panner.pan.value = 0.75;
         }
-        gunfire.play();
-    } else if(newScreen.name == "menu"){
-        countdown.pause();
-        gunfire.pause();
+    },
+    help:{
+        name: "help",
+        async update(){
+            let keyboardOffset = phisicalKeyboard ? 0 : 75
+            context.fillStyle = "#5e4700"
+            context.fillRect(0,0, 650, 250)
+            context.fillStyle = "#fff"
+            context.font = "23px game"
+            context.fillText(lang.help1, 325, 30 + keyboardOffset)
+            context.fillText(lang.help2, 325, 55 + keyboardOffset)
+            context.fillText(lang.frozenMsg, 325, 85 + keyboardOffset)
+            if(phisicalKeyboard){
+                context.fillText(lang.help3, 325, 145)
+                context.fillText(lang.help4, 325, 175)
+                context.fillText(lang.help5, 325, 205)
+                context.fillText(lang.help6, 325, 235)
+            }
+            context.font = "40px game"
+            context.fillText("X", 630, 30)
+        }
     }
-    currentScreen = newScreen;
 }
 
-function randomIntFromInterval(min, max) { //Generates random unmber (min and max included).
+function drawEveryFrameObjects(){ //Draws the backgorund and both characters.
+    context.clearRect(0,0, 650, 250)
+    context.drawImage(sprites, 0, 600, 455, 229, 100, 10, 455, 229)
+    players.draw(players.first)
+    players.draw(players.second)
+}
+
+function drawTimer(){
+    if(remainingTimer <= -1000) return
+    context.beginPath()
+    context.arc(325, 125, 50, 0, Math.PI*2)
+    context.closePath()
+    if(remainingTimer <= 0){
+        context.fillStyle = "#f00"
+        context.fill()
+        context.fillStyle = "#fff"
+        context.font = "30px game"
+        context.fillText(lang.shoot, 325, 135)
+        return
+    }
+    context.fillStyle = "#000"
+    context.fill()
+    context.fillStyle = "#fff"
+    context.font = "140px game"
+    if(remainingTimer <= 1000){
+        context.fillText("1", 325, 163)
+        return
+    }
+    if(remainingTimer <= 2000){
+        context.fillText("2", 325, 163)
+        return
+    }
+    if(remainingTimer <= 3000){
+        context.fillText("3", 325, 163)
+        return
+    }
+}
+
+function drawFrozenMsg(){
+    context.fillStyle = "#fff"
+    context.font = "23px game"
+    context.fillText(lang.frozenMsg, 325, 25)
+}
+
+async function changeCurrentScreen(newScreen){
+    if(newScreen == currentScreen) return
+    currentScreen = newScreen
+    if(newScreen.name == "game"){
+        players.reset(players.first)
+        players.reset(players.second)
+        countdown.currentTime = 0
+        countdown.play()
+        timerEnd = Date.now()+3000
+        remainingTimer = 3000
+        currentScreen.update()
+        setTimeout(() => {
+            remainingTimer = 2000
+            currentScreen.update()
+        }, 1000)
+        setTimeout(() => {
+            remainingTimer = 1000
+            currentScreen.update()
+        }, 2000)
+        setTimeout(() => {
+            clearInterval(timerUpdateInterval)
+            timerUpdateInterval = setInterval(() => {
+                remainingTimer = timerEnd - Date.now()
+            })
+            clearInterval(frameUpdateInterval)
+            frameUpdateInterval = setInterval(() => {
+                currentScreen.update()
+            }, 16)
+            clearInterval(playersUpdateInterval)
+            playersUpdateInterval = setInterval(() =>{
+                if(remainingTimer < 100){
+                    if(!players.first.frozen) players.doWithdraw(players.first)
+                    if(!players.second.frozen) players.doWithdraw(players.second)
+                }
+            }, 30)
+        }, 2850)
+        if(mode == "single" && (currentLevel != 0 || getCookie("tutorial") != "")){
+            let enemyTrigger = randomIntFromInterval(levels[currentLevel].min, levels[currentLevel].max)
+            setTimeout(() => {
+                players.second.reactionTime = -remainingTimer
+                if(players.second.status != "dead"){
+                    players.action(players.second, players.first)
+                    changeCurrentScreen(screens.end)
+                }
+            }, 3000 + enemyTrigger)
+        }
+        return
+    }
+    if(newScreen.name == "end"){
+        clearInterval(playersUpdateInterval)
+        playersUpdateInterval = setInterval(() =>{
+            if(players.first.status == "shooting"){
+                players.action(players.first, players.second)
+            }else if(players.second.status == "shooting"){
+                players.action(players.second, players.first)
+            }
+            if(players.first.status == "withdraw"){
+                players.undoWithdraw(players.first)
+            }
+            if(players.second.status == "withdraw"){
+                players.undoWithdraw(players.second)
+            }
+        }, 80)
+        if(players.first.frozen && players.first.reactionTime == undefined) clearTimeout(players.first.unfreezeTimeout)
+        if(players.second.frozen && players.second.reactionTime == undefined) clearTimeout(players.second.unfreezeTimeout)
+        gunfire.currentTime = 0
+        gunfire.play()
+        return
+    }
+    if(newScreen.name == "menu"){
+        //both players need to be reseted
+        //otherwise animations can break
+        players.reset(players.first)
+        players.reset(players.second)
+        //intervals need to be cleared
+        //otherwise it can generate unneeded CPU usage
+        clearInterval(frameUpdateInterval)
+        clearInterval(playersUpdateInterval)
+        clearInterval(timerUpdateInterval)
+        countdown.pause()
+        gunfire.pause()
+    }
+    newScreen.update()
+}
+
+function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function userInput(X, Y, key){//Receives mouse and touch inputs
-    Y -= canvas.offsetTop;
-    X -= canvas.offsetLeft;
+async function userInput(X, Y, key){
+    Y -= canvas.positionY
+    X -= canvas.positionX
+    let leftSideinput
+    let rightSideinput
+    if(X < 125 || (mode == "single" && key != undefined ) || ((mode =="multi") && (key == "f" || key == "F"))) leftSideinput = true
+    if(mode == "multi" && (X > 525 || key == "j" || key == "J")) rightSideinput = true
     if(currentScreen.name == "game"){
-        if(mode == "single"){
-            if(!sideToBLock(0)) return;
-            if(!sideToBLock(canvas.width)) return;
-            if(remainingTimer < 0){
-                players.action(players.first, players.second);
-                changeCurrentScreen(screens.end);
-            }
-        }else if(mode == "multi"){
-            if((X < canvas.halfWidth - 150) || (key == "f" || key == "F")){
-                if(!sideToBLock(0)) return;
-                if(remainingTimer < 0){
-                    players.action(players.first, players.second);
-                    changeCurrentScreen(screens.end);
-                }
-            }else if((X > canvas.halfWidth + 150) || (key == "j" || key == "J")){
-                if(!sideToBLock(canvas.width)) return;
-                if(remainingTimer < 0){
-                    players.action(players.second, players.first);
-                    changeCurrentScreen(screens.end);
-                }
-            }
+        if(leftSideinput && !isPlayerAlreadyFrozen(players.first) && remainingTimer <= 0 && players.first.status != "dead"){
+            players.first.reactionTime = -remainingTimer
+            players.action(players.first, players.second)
+            changeCurrentScreen(screens.end)
+            return
         }
-    }else if(currentScreen.name == "menu"){
-        if(X > canvas.halfWidth - 150 && X < canvas.halfWidth && Y > canvas.halfHieght - 75 && Y < canvas.halfHieght + 75){
-            mode = "single";
-            currentLevel = 0;
-            changeCurrentScreen(screens.game);
-        }else if(X > canvas.halfWidth && X < canvas.halfWidth + 150 && Y > canvas.halfHieght - 75 && Y < canvas.halfHieght + 75){
-            mode = "multi";
-            changeCurrentScreen(screens.game);
-        }else if(X > canvas.halfWidth - 340 && X  < canvas.halfWidth - 314 && Y > canvas.halfHieght - 105 && Y < canvas.halfHieght - 70){
-            changeCurrentScreen(screens.help);
+        if(rightSideinput && !isPlayerAlreadyFrozen(players.second) && remainingTimer <= 0 && players.second.status != "dead"){
+            players.second.reactionTime = -remainingTimer
+            players.action(players.second, players.first)
+            changeCurrentScreen(screens.end)
+            return
         }
-    }else if(currentScreen.name == "end"){
-        if((X > canvas.halfWidth - 150 && X < canvas.halfWidth + 150 && Y > canvas.halfHieght - 75 && Y < canvas.halfHieght + 75)){
+        return
+    }
+    if(currentScreen.name == "end"){
+        if(leftSideinput && !players.first.reactionTime && !players.first.frozen){
+            players.first.reactionTime = -remainingTimer 
+            currentScreen.update()
+            return
+        }
+        if(rightSideinput && !players.second.reactionTime && !players.second.frozen){
+            players.second.reactionTime = -remainingTimer
+            currentScreen.update()
+            return
+        }
+        if(remainingTimer >= -500) return
+        if((X > 125 && X < 525 && Y > 50 && Y < 200) || key != undefined){
             if(players.first.status == "dead" || mode == "multi" || currentLevel == 9){
-                changeCurrentScreen(screens.menu);
-            }else{
-                //both players need to be reseted otherwise animations can break when the screen changes before animation end
-                players.first.reset();
-                players.second.reset();
-                currentLevel++;
-                changeCurrentScreen(screens.game);
+                changeCurrentScreen(screens.menu)
+                return
             }
+            currentLevel++
+            changeCurrentScreen(screens.game)
+            return    
         }
-    }else if(currentScreen.name == "help"){
-        changeCurrentScreen(screens.menu);
+        if((X > 125 && X < 525 && Y > 205 && Y < 245) && currentLevel == 9 && players.first.status != "dead"){
+            let name = window.prompt(lang.achievementPrompt)
+            if(name != null && name != "" && name.length < 40){
+                let  data = new FormData()
+                data.append('encrypt', name)
+                let res = await fetch("generate.php",{ method: 'POST', body: data})
+                res = await res.json()
+                res = res.result;
+                location.href = location+"achievement/?name="+encodeURIComponent(res);
+                return
+            }
+            window.alert(lang.invalid)
+        }
+        return
     }
-}
-
-function setCanvasSizing(){// Set canvas sizing on start and resize event
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight - canvas.offsetTop;
-    canvas.halfHieght = canvas.height / 2;
-    canvas.halfWidth = canvas.width / 2;
-    players.first.positionX = canvas.halfWidth - 350;
-    players.first.positionY = players.second.positionY = canvas.height / 2 - 48;
-    players.second.positionX = canvas.halfWidth + 254;
-}
-
-function unBlockInputLeft(){
-    if(blockInputLeft) blockInputLeft = false;
-}
-
-function unBlockInputRight(){
-    if(blockInputRight) blockInputRight = false;
-}
-
-function sideToBLock(X){
-    if(X < canvas.halfWidth){
-        if(blockInputLeft){
-            clearTimeout(unblockInputLeftTimeout);
-            unblockInputLeftTimeout = setTimeout(unBlockInputLeft, 500);
-            return false
-        }else{
-            blockInputLeft = true;
-            unblockInputLeftTimeout = setTimeout(unBlockInputLeft, 500);
+    if(currentScreen.name == "menu"){
+        currentLevel = 0
+        if((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")){
+            mode = "single"
+            changeCurrentScreen(screens.game)
+            return
         }
-    }else if(X > canvas.halfWidth){
-        if(blockInputRight){
-            clearTimeout(unblockInputRightTimeout);
-            unblockInputRightTimeout = setTimeout(unBlockInputRight, 500);
-            return false
-        }else{
-            blockInputRight = true;
-            unblockInputRightTimeout = setTimeout(unBlockInputRight, 500);
+        if((X > 325 && X < 525 && Y > 50 && Y < 200) || (key == "j" || key == "J")){
+            mode = "multi"
+            changeCurrentScreen(screens.game)
+            return
+        }
+        if((X > 0 && X  < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")){
+            changeCurrentScreen(screens.help)
+            return
+        }
+        if(X > 550 && X  < 650 && Y > 0 && Y < 80){
+            setTimeout(() =>{
+                navigator.share({
+                    title: window.title,
+                    text: lang.description,
+                    url: window.location.href
+                })
+            }, 100)
+            return
+        }
+        return
+    }
+    changeCurrentScreen(screens.menu)
+}
+
+function setCanvasBoundings(){// Set canvas sizing and position, called at start and resize event
+    let boundingClientRect = canvas.getBoundingClientRect()
+    canvas.positionX = boundingClientRect.x
+    canvas.positionY = boundingClientRect.y
+}
+
+function isPlayerAlreadyFrozen(player){
+    if(player.frozen){
+        clearTimeout(player.unfreezeTimeout)
+        player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
+        return true
+    }
+    player.frozen = true
+    setTimeout(() => {
+        currentScreen.update()    
+    }, 50);
+    player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
+    return false
+}
+
+function unfreezePlayer(player){
+    player.frozen = false
+    if(currentScreen.name == "game") currentScreen.update()
+}
+
+function getCookie(cname) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(c of ca) {
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
         }
     }
-    return true
+    return "";
 }
 
-//Adds event listener for user inputs and blocks repeated taps
-document.addEventListener('touchstart', function(event){
-    userInput(event.targetTouches[event.targetTouches.length-1].clientX, event.targetTouches[event.targetTouches.length-1].clientY, null);
-});
-document.addEventListener('mousedown', function(event){
-    userInput(event.clientX, event.clientY, undefined);
-});
-document.addEventListener('keydown', function (event) {
-    userInput(undefined, undefined, event.key);
-});
-//prevents "ghost" mousedown event after touchstart and longish presses
-document.addEventListener('gesturetap', (e) => {
-    e.preventDefault();
-});
+let checkAssetsInterval = setInterval(() => {   
+    if(gunfire.readyState === 4 && countdown.readyState === 4 && sprites.complete === true && document.fonts.check("16px game")){
+        gameAssetsLoaded = true
+        clearInterval(checkAssetsInterval)
+    }
+})
 
-window.addEventListener('resize', setCanvasSizing);
+async function initializeGame(){
+    if(gameAssetsLoaded){
+        clearInterval(initializeGame)
+        if(navigator.keyboard) {
+            let keyboard = await navigator.keyboard.getLayoutMap()
+            phisicalKeyboard = keyboard.size == 0 ? false : true 
+        }else{
+            phisicalKeyboard = true
+        }
+        setCanvasBoundings()
+        changeCurrentScreen(screens.menu)
+        
+        window.addEventListener('resize', setCanvasBoundings)
+        canvas.addEventListener('touchstart', function(event){
+            event.preventDefault()//prevents mousedown event
+            userInput(event.targetTouches[event.targetTouches.length-1].clientX, event.targetTouches[event.targetTouches.length-1].clientY, null)
+        });
+        canvas.addEventListener('mousedown', function(event){
+            userInput(event.clientX, event.clientY, undefined)
+        });
+        
+        window.addEventListener('keydown', function (event) {
+            userInput(undefined, undefined, event.key)
+        });
 
-setCanvasSizing();
-changeCurrentScreen(screens.menu);
-setInterval(() => {//Updates the frames and sets the frame rate.
-    currentScreen.update();
-}, 100);
+        return
+    }
+    initializeInterval = setTimeout(initializeGame)
+}
