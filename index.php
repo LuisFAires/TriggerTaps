@@ -31,20 +31,29 @@
         <?php include 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"crossorigin="anonymous"></script>
 </head>
 
 <body>
     <div id="rotateOverlay"></div>    
     <div id="loadingOverlay"></div>    
-    <div id="upper"></div>
+    <div id="upper">
+        <div class="adContainer"></div>
+    </div>
     <div>
-        <div id="left"></div>
+        <div id="left">
+            <div class="adContainer"></div>
+        </div>
         <canvas width="650" height="250">
             Browser unsupported
         </canvas>
-        <div id="right"></div>
+        <div id="right">
+            <div class="adContainer"></div>
+        </div>
     </div>
-    <div id="bottom"></div>
+    <div id="bottom">
+        <div class="adContainer"></div>
+    </div>
     <script>
         <?php
             include 'game.js';

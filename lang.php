@@ -28,7 +28,7 @@
         $lang['reaction2'] = "Tempo de reação do jogador 2: ";
         $lang['shoot'] = "Atire";
         $lang['install'] = "Instale o app e jogue onde quiser";
-        $lang['loading'] = "Loading...";
+        $lang['loading'] = "Carregando...";
         $lang['ready'] = "<span>Jogo pronto!<br>Clique ou toque em qualquer lugar para jogar</span>";
         $lang['rotate'] = "Vire seu dispositivo para jogar...🔄";
         $lang['description'] = "Jogo de faroeste onde os personagens travam um duelo";

@@ -59,70 +59,6 @@ function promotionAction(os, url){
     location.href = url
 }
 
-function adString(){
-    setTimeout(()=>{console.log("ad script")},100)
-    return `$$$$`
-}
-
-function calculateDivs(){
-    //set external divs size
-    if(window.getComputedStyle(document.getElementById("loadingOverlay")).display != "none") return
-    if(window.getComputedStyle(document.getElementById("rotateOverlay")).display != "none") return
-    if(lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
-    if(touchDevice && document.fullscreenElement === null) return
-
-    left.style.width = right.style.width = (window.innerWidth - gameArea.width) / 2 + "px" 
-
-    if(window.innerHeight > gameArea.height + 50 && window.innerHeight <= gameArea.height + 100){
-        upper.style.minHeight = bottom.style.minHeight = bottom.style.height = 0
-        upper.style.height = window.innerHeight - gameArea.height + "px"
-    }else if(window.innerHeight > gameArea.height + 100){
-        upper.style.minHeight = "100px"
-        upper.style.height = (window.innerHeight - gameArea.height) / 2 + "px"
-        if(!touchDevice){
-            bottom.style.height = (window.innerHeight - parseInt(window.getComputedStyle(upper).height) - gameArea.height) + "px"
-        }
-    }else{
-        upper.style.minHeight = upper.style.height = bottom.style.minHeight = bottom.style.height = 0
-    }
-
-    left.style.height = right.style.height = window.innerHeight - parseInt(window.getComputedStyle(upper).height) - parseInt(window.getComputedStyle(bottom).height)+"px"
-    lastWidth = window.innerWidth
-    lastHeigth = window.innerHeight
-
-    setDivsContent()
-
-    setCanvasBoundings()
-}
-
-function setDivsContent(){
-    lastAdUpdate = new Date()
-    left.innerHTML = ""
-    right.innerHTML = ""
-    if(window.innerWidth > gameArea.width + 240){
-        left.innerHTML = `<div class="adContainer">${adString()}</div>`
-        right.innerHTML = `<div class="adContainer">${adString()}</div>`
-    }else{  
-        left.innerHTML = ""
-        right.innerHTML = ""
-    }
-
-    upper.innerHTML = ""
-    if(parseInt(window.getComputedStyle(upper).height) >= 50){
-        upper.insertAdjacentHTML("afterbegin", `<div class="adContainer">${adString()}</div>`)
-        if(parseInt(window.getComputedStyle(upper).height) >= 100 && showPromotion == true){
-            upper.insertAdjacentHTML("beforeend", promotionString)
-        }
-    }
-
-    bottom.innerHTML = ""
-    if(parseInt(window.getComputedStyle(bottom).height) >= 50){
-        bottom.insertAdjacentHTML("beforeend", `<div class="adContainer">${adString()}</div>`)
-    }
-}
-
-
-//TENTAR AJUSTAR PARA FIREFOX MOBILE
 function fullscreenLock(){
     if(!touchDevice) return
     if(document.fullscreenElement === null){
@@ -172,15 +108,62 @@ function waitForUserInteraction(element, interactions, callback = undefined, key
     })
 }
 
-function adUpdate(){
-    if(new Date() - lastAdUpdate > 5000 && currentScreen.name === "menu"){
-        lastAdUpdate = new Date()
-        let containers = document.getElementsByClassName("adContainer")
-        for(container of containers){
-            container.innerHTML = adString()
+function calculateDivs(){
+    //set external divs size
+    if(window.getComputedStyle(document.getElementById("loadingOverlay")).display != "none") return
+    if(window.getComputedStyle(document.getElementById("rotateOverlay")).display != "none") return
+    if(lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
+    if(touchDevice && document.fullscreenElement === null) return
+
+    left.style.width = right.style.width = (window.innerWidth - gameArea.width) / 2 + "px" 
+
+    if(window.innerHeight > gameArea.height + 50 && window.innerHeight <= gameArea.height + 100){
+        upper.style.minHeight = bottom.style.minHeight = bottom.style.height = 0
+        upper.style.height = window.innerHeight - gameArea.height + "px"
+    }else if(window.innerHeight > gameArea.height + 100){
+        upper.style.minHeight = "100px"
+        upper.style.height = (window.innerHeight - gameArea.height) / 2 + "px"
+        if(!touchDevice){
+            bottom.style.height = (window.innerHeight - parseInt(window.getComputedStyle(upper).height) - gameArea.height) + "px"
         }
+    }else{
+        upper.style.minHeight = upper.style.height = bottom.style.minHeight = bottom.style.height = 0
     }
-    waitForUserInteraction(gameArea, ["touchstart", "mousedown"], adUpdate, true)
+
+    left.style.height = right.style.height = window.innerHeight - parseInt(window.getComputedStyle(upper).height) - parseInt(window.getComputedStyle(bottom).height) + "px"
+    lastWidth = window.innerWidth
+    lastHeigth = window.innerHeight
+
+    let promotion = document.getElementById("promotion")
+    if(parseInt(window.getComputedStyle(upper).height) >= 100 && showPromotion == true && !promotion){
+        upper.insertAdjacentHTML("beforeend", promotionString)
+    }
+
+    insertAds()
+
+    setCanvasBoundings()
+}
+
+function insertAds(){
+    lastAdUpdate = new Date()
+    let containers = document.getElementsByClassName("adContainer")
+    for(container of containers){
+        let containerWidth = parseInt(window.getComputedStyle(container).width)
+        let containerHeight = parseInt(window.getComputedStyle(container).height)
+        if(containerWidth >= 120 && containerHeight >= 50) container.innerHTML = adString(containerHeight)
+    }
+
+    function adString(adHeight = 50){
+        setTimeout(()=>{(adsbygoogle = window.adsbygoogle || []).push({});},100)
+        return ` <ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="1070652247" data-full-width-responsive="true"></ins>`
+    }
+}
+
+function updateAds(){
+    if(new Date() - lastAdUpdate > 60000 && currentScreen.name == "menu"){
+        insertAds()
+    }
+    waitForUserInteraction(gameArea, ["mousedown", "touchstart"], updateAds, true)
 }
 
 window.addEventListener("load",()=>{
@@ -195,10 +178,10 @@ window.addEventListener("load",()=>{
             showRotateOverlay()
             fullscreenLock()
             initializeGame()
-            setTimeout(() => {
+            setTimeout(async () => {
                 showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
-                calculateDivs()
-                adUpdate()
+                await calculateDivs()
+                updateAds()
             }, 500)
             window.addEventListener("resize", ()=>{
                 clearTimeout(afterResizeTimeout)
