@@ -1,18 +1,7 @@
 <!DOCTYPE html>
 <?php
-    include '../generate.php';
-    if(!isset($result['result']) || $result['result'] == ""){
-        echo "<script>alert('Invalid achievement!!!'); location.href = location.origin;</script>";
-        //header("Location: https://".$_SERVER['HTTP_HOST']);
-        die();
-    }
-    if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "pt"){
-        $lang['lang'] = "pt";
-    }elseif(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "es"){
-        $lang['lang'] = "es";
-    }else{
-        $lang['lang'] = "en";
-    }
+    require_once '../generate.php';
+    require_once '../lang.php';
 ?>
 <html lang="<?php echo $lang['lang']; ?>" translate="no">
 <head>
@@ -21,9 +10,8 @@
     <meta name="application-name" content="Wild West Gun Battle">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <script>
-        <?php 
-            include '../lang.php';
-            if($lang['lang'] == "en"){
+        <?php
+            if($lang['lang'] == 'en'){
                 $title =  $result['result'].$lang['achievementTitle'];
             }else{
                 $title =  $lang['achievementTitle'].$result['result'];

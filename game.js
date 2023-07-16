@@ -1,3 +1,5 @@
+//This file is responsible for everything that happens inside of the canvas tag
+
 const sprites = new Image()
 sprites.src = "./img/sprites.webp"
 
@@ -25,10 +27,11 @@ let frameUpdateInterval
 let playersUpdateInterval
 let initializeInterval
 let gameAssetsLoaded
-let phisicalKeyboard
+let physicalKeyboard
+let achievementLocation = location.origin + "/achievement/"
 
 const players = {
-    first:{
+    first: {
         status: "standing",
         sourceX: 0,
         sourceY: 0,
@@ -39,7 +42,7 @@ const players = {
         unfreezeTimeout: undefined,
         reactionTime: undefined
     },
-    second:{
+    second: {
         status: "standing",
         sourceX: 0,
         sourceY: 100,
@@ -50,16 +53,16 @@ const players = {
         unfreezeTimeout: undefined,
         reactionTime: undefined
     },
-    draw(player){
+    draw(player) {
         context.drawImage(
             sprites,
             player.sourceX, player.sourceY, //Sprite start position
             100, 100, //Sprite size
-            player.positionX , 75, //On frame position
+            player.positionX, 75, //On frame position
             100, 100 //On frame size
         )
     },
-    reset(player){
+    reset(player) {
         player.status = "standing"
         player.sourceX = 0
         player.sourceY = player.initialsourceY
@@ -67,9 +70,9 @@ const players = {
         player.frozen = false
         player.reactionTime = undefined
     },
-    doWithdraw(player){
-        if(player.status == "standing"){
-            if(player.sourceX != 500){
+    doWithdraw(player) {
+        if (player.status == "standing") {
+            if (player.sourceX != 500) {
                 player.sourceX += 100
                 player.moving = true
                 return
@@ -78,9 +81,9 @@ const players = {
             player.moving = false
         }
     },
-    undoWithdraw(player){
-        if(player.status == "withdraw"){
-            if(player.sourceX != 0){
+    undoWithdraw(player) {
+        if (player.status == "withdraw") {
+            if (player.sourceX != 0) {
                 player.sourceX -= 100
                 player.moving = true
                 return
@@ -89,16 +92,16 @@ const players = {
             player.moving = false
         }
     },
-    shoot(shooter){
-        if(shooter.status == "withdraw" || shooter.status == "standing"){
+    shoot(shooter) {
+        if (shooter.status == "withdraw" || shooter.status == "standing") {
             shooter.status = "shooting"
             shooter.sourceX = 0
             shooter.sourceY += 200
             shooter.moving = true
             return
-        }else if(shooter.status == "shooting" && shooter.moving){
+        } else if (shooter.status == "shooting" && shooter.moving) {
             shooter.sourceX += 100
-            if(shooter.sourceX == 400){
+            if (shooter.sourceX == 400) {
                 shooter.sourceX += 100
                 shooter.sourceY -= 200
                 shooter.status = "withdraw"
@@ -106,20 +109,20 @@ const players = {
             }
         }
     },
-    die(dead){
-        if(dead.status == "withdraw" || dead.status == "standing"){
+    die(dead) {
+        if (dead.status == "withdraw" || dead.status == "standing") {
             dead.status = "dead"
             dead.sourceX = 0
-            dead.sourceY += 400 
+            dead.sourceY += 400
             dead.moving = true
             return
         }
-        if(dead.status == "dead" && dead.moving){
+        if (dead.status == "dead" && dead.moving) {
             dead.sourceX += 100
-            if(dead.sourceX == 400) dead.moving = false
+            if (dead.sourceX == 400) dead.moving = false
         }
     },
-    action(shooter, dead){//Calls the shoot and die functions together so they do not conflict each other.
+    action(shooter, dead) {//Calls the shoot and die functions together so they do not conflict each other.
         players.shoot(shooter)
         players.die(dead)
     }
@@ -138,43 +141,43 @@ const levels = [
     { min: 45, max: 40 }//10
 ]
 
-const screens = { 
-    game:{
+const screens = {
+    game: {
         name: "game",
-        update(){
+        update() {
             drawEveryFrameObjects()
             drawTimer()
             context.font = "24px game"
-            if(players.first.frozen){
+            if (players.first.frozen) {
                 drawFrozenMsg()
                 context.fillText(lang.frozen, 75, 75)
-            }else{
+            } else {
                 context.fillStyle = "#4e463c"
-                context.fillText((mode == "single" ? lang.you: lang.player+" 1"), 75, 75)
+                context.fillText((mode == "single" ? lang.you : lang.player + " 1"), 75, 75)
             }
-            if(players.second.frozen){
+            if (players.second.frozen) {
                 drawFrozenMsg()
-                context.fillText(lang.frozen, 575, 75)   
-            }else{
+                context.fillText(lang.frozen, 575, 75)
+            } else {
                 context.fillStyle = "#4e463c"
-                context.fillText((mode == "single" ? lang.enemy : lang.player+" 2"), 575, 75)
+                context.fillText((mode == "single" ? lang.enemy : lang.player + " 2"), 575, 75)
             }
-            if(mode == "single" && !players.first.frozen && remainingTimer <= 0 && parseInt(remainingTimer/150)%2 == 0){
+            if (mode == "single" && !players.first.frozen && remainingTimer <= 0 && parseInt(remainingTimer / 150) % 2 == 0) {
                 context.drawImage(sprites, 500, 200, 100, 100, 40, 120, 80, 80)
             }
         },
     },
-    end:{
+    end: {
         name: "end",
-        update(){
+        update() {
             document.cookie = "tutorial=done;"
             drawEveryFrameObjects()
             let frozenReaction = ((players.first.frozen && !players.first.reactionTime) || (players.second.frozen && !players.second.reactionTime))
-            if(players.first.moving == false && players.second.moving == false){
+            if (players.first.moving == false && players.second.moving == false) {
                 clearInterval(frameUpdateInterval)
                 clearInterval(playersUpdateInterval)
                 clearInterval(timerUpdateInterval)
-                if(frozenReaction) drawFrozenMsg()
+                if (frozenReaction) drawFrozenMsg()
             }
             context.fillStyle = "#fff"
             context.fillRect(125, 50, 400, 150)
@@ -183,33 +186,33 @@ const screens = {
             context.fillStyle = "#fff"
             context.font = "16px game"
             context.fillStyle = "#fff"
-            if(players.first.frozen && !players.first.reactionTime){
-                context.fillText((mode == "single" ? lang.you : lang.player+" 1")+lang.wasFrozen, 325, 160)
-            }else if(players.first.reactionTime != undefined){
-                context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1)+players.first.reactionTime+"ms", 325, 160)
+            if (players.first.frozen && !players.first.reactionTime) {
+                context.fillText((mode == "single" ? lang.you : lang.player + " 1") + lang.wasFrozen, 325, 160)
+            } else if (players.first.reactionTime != undefined) {
+                context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1) + players.first.reactionTime + "ms", 325, 160)
             }
-            if(players.second.frozen && !players.second.reactionTime){
-                context.fillText(lang.player+" 2 "+lang.wasFrozen, 325, 180)
-            }else if(players.second.reactionTime != undefined){
-                context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2)+players.second.reactionTime+"ms", 325, 180)
+            if (players.second.frozen && !players.second.reactionTime) {
+                context.fillText(lang.player + " 2 " + lang.wasFrozen, 325, 180)
+            } else if (players.second.reactionTime != undefined) {
+                context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2) + players.second.reactionTime + "ms", 325, 180)
             }
-            if(currentLevel != 9 || players.first.status == "dead"){
-                if(frozenReaction && parseInt(remainingTimer/50)%2 != 0) drawFrozenMsg()
+            if (currentLevel != 9 || players.first.status == "dead") {
+                if (frozenReaction && parseInt(remainingTimer / 50) % 2 != 0) drawFrozenMsg()
                 context.font = "25px game"
                 context.fillText(lang.taphere, 325, 125)
-                if(mode == "single"){
-                    context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl+(currentLevel+1)+lang.completed), 325, 95)
+                if (mode == "single") {
+                    context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl + (currentLevel + 1) + lang.completed), 325, 95)
                     return
-                }else{
-                    context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325 , 95)
+                } else {
+                    context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325, 95)
                     return
                 }
-            }else{
+            } else {
                 context.font = "30px game"
                 context.fillText(lang.gameCompleted1, 325, 85)
                 context.fillText(lang.gameCompleted2, 325, 115)
                 context.fillText(lang.gameCompleted3, 325, 140)
-                let colorsSwitch = parseInt(remainingTimer/50)%2 == 0 ? true : false
+                let colorsSwitch = parseInt(remainingTimer / 50) % 2 == 0 ? true : false
                 context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
                 context.fillRect(125, 205, 400, 40)
                 context.fillStyle = (colorsSwitch ? "#5e4700" : "#fff")
@@ -220,13 +223,14 @@ const screens = {
             }
         }
     },
-    menu:{
+    menu: {
         name: "menu",
-        update(){
+        update() {
             drawEveryFrameObjects()
             context.fillStyle = "#4e463c"
+            context.drawImage(sprites, 500, 400, 100, 100, 35, 25, 45, 45)
             context.font = "50px game"
-            context.fillText("?", 65, 63)
+            context.fillText("?", 85, 63)
             context.drawImage(sprites, 500, 300, 100, 100, 565, 25, 55, 55)
             context.fillStyle = "#fff"
             context.fillRect(125, 50, 400, 150)
@@ -239,51 +243,81 @@ const screens = {
             context.fillText("2", 425, 120)
             context.fillText(lang.player, 225, 150)
             context.fillText(lang.players, 425, 150)
-            if(phisicalKeyboard){
+            if (physicalKeyboard) {
                 context.font = "16px  game"
-                context.fillText(lang.press+" F", 225, 170)
-                context.fillText(lang.press+" J", 425, 170)
+                context.fillText(lang.press + " F", 225, 170)
+                context.fillText(lang.press + " J", 425, 170)
                 context.fillStyle = "#4e463c"
-                context.fillText(lang.press+" H", 65, 75)
+                context.fillText(lang.press + " H", 65, 75)
+            }
+            if (getCookie("achievement")) {
+                context.font = "30px game"
+                context.fillStyle = "#fff"
+                context.fillRect(125, 205, 400, 40)
+                context.fillStyle = "#5e4700"
+                context.fillRect(130, 210, 390, 30)
+                context.fillStyle = "#fff"
+                context.fillText(lang.shareAchievement, 325, 233)
             }
         }
     },
-    help:{
+    help: {
         name: "help",
-        async update(){
-            let keyboardOffset = phisicalKeyboard ? 0 : 75
+        async update() {
             context.fillStyle = "#5e4700"
-            context.fillRect(0,0, 650, 250)
+            context.fillRect(0, 0, 650, 250)
             context.fillStyle = "#fff"
             context.font = "23px game"
-            context.fillText(lang.help1, 325, 30 + keyboardOffset)
-            context.fillText(lang.help2, 325, 55 + keyboardOffset)
-            context.fillText(lang.frozenMsg, 325, 85 + keyboardOffset)
-            if(phisicalKeyboard){
-                context.fillText(lang.help3, 325, 145)
-                context.fillText(lang.help4, 325, 175)
-                context.fillText(lang.help5, 325, 205)
-                context.fillText(lang.help6, 325, 235)
+            context.fillText(lang.help1, 325, 30)
+            context.fillText(lang.help2, 325, 55)
+            context.fillText(lang.frozenMsg, 325, 85)
+            if (physicalKeyboard) {
+                context.fillText(lang.help3, 150, 145)
+                context.fillText(lang.help4, 150, 175)
+                context.fillText(lang.help5, 150, 205)
+                context.fillText(lang.help6, 150, 235)
             }
+            let keyboardOffset = physicalKeyboard ? 0 : 175
+
+            context.fillStyle = "#fff"
+            context.fillRect(425 - keyboardOffset, 115, 150, 40)
+            context.fillStyle = "#5e4700"
+            context.fillRect(430 - keyboardOffset, 120, 140, 30)
+
+            context.fillStyle = "#fff"
+            context.fillRect(425 - keyboardOffset, 160, 150, 40)
+            context.fillStyle = "#5e4700"
+            context.fillRect(430 - keyboardOffset, 165, 140, 30)
+
+            context.fillStyle = "#fff"
+            context.fillRect(425 - keyboardOffset, 205, 150, 40)
+            context.fillStyle = "#5e4700"
+            context.fillRect(430 - keyboardOffset, 210, 140, 30)
+
+            context.fillStyle = "#fff"
+            context.font = "30px game"
+            context.fillText("English", 500 - keyboardOffset, 145)
+            context.fillText("Español", 500 - keyboardOffset, 190)
+            context.fillText("Português", 500 - keyboardOffset, 235)
             context.font = "40px game"
             context.fillText("X", 630, 30)
         }
     }
 }
 
-function drawEveryFrameObjects(){ //Draws the backgorund and both characters.
-    context.clearRect(0,0, 650, 250)
+function drawEveryFrameObjects() { //Draws the backgorund and both characters.
+    context.clearRect(0, 0, 650, 250)
     context.drawImage(sprites, 0, 600, 455, 229, 100, 10, 455, 229)
     players.draw(players.first)
     players.draw(players.second)
 }
 
-function drawTimer(){
-    if(remainingTimer <= -1000) return
+function drawTimer() {
+    if (remainingTimer <= -1000) return
     context.beginPath()
-    context.arc(325, 125, 50, 0, Math.PI*2)
+    context.arc(325, 125, 50, 0, Math.PI * 2)
     context.closePath()
-    if(remainingTimer <= 0){
+    if (remainingTimer <= 0) {
         context.fillStyle = "#f00"
         context.fill()
         context.fillStyle = "#fff"
@@ -295,35 +329,35 @@ function drawTimer(){
     context.fill()
     context.fillStyle = "#fff"
     context.font = "140px game"
-    if(remainingTimer <= 1000){
+    if (remainingTimer <= 1000) {
         context.fillText("1", 325, 163)
         return
     }
-    if(remainingTimer <= 2000){
+    if (remainingTimer <= 2000) {
         context.fillText("2", 325, 163)
         return
     }
-    if(remainingTimer <= 3000){
+    if (remainingTimer <= 3000) {
         context.fillText("3", 325, 163)
         return
     }
 }
 
-function drawFrozenMsg(){
+function drawFrozenMsg() {
     context.fillStyle = "#fff"
     context.font = "23px game"
     context.fillText(lang.frozenMsg, 325, 25)
 }
 
-async function changeCurrentScreen(newScreen){
-    if(newScreen == currentScreen) return
+async function changeCurrentScreen(newScreen) {
+    if (newScreen == currentScreen) return
     currentScreen = newScreen
-    if(newScreen.name == "game"){
+    if (newScreen.name == "game") {
         players.reset(players.first)
         players.reset(players.second)
         countdown.currentTime = 0
         countdown.play()
-        timerEnd = Date.now()+3000
+        timerEnd = Date.now() + 3000
         remainingTimer = 3000
         currentScreen.update()
         setTimeout(() => {
@@ -344,18 +378,18 @@ async function changeCurrentScreen(newScreen){
                 currentScreen.update()
             }, 16)
             clearInterval(playersUpdateInterval)
-            playersUpdateInterval = setInterval(() =>{
-                if(remainingTimer < 100){
-                    if(!players.first.frozen) players.doWithdraw(players.first)
-                    if(!players.second.frozen) players.doWithdraw(players.second)
+            playersUpdateInterval = setInterval(() => {
+                if (remainingTimer < 100) {
+                    if (!players.first.frozen) players.doWithdraw(players.first)
+                    if (!players.second.frozen) players.doWithdraw(players.second)
                 }
             }, 30)
         }, 2850)
-        if(mode == "single" && (currentLevel != 0 || getCookie("tutorial") != "")){
+        if (mode == "single" && (currentLevel != 0 || getCookie("tutorial") != "")) {
             let enemyTrigger = randomIntFromInterval(levels[currentLevel].min, levels[currentLevel].max)
             setTimeout(() => {
                 players.second.reactionTime = -remainingTimer
-                if(players.second.status != "dead"){
+                if (players.second.status != "dead") {
                     players.action(players.second, players.first)
                     changeCurrentScreen(screens.end)
                 }
@@ -363,28 +397,28 @@ async function changeCurrentScreen(newScreen){
         }
         return
     }
-    if(newScreen.name == "end"){
+    if (newScreen.name == "end") {
         clearInterval(playersUpdateInterval)
-        playersUpdateInterval = setInterval(() =>{
-            if(players.first.status == "shooting"){
+        playersUpdateInterval = setInterval(() => {
+            if (players.first.status == "shooting") {
                 players.action(players.first, players.second)
-            }else if(players.second.status == "shooting"){
+            } else if (players.second.status == "shooting") {
                 players.action(players.second, players.first)
             }
-            if(players.first.status == "withdraw"){
+            if (players.first.status == "withdraw") {
                 players.undoWithdraw(players.first)
             }
-            if(players.second.status == "withdraw"){
+            if (players.second.status == "withdraw") {
                 players.undoWithdraw(players.second)
             }
         }, 80)
-        if(players.first.frozen && players.first.reactionTime == undefined) clearTimeout(players.first.unfreezeTimeout)
-        if(players.second.frozen && players.second.reactionTime == undefined) clearTimeout(players.second.unfreezeTimeout)
+        if (players.first.frozen && players.first.reactionTime == undefined) clearTimeout(players.first.unfreezeTimeout)
+        if (players.second.frozen && players.second.reactionTime == undefined) clearTimeout(players.second.unfreezeTimeout)
         gunfire.currentTime = 0
         gunfire.play()
         return
     }
-    if(newScreen.name == "menu"){
+    if (newScreen.name == "menu") {
         //both players need to be reseted
         //otherwise animations can break
         players.reset(players.first)
@@ -404,21 +438,22 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-async function userInput(X, Y, key){
+async function userInput(X, Y, key) {
+    //console.log(X, Y)
     Y -= canvas.positionY
     X -= canvas.positionX
     let leftSideinput
     let rightSideinput
-    if(X < 125 || (mode == "single" && key != undefined ) || ((mode =="multi") && (key == "f" || key == "F"))) leftSideinput = true
-    if(mode == "multi" && (X > 525 || key == "j" || key == "J")) rightSideinput = true
-    if(currentScreen.name == "game"){
-        if(leftSideinput && !isPlayerAlreadyFrozen(players.first) && remainingTimer <= 0 && players.first.status != "dead"){
+    if (X < 125 || (mode == "single" && key != undefined) || ((mode == "multi") && (key == "f" || key == "F"))) leftSideinput = true
+    if (mode == "multi" && (X > 525 || key == "j" || key == "J")) rightSideinput = true
+    if (currentScreen.name == "game") {
+        if (leftSideinput && !isPlayerAlreadyFrozen(players.first) && remainingTimer <= 0 && players.first.status != "dead") {
             players.first.reactionTime = -remainingTimer
             players.action(players.first, players.second)
             changeCurrentScreen(screens.end)
             return
         }
-        if(rightSideinput && !isPlayerAlreadyFrozen(players.second) && remainingTimer <= 0 && players.second.status != "dead"){
+        if (rightSideinput && !isPlayerAlreadyFrozen(players.second) && remainingTimer <= 0 && players.second.status != "dead") {
             players.second.reactionTime = -remainingTimer
             players.action(players.second, players.first)
             changeCurrentScreen(screens.end)
@@ -426,60 +461,61 @@ async function userInput(X, Y, key){
         }
         return
     }
-    if(currentScreen.name == "end"){
-        if(leftSideinput && !players.first.reactionTime && !players.first.frozen){
-            players.first.reactionTime = -remainingTimer 
+    if (currentScreen.name == "end") {
+        if (leftSideinput && !players.first.reactionTime && !players.first.frozen) {
+            players.first.reactionTime = -remainingTimer
             currentScreen.update()
             return
         }
-        if(rightSideinput && !players.second.reactionTime && !players.second.frozen){
+        if (rightSideinput && !players.second.reactionTime && !players.second.frozen) {
             players.second.reactionTime = -remainingTimer
             currentScreen.update()
             return
         }
-        if(remainingTimer >= -500) return
-        if((X > 125 && X < 525 && Y > 50 && Y < 200) || key != undefined){
-            if(players.first.status == "dead" || mode == "multi" || currentLevel == 9){
+        if (remainingTimer >= -500) return
+        if ((X > 125 && X < 525 && Y > 50 && Y < 200) || key != undefined) {
+            if (players.first.status == "dead" || mode == "multi" || currentLevel == 9) {
                 changeCurrentScreen(screens.menu)
                 return
             }
             currentLevel++
             changeCurrentScreen(screens.game)
-            return    
+            return
         }
-        if((X > 125 && X < 525 && Y > 205 && Y < 245) && currentLevel == 9 && players.first.status != "dead"){
+        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && currentLevel == 9 && players.first.status != "dead") {
             let name = window.prompt(lang.achievementPrompt)
-            if(name != null && name != "" && name.length < 40){
-                let  data = new FormData()
+            if (name != null && name != "" && name.length < 40) {
+                let data = new FormData()
                 data.append('encrypt', name)
-                let res = await fetch("generate.php",{ method: 'POST', body: data})
-                res = await res.json()
-                res = res.result;
-                location.href = location+"achievement/?name="+encodeURIComponent(res);
+                let response = await fetch("generate.php", { method: 'POST', body: data })
+                response = await response.json()
+                result = encodeURIComponent(response.result)
+                document.cookie = "achievement=" + result
+                location.href = achievementLocation + `?name=${result}&lang=${lang.lang}`
                 return
             }
             window.alert(lang.invalid)
         }
         return
     }
-    if(currentScreen.name == "menu"){
+    if (currentScreen.name == "menu") {
         currentLevel = 0
-        if((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")){
+        if ((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")) {
             mode = "single"
             changeCurrentScreen(screens.game)
             return
         }
-        if((X > 325 && X < 525 && Y > 50 && Y < 200) || (key == "j" || key == "J")){
+        if ((X > 325 && X < 525 && Y > 50 && Y < 200) || (key == "j" || key == "J")) {
             mode = "multi"
             changeCurrentScreen(screens.game)
             return
         }
-        if((X > 0 && X  < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")){
+        if ((X > 0 && X < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")) {
             changeCurrentScreen(screens.help)
             return
         }
-        if(X > 550 && X  < 650 && Y > 0 && Y < 80){
-            setTimeout(() =>{
+        if (X > 550 && X < 650 && Y > 0 && Y < 80) {
+            setTimeout(() => {
                 navigator.share({
                     title: window.title,
                     text: lang.description,
@@ -488,40 +524,61 @@ async function userInput(X, Y, key){
             }, 100)
             return
         }
+        let cookieAchievement = getCookie("achievement")
+        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && cookieAchievement != "") {
+            location.href = achievementLocation + `?name=${cookieAchievement}&lang=${lang.lang}`
+        }
         return
+    }
+    if(currentScreen.name == "help"){
+        let keyboardOffset = physicalKeyboard ? 0 : 175
+        if(X > 425 - keyboardOffset && X < 575 - keyboardOffset){
+            if(Y > 115 && Y < 155){
+                location.href = location.origin + location.pathname + "?lang=en"
+                return
+            }
+            if(Y > 160 && Y < 200){
+                location.href = location.origin + location.pathname + "?lang=es"
+                return
+            }
+            if(Y > 205 && Y < 245){
+                location.href = location.origin + location.pathname + "?lang=pt"
+                return
+            }
+        }
     }
     changeCurrentScreen(screens.menu)
 }
 
-function setCanvasBoundings(){// Set canvas sizing and position, called at start and resize event
+function setCanvasBoundings() {// Set canvas position, called at start and resize event
     let boundingClientRect = canvas.getBoundingClientRect()
     canvas.positionX = boundingClientRect.x
     canvas.positionY = boundingClientRect.y
 }
 
-function isPlayerAlreadyFrozen(player){
-    if(player.frozen){
+function isPlayerAlreadyFrozen(player) {
+    if (player.frozen) {
         clearTimeout(player.unfreezeTimeout)
         player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
         return true
     }
     player.frozen = true
     setTimeout(() => {
-        currentScreen.update()    
+        currentScreen.update()
     }, 50);
     player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
     return false
 }
 
-function unfreezePlayer(player){
+function unfreezePlayer(player) {
     player.frozen = false
-    if(currentScreen.name == "game") currentScreen.update()
+    if (currentScreen.name == "game") currentScreen.update()
 }
 
 function getCookie(cname) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
-    for(c of ca) {
+    for (c of ca) {
         while (c.charAt(0) == ' ') {
             c = c.substring(1);
         }
@@ -532,34 +589,34 @@ function getCookie(cname) {
     return "";
 }
 
-let checkAssetsInterval = setInterval(() => {   
-    if(gunfire.readyState === 4 && countdown.readyState === 4 && sprites.complete === true && document.fonts.check("16px game")){
+let checkAssetsInterval = setInterval(() => {
+    if (gunfire.readyState === 4 && countdown.readyState === 4 && sprites.complete === true && document.fonts.check("16px game")) {
         gameAssetsLoaded = true
         clearInterval(checkAssetsInterval)
     }
 })
 
-async function initializeGame(){
-    if(gameAssetsLoaded){
+async function initializeGame() {
+    if (gameAssetsLoaded) {
         clearInterval(initializeGame)
-        if(navigator.keyboard) {
+        if (navigator.keyboard) {
             let keyboard = await navigator.keyboard.getLayoutMap()
-            phisicalKeyboard = keyboard.size == 0 ? false : true 
-        }else{
-            phisicalKeyboard = true
+            physicalKeyboard = keyboard.size == 0 ? false : true
+        } else {
+            physicalKeyboard = true
         }
         setCanvasBoundings()
         changeCurrentScreen(screens.menu)
-        
+
         window.addEventListener('resize', setCanvasBoundings)
-        canvas.addEventListener('touchstart', function(event){
+        canvas.addEventListener('touchstart', function (event) {
             event.preventDefault()//prevents mousedown event
-            userInput(event.targetTouches[event.targetTouches.length-1].clientX, event.targetTouches[event.targetTouches.length-1].clientY, null)
+            userInput(event.targetTouches[event.targetTouches.length - 1].clientX, event.targetTouches[event.targetTouches.length - 1].clientY, null)
         });
-        canvas.addEventListener('mousedown', function(event){
+        canvas.addEventListener('mousedown', function (event) {
             userInput(event.clientX, event.clientY, undefined)
         });
-        
+
         window.addEventListener('keydown', function (event) {
             userInput(undefined, undefined, event.key)
         });

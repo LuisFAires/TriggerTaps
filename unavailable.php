@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <?php
-    if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "pt"){
-        $lang['lang'] = "pt";
-    }elseif(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "es"){
-        $lang['lang'] = "es";
-    }else{
-        $lang['lang'] = "en";
-    }
+    require_once 'lang.php';
 ?>
 <html lang="<?php echo $lang['lang']; ?>" translate="no">
 <head>
@@ -88,12 +82,12 @@
         <div id="textContainer" class="side">
             <span id="noConnection" class="side"></span>
             <div>
-                <button id="tryAgain"onclick="location.href = location.origin"></button>
+                <button id="tryAgain" onclick="location.href = location.origin"></button>
             </div>
         <div>
     </div>
     <script>
-        <?php require "./lang.php"; ?>
+        <?php echo 'lang = '.json_encode($lang).';'; ?>
         noConnection.innerText = lang.noConnection
         tryAgain.innerText =  lang.tryAgain
     </script>

@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <?php
-    if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "pt"){
-        $lang['lang'] = "pt";
-    }elseif(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "es"){
-        $lang['lang'] = "es";
-    }else{
-        $lang['lang'] = "en";
-    }
+    require_once 'lang.php';
 ?>
 <html lang="<?php echo $lang['lang']; ?>" translate="no">
 
@@ -49,8 +43,8 @@
     </canvas>
     <script>
         <?php
-            include 'lang.php';
-            include 'game.js';
+            echo 'lang = '.json_encode($lang);
+            require_once 'game.js';
         ?>
         initializeGame()
         addEventListener("resize", setCanvasBoundings)

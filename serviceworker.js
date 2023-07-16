@@ -1,6 +1,6 @@
-const cacheName = "v1"
+const currentCache = "v1"
 
-const resourcesToCache = [
+const offlineFallbackFiles = [
     location.origin,
     "/sound/countdown.mp3",
     "/sound/gunfire.mp3",
@@ -12,26 +12,53 @@ const resourcesToCache = [
 
 self.addEventListener("install", (event) => {
     event.waitUntil(
-        caches.open(cacheName)
+        caches.open(currentCache)
             .then((cache) => {
-                return cache.addAll(resourcesToCache)
+                return cache.addAll(offlineFallbackFiles)
             })
     )
 })
 
-self.addEventListener('fetch', function(event) {
+this.addEventListener("activate", (event) => {
+    event.waitUntil(
+      caches.keys().then((keyList) =>
+        Promise.all(
+          keyList.map((key) => {
+            if (![currentCache].includes(key)) {
+              return caches.delete(key);
+            }
+          })
+        )
+      )
+    );
+  });
+
+self.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "SKIP_WAITING") {
+      self.skipWaiting();
+    }
+  });
+
+//Intercepts every fetch event
+self.addEventListener('fetch', (event) => {
     event.respondWith(
-        fetch(event.request).then(function(res){
-            if(event.request.method == "GET" && res.status == "200"){
-                caches.open(cacheName).then(function(cache) {
-                    cache.put(event.request, res)
+        //Tries toget the resouce
+        fetch(event.request).then(
+            //If the resource is downloaded sucessfully put into cache and resolves the first fetch with it
+            (res) => {
+                if(event.request.method == "GET" && res.status == "200"){
+                    caches.open(currentCache).then(function(cache) {
+                        cache.put(event.request, res)
+                    })
+                }
+                return res.clone()
+            }, 
+            //If its unable to get the resource show the unvailable page
+            () => {
+                return caches.match(event.request).then((res) =>{
+                    return (res || caches.match('/unavailble.php'))
                 })
             }
-            return res.clone()
-            }, function(err){
-                return caches.match(event.request).then((res) =>{
-                    return (res || caches.match('/unavailable.php'))
-                })
-            })
         )
+    )
 })

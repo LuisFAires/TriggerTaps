@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <?php
-    if(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "pt"){
-        $lang['lang'] = "pt";
-    }elseif(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) == "es"){
-        $lang['lang'] = "es";
-    }else{
-        $lang['lang'] = "en";
-    }
+    require_once 'lang.php';
 ?>
 <html lang="<?php echo $lang['lang']; ?>" translate="no">
 
@@ -14,7 +8,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>Wild West Gun Battle</title>
     <!--JSON LD-->
-    <script><?php include 'lang.php'; ?></script>
+    <script><?php echo 'lang = '.json_encode($lang)?></script>
     <meta id="description" name="description" content="Wild West Gun Battle, <?php echo $lang['description']?>">
     <meta name="keywords" content="Wild West Gun Battle, <?php echo $lang['description']?>">
     <meta name="application-name" content="Wild West Gun Battle">
@@ -28,10 +22,10 @@
     <meta name="theme-color" content="#deb887">
     <link rel="manifest" href="./manifest.json">
     <style>
-        <?php include 'style.css'; ?>
+        <?php require_once 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"crossorigin="anonymous"></script>
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"crossorigin="anonymous"></script> -->
 </head>
 
 <body>
@@ -44,20 +38,26 @@
         <div id="left">
             <div class="adContainer"></div>
         </div>
-        <canvas width="650" height="250">
-            Browser unsupported
-        </canvas>
+        <div id="center">
+        <div id="promotion" style="display: none;">
+            <span onclick="installPrompt()"><?php echo $lang['install'];?></span>
+            <img class="storeBagde" src="./img/play-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
+            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
+            <!--Coming soon-->
+            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['lang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')">-->
+        </div>
+            <canvas width="650" height="250">
+                Browser unsupported
+            </canvas>
+        </div>
         <div id="right">
             <div class="adContainer"></div>
         </div>
     </div>
-    <div id="bottom">
-        <div class="adContainer"></div>
-    </div>
     <script>
         <?php
-            include 'game.js';
-            include 'index.js';
+            require_once 'game.js';
+            require_once 'index.js';
         ?>
     </script>
 </body>
