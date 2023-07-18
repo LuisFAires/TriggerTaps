@@ -18,11 +18,14 @@
             }
         ?>
     </script>
+    <meta name="description" content="<?php echo $result['result'].$lang['achievement'];?>">
     <meta property="og:title" content="<?php echo $title?>">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $result['result'].$lang['achievement'];?>">
     <meta property="og:image" content="../img/CowBoyShoot.gif">
+    <link rel="apple-touch-icon" href="../img/ios/192.png">
     <link rel="icon" href="../img/CowBoyShoot.gif">
+    <meta name="theme-color" content="#deb887">
     <title><?php echo $title?></title>
     <style>
         @font-face {
@@ -95,7 +98,7 @@
             <span id="name"><?php echo $result['result']; ?></span>
             <span id="text"><?php echo $lang['achievement']; ?></span>
             <div>
-                <button onclick="share()"><?php echo $lang['share'];?></button>
+                <button id="share" onclick="share()"><?php echo $lang['share'];?></button>
                 <button id="play" onclick="location.href = location.origin"><?php echo $lang['play']; ?></button>
             </div>
         <div>
@@ -104,7 +107,7 @@
         function share(){
             navigator.share({
                 title: document.title,
-                text: "<?php echo $result['result'];?>"+lang.achievement,
+                text: "<?php echo $result['result'];?>"+text.innerHTML,
                 url: window.location.href
             })
         }
