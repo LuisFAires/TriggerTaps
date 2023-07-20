@@ -9,13 +9,13 @@
     <title>Wild West Gun Battle</title>
     <!--JSON LD-->
     <script><?php echo 'lang = '.json_encode($lang)?></script>
-    <meta name="description" content="Wild West Gun Battle, <?php echo $lang['description']?>">
-    <meta name="keywords" content="Wild West Gun Battle, <?php echo $lang['description']?>">
+    <meta name="description" content="<?php echo $lang['description']?>">
+    <meta name="keywords" content="<?php echo $lang['description']?>">
     <meta name="application-name" content="Wild West Gun Battle">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta property="og:title" content="Wild West Gun Battle">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="Wild West Gun Battle, <?php echo $lang['description']?>">
+    <meta property="og:description" content="<?php echo $lang['description']?>">
     <meta property="og:image" content="img/CowBoyShoot.gif">
     <link rel="apple-touch-icon" href="/img/ios/192.png">
     <link rel="icon" href="img/CowBoyShoot.gif">

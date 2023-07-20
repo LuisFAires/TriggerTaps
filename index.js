@@ -197,7 +197,7 @@ if ("serviceWorker" in navigator) {
             if (
                 currentScreen.name == "end" &&
                 ((mode == "single" && players.second.status == "dead" && currentLevel > 1) || mode == "multi") &&
-                new Date() - lastPrompt > 60000
+                new Date() - lastPrompt > 180000
             ) {
                 installed = await installPrompt()
             }
