@@ -29,6 +29,9 @@ let initializeInterval
 let gameAssetsLoaded
 let physicalKeyboard
 let achievementLocation = location.origin + "/achievement/"
+let cookieExpires = new Date()
+cookieExpires.setFullYear(cookieExpires.getFullYear() + 1)
+cookieExpires = cookieExpires.toUTCString()
 
 const players = {
     first: {
@@ -170,7 +173,7 @@ const screens = {
     end: {
         name: "end",
         update() {
-            document.cookie = "tutorial=done;"
+            document.cookie = `tutorial=done;expires=${cookieExpires};`
             drawEveryFrameObjects()
             let frozenReaction = ((players.first.frozen && !players.first.reactionTime) || (players.second.frozen && !players.second.reactionTime))
             if (players.first.moving == false && players.second.moving == false) {
@@ -490,7 +493,7 @@ async function userInput(X, Y, key) {
                 let response = await fetch("generate.php", { method: 'POST', body: data })
                 response = await response.json()
                 result = encodeURIComponent(response.result)
-                document.cookie = "achievement=" + result
+                document.cookie = `achievement=${result};expires=${cookieExpires};`;
                 location.href = achievementLocation + `?name=${result}&lang=${lang.lang}`
                 return
             }
