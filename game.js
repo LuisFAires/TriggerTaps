@@ -25,10 +25,10 @@ let currentLevel
 let timerUpdateInterval
 let frameUpdateInterval
 let playersUpdateInterval
-let initializeInterval
 let gameAssetsLoaded
 let physicalKeyboard
 let achievementLocation = location.origin + "/achievement/"
+let touchPressed = false
 let cookieExpires = new Date()
 cookieExpires.setFullYear(cookieExpires.getFullYear() + 1)
 cookieExpires = cookieExpires.toUTCString()
@@ -175,7 +175,7 @@ const screens = {
         update() {
             document.cookie = `tutorial=done;expires=${cookieExpires};`
             drawEveryFrameObjects()
-            let frozenReaction = ((players.first.frozen && !players.first.reactionTime) || (players.second.frozen && !players.second.reactionTime))
+            let frozenReaction = ((players.first.frozen && players.first.reactionTime == undefined) || (players.second.frozen && players.second.reactionTime == undefined))
             if (players.first.moving == false && players.second.moving == false) {
                 clearInterval(frameUpdateInterval)
                 clearInterval(playersUpdateInterval)
@@ -189,14 +189,14 @@ const screens = {
             context.fillStyle = "#fff"
             context.font = "16px game"
             context.fillStyle = "#fff"
-            if (players.first.frozen && !players.first.reactionTime) {
+            if (players.first.frozen && players.first.reactionTime == undefined) {
                 context.fillText((mode == "single" ? lang.you : lang.player + " 1") + lang.wasFrozen, 325, 160)
-            } else if (players.first.reactionTime != undefined) {
+            } else if (players.first.reactionTime >= 0) {
                 context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1) + players.first.reactionTime + "ms", 325, 160)
             }
-            if (players.second.frozen && !players.second.reactionTime) {
+            if (players.second.frozen && players.second.reactionTime == undefined) {
                 context.fillText(lang.player + " 2 " + lang.wasFrozen, 325, 180)
-            } else if (players.second.reactionTime != undefined) {
+            } else if (players.second.reactionTime >= 0) {
                 context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2) + players.second.reactionTime + "ms", 325, 180)
             }
             if (currentLevel != 9 || players.first.status == "dead") {
@@ -356,6 +356,7 @@ async function changeCurrentScreen(newScreen) {
     if (newScreen == currentScreen) return
     currentScreen = newScreen
     if (newScreen.name == "game") {
+        await waitForInteractionLeave()
         players.reset(players.first)
         players.reset(players.second)
         countdown.currentTime = 0
@@ -518,13 +519,12 @@ async function userInput(X, Y, key) {
             return
         }
         if (X > 550 && X < 650 && Y > 0 && Y < 80) {
-            setTimeout(() => {
-                navigator.share({
-                    title: window.title,
-                    text: lang.description,
-                    url: window.location.href
-                })
-            }, 100)
+            await waitForInteractionLeave()
+            navigator.share({
+                title: document.title,
+                text: lang.description,
+                url: window.location.href
+            })
             return
         }
         let cookieAchievement = getCookie("achievement")
@@ -533,18 +533,18 @@ async function userInput(X, Y, key) {
         }
         return
     }
-    if(currentScreen.name == "help"){
+    if (currentScreen.name == "help") {
         let keyboardOffset = physicalKeyboard ? 0 : 175
-        if(X > 425 - keyboardOffset && X < 575 - keyboardOffset){
-            if(Y > 115 && Y < 155){
+        if (X > 425 - keyboardOffset && X < 575 - keyboardOffset) {
+            if (Y > 115 && Y < 155) {
                 location.href = location.origin + location.pathname + "?lang=en"
                 return
             }
-            if(Y > 160 && Y < 200){
+            if (Y > 160 && Y < 200) {
                 location.href = location.origin + location.pathname + "?lang=es"
                 return
             }
-            if(Y > 205 && Y < 245){
+            if (Y > 205 && Y < 245) {
                 location.href = location.origin + location.pathname + "?lang=pt"
                 return
             }
@@ -599,6 +599,18 @@ let checkAssetsInterval = setInterval(() => {
     }
 })
 
+function waitForInteractionLeave() {
+    return new Promise(checkPress = (r) => {
+        if (touchPressed) {
+            setTimeout(() => {
+                checkPress(r)
+            })
+        } else {
+            r()
+        }
+    })
+}
+
 async function initializeGame() {
     if (gameAssetsLoaded) {
         clearInterval(initializeGame)
@@ -613,18 +625,20 @@ async function initializeGame() {
 
         window.addEventListener('resize', setCanvasBoundings)
         canvas.addEventListener('touchstart', function (event) {
+            touchPressed = true
             event.preventDefault()//prevents mousedown event
             userInput(event.targetTouches[event.targetTouches.length - 1].clientX, event.targetTouches[event.targetTouches.length - 1].clientY, null)
+        });
+        canvas.addEventListener('touchend', function () {
+            touchPressed = false
         });
         canvas.addEventListener('mousedown', function (event) {
             userInput(event.clientX, event.clientY, undefined)
         });
-
         window.addEventListener('keydown', function (event) {
             userInput(undefined, undefined, event.key)
         });
-
         return
     }
-    initializeInterval = setTimeout(initializeGame)
+    setTimeout(initializeGame)
 }
