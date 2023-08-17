@@ -3,7 +3,7 @@ import fs from 'fs';
 
 (async () => {
   console.time('Runing time')
-  const urlOrigin = 'https://dev.gunbattle.com/';
+  const urlOrigin = 'https://triggertaps.top/';
   const urlPathname = 'noads.php';
   const acceptableLanguages = ['pt', 'en', 'es'];
   const userName = 'Automated Tester';
@@ -14,6 +14,7 @@ import fs from 'fs';
   let somethingWrong;
   let directory
   let logStream
+  let href
 
   const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
@@ -80,6 +81,29 @@ import fs from 'fs';
     await page.mouse.click(canvasX + 5, canvasY + 5);
   }
 
+  async function replaceShareFuntion(){
+    await page.evaluate(()=>{
+      var sharedData
+      navigator.share = (obj) => {
+        window.sharedData = obj
+      } 
+    })
+  }
+
+  async function getSharedData(){
+    let sharedData = await page.evaluate(()=>{
+      return window.sharedData
+    })
+    return sharedData
+  }
+
+  async function getHref(){
+    let href = await page.evaluate(() => {
+      return location.href;
+    })
+    return href
+  }
+
   //reports directory
   if (fs.existsSync('./reports/')) {
     console.log("Reports folder already exists✅")
@@ -120,7 +144,7 @@ import fs from 'fs';
     //page load
     logForBoth(logStream, 'Loading page');
     await page.goto(urlOrigin + urlPathname + '?lang=' + language);
-    await page.waitForNetworkIdle();
+    await page.waitForNetworkIdle({idleTime: 1000});
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Page loaded✅');
 
@@ -171,9 +195,24 @@ import fs from 'fs';
     })
     logForBoth(logStream, 'tutorial skiped✅');
 
-    //mene help screenshots
+    //menu help screenshots
     await screenshotMenuAndHelp(false);
     await screenshotMenuAndHelp(true);
+
+    //test share button
+    await replaceShareFuntion()
+    await page.mouse.click(canvasX + 640, canvasY + 10)
+    await page.waitForFunction('window.sharedData')
+    let menuSharedData = await getSharedData();
+    testableTexts.sharedTitle = menuSharedData.title
+    testableTexts.sharedText =  menuSharedData.text
+    href = await getHref()
+    if(menuSharedData.url == href){
+      logForBoth(logStream, 'menu shared url ✅')
+    }else{
+      somethingWrong = true
+      logForBoth(logStream, 'menu shared url ❌')
+    }
 
     //test if players are getting frozen 
     await freezeTest('single');
@@ -295,6 +334,20 @@ import fs from 'fs';
       return document.getElementById('share').innerHTML
     })
 
+    //test share button
+    await replaceShareFuntion()
+    await page.click('#share')
+    await page.waitForFunction('window.sharedData')
+    let achievementSharedData = await getSharedData();
+    testableTexts.achievementSharedTitle = achievementSharedData.title
+    testableTexts.achievementSharedText =  achievementSharedData.text
+    href = await getHref()
+    if(achievementSharedData.url == href){
+      logForBoth(logStream, 'achievement shared url ✅')
+    }else{
+      somethingWrong = true
+      logForBoth(logStream, 'achievement shared url ❌')
+    }
 
     //screenshot achievement in both orientations
     await page.screenshot({ path: directory + 'achievement landscape.png' });
@@ -306,9 +359,7 @@ import fs from 'fs';
 
     //checks achievement play button
     await page.click("#play");
-    let href = await page.evaluate(() => {
-      return location.href;
-    })
+    href = await getHref()
     if (href == page.url()) {
       logForBoth(logStream, 'Play to button returns to home page✅');
     } else {
@@ -375,9 +426,7 @@ import fs from 'fs';
     })
 
     await page.click("#tryAgain");
-    href = await page.evaluate(() => {
-      return location.href;
-    })
+    href = await getHref()
     if (href == page.url()) {
       logForBoth(logStream, 'Try again button works✅');
     } else {
@@ -406,6 +455,7 @@ import fs from 'fs';
     }
 
     let whereShouldBeName = [
+      testableTexts.sharedTitle,
       testableTexts.title,
       testableTexts.name,
       testableTexts.ogtitle,
@@ -415,12 +465,14 @@ import fs from 'fs';
     let whereShouldBeDescription = [
       testableTexts.description,
       testableTexts.keywords,
-      testableTexts.ogdescription
+      testableTexts.ogdescription,
+      testableTexts.sharedText
     ]
 
     let whereShouldBeAchievement = [
       testableTexts.achievementdescription,
-      testableTexts.achievementogdescription
+      testableTexts.achievementogdescription,
+      testableTexts.achievementSharedText
     ]
 
     if (compareArray(langObj.name, whereShouldBeName)) {
@@ -445,10 +497,13 @@ import fs from 'fs';
     }
 
     if (
-      (testableTexts.achievementTitle == testableTexts.achievementogtitle) &&
       (
-        (langObj.achievementTitle == userName + testableTexts.achievementTitle) ||
-        (langObj.achievementTitle == testableTexts.achievementTitle + userName)
+        (testableTexts.achievementTitle == testableTexts.achievementogtitle) &&
+        (testableTexts.achievementTitle == testableTexts.achievementSharedTitle)
+      ) &&
+      (
+        (userName + langObj.achievementTitle ==  testableTexts.achievementTitle) ||
+        (langObj.achievementTitle + userName == testableTexts.achievementTitle)
       )
     ) {
       logForBoth(logStream, 'achievement title✅')
