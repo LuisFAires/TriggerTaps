@@ -58,7 +58,7 @@
     <script>
         <?php
             require_once 'game.js';
-            //require_once 'index.js';
+            //require_once 'main.js';
         ?>
         initializeGame()
     </script>
