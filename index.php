@@ -55,7 +55,8 @@
         <?php require_once 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
-    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"crossorigin="anonymous"></script> -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
+     crossorigin="anonymous"></script>
 </head>
 
 <body>
