@@ -1,10 +1,10 @@
-# Gun Battle  
+# TriggerTaps.top  
 
-<img align="center" src="https://luisfaires.github.io/Gun-Battle/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
+<img align="center" src="https://luisfaires.github.io/TriggerTaps.top/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
 
-Western-themed game where the characters fight a duel, The winner is the fastest cowboy to pull the trigger. You can play on your own or duel with a friend in the 2 player mode.
+Wild West themed game where the characters fight a duel, The winner is the fastest cowboy to pull the trigger. You can play on your own or duel with a friend in the 2 player mode.
 
-### [Click here to play](https://luisfaires.github.io/Gun-Battle/)
+### [Click here to play](https://TriggerTaps.top/)
 
 ### Developed with:  
 ![VS Code](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white)
