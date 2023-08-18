@@ -54,27 +54,26 @@ function promotionAction(os, url) {
     location.href = url
 }
 
-function fullscreenLock() {
+async function fullscreenLock() {
     if (!touchDevice) return
     if (document.fullscreenElement === null) {
-        setTimeout(async () => {
+        await waitForInteractionLeave()
+        try {
+            await document.documentElement.requestFullscreen()
             try {
-                await document.documentElement.requestFullscreen()
-                try {
-                    await screen.orientation.lock("landscape")
-                } catch {
-                    console.log("unable to get orientation locked")
-                }
+                await screen.orientation.lock("landscape")
             } catch {
-                //console.log("unable to get fullscreen")
+                console.log("unable to get orientation locked")
             }
-
-        }, 200);
+        } catch {
+            //console.log("unable to get fullscreen")
+        }
     }
     waitForUserInteraction(document, ["touchstart", "mousedown"], fullscreenLock, true)
 }
 
 async function installPrompt() {
+    await waitForInteractionLeave()
     deferredPrompt.prompt()
     lastPrompt = new Date()
     const { outcome } = await deferredPrompt.userChoice
@@ -110,7 +109,8 @@ function calculateDivs() {
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null) return
 
-    left.style.width = right.style.width = (window.innerWidth - center.clientWidth) / 2 + "px"
+    let sideDivWidth = (window.innerWidth - center.clientWidth) / 2
+    left.style.width = right.style.width = (sideDivWidth >= 0 ? sideDivWidth : 0) + "px"
 
     promotion.style.display = (window.innerHeight >= gameArea.height + 50 && showPromotion) ? "flex" : "none"
 
@@ -141,14 +141,12 @@ function insertAds() {
         let containerWidth = container.clientWidth
         let containerHeight = container.clientHeight
         container.innerHTML = containerWidth >= 135 && containerHeight >= 50 ? adString(containerHeight) : ""
-        container.innerHTML
     }
 
     function adString(adHeight = 50) {
         console.log("Ad placed")
         //setTimeout(()=>{(adsbygoogle = window.adsbygoogle || []).push({});},100)
-        return `<div style="height:100%; width:100%; background-color: #0003;">Ads will be placed here</div>`
-        return ` <ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="1070652247" data-full-width-responsive="true" data-adtest="on"></ins>`
+        return `<ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="1070652247" data-full-width-responsive="true" data-adtest="on"></ins>`
     }
 }
 
@@ -164,18 +162,16 @@ window.addEventListener("load", () => {
         if (gameAssetsLoaded) {
             clearInterval(loadingInterval)
             document.querySelector("#loadingOverlay").innerHTML = lang.ready
+            initializeGame()
+            //showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
             await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
             loadingOverlay.style.display = "none"
+            await fullscreenLock()
+            await showRotateOverlay()
+            await calculateDivs()
+            updateAds()
             screen.orientation.addEventListener("change", showRotateOverlay)
             window.addEventListener("resize", showRotateOverlay)
-            showRotateOverlay()
-            fullscreenLock()
-            initializeGame()
-            setTimeout(async () => {
-                showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
-                await calculateDivs()
-                updateAds()
-            }, 500)
             window.addEventListener("resize", () => {
                 clearTimeout(afterResizeTimeout)
                 afterResizeTimeout = setTimeout(calculateDivs, 500)
@@ -188,7 +184,7 @@ if ("serviceWorker" in navigator) {
     window.addEventListener("beforeinstallprompt", (ev) => {
         ev.preventDefault()
         deferredPrompt = ev
-        waitForUserInteraction(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt)
+        waitForUserInteraction(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
     })
 
     function endScreenInstallPrompt() {

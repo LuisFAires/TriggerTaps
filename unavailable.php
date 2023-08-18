@@ -6,13 +6,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="Wild West Gun Battle">
+    <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta property="og:title" content="Unavailable">
     <meta property="og:type" content="game">
     <meta property="og:description" content="Unavailable">
     <meta property="og:image" content="./img/CowBoyShoot.gif">
+    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="icon" href="./img/CowBoyShoot.gif">
+    <meta name="robots" content="noindex">
     <title>Unavailable</title>
     <style>
         @font-face {

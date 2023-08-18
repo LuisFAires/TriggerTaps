@@ -1,13 +1,13 @@
 {
     "background_color": "#deb887",
     "theme_color": "#deb887",
-    "description": "Wild West Gun Battle, Western-themed game where the characters fight a duel",
+    "description": "TriggerTaps.Top | Wild West themed game where the characters fight a duel",
     "dir": "ltr",
     "display": "standalone",
-    "name": "Wild West Gun Battle",
+    "name": "TriggerTaps.Top",
     "orientation": "landscape",
     "scope": "/",
-    "short_name": "Wild West Gun Battle",
+    "short_name": "TriggerTaps.Top",
     "start_url": "/",
     "icons": [
         {

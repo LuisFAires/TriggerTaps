@@ -51,7 +51,7 @@ div {
     width: 100%;
 }
 
-#center{
+#center {
     flex-flow: column;
 }
 
@@ -60,7 +60,7 @@ div {
     min-height: 250px;
 }
 
-.adContainer{
+.adContainer {
     display: block;
     width: 100%;
     height: 100%;

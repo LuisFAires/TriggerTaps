@@ -1,3 +1,16 @@
+<?php
+    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+        if(!headers_sent()) {
+        header('Status: 301 Moved Permanently');
+        header(sprintf(
+        'Location: https://%s%s',
+        $_SERVER['HTTP_HOST'],
+        $_SERVER['REQUEST_URI']
+        ));
+        exit();
+        }
+    }
+?>
 <!DOCTYPE html>
 <?php
     require_once '../generate.php';
@@ -7,7 +20,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="Wild West Gun Battle">
+    <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <script>
         <?php
@@ -23,9 +36,11 @@
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $result['result'].$lang['achievement'];?>">
     <meta property="og:image" content="../img/CowBoyShoot.gif">
+    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="apple-touch-icon" href="../img/ios/192.png">
     <link rel="icon" href="../img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
+    <meta name="robots" content="noindex">
     <title><?php echo $title?></title>
     <style>
         @font-face {

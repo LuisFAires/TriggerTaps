@@ -12,9 +12,8 @@
     if(!isset($lang['lang'])){
         $lang['lang'] = 'en';
     }
-
+    $lang['name'] = 'TriggerTaps.Top';
     if($lang['lang'] == 'pt'){
-        $lang['name'] = 'Wild West Gun Battle';
         $lang['frozen'] = 'Congelado';
         $lang['you'] = 'Você';
         $lang['player'] = 'Jogador';
@@ -44,21 +43,20 @@
         $lang['shoot'] = 'Atire';
         $lang['install'] = 'Instale o app e jogue onde quiser';
         $lang['loading'] = 'Carregando...';
-        $lang['ready'] = '<span>Jogo carregado!<br>Clique ou toque em qualquer lugar para jogar</span>';
+        $lang['ready'] = '<span>Jogo carregado!<br>Clique ou toque aqui para jogar</span>';
         $lang['rotate'] = 'Vire seu dispositivo para jogar...🔄';
-        $lang['description'] = $lang['name'].', Jogo de faroeste onde os personagens travam um duelo';
+        $lang['description'] = $lang['name'].' | Jogo de faroeste onde os personagens travam um duelo';
         $lang['shareAchievement'] = 'Compartilhar conquista';
         $lang['achievementPrompt'] = 'Digite o nome/apelido que estará na sua conquista de atirador mais rápido:';
         $lang['invalid'] = 'Nome/apelido invalido, são aceitos no maximo 40 caracteres!';
         $lang['achievementTitle'] = 'Conquista de ';
-        $lang['achievement'] = ' alcançou conquista de atirador mais rápido🏆 jogue e demonstre que pode fazer o mesmo!';
+        $lang['achievement'] = ' alcançou conquista de atirador mais rápido 🏆 jogue e demonstre que pode fazer o mesmo!';
         $lang['share'] = 'Compartilhar';
         $lang['play'] = 'Jogar';
         $lang['noConnection'] = 'Conecte-se à internet uma vez para poder jogar offline!!';
         $lang['tryAgain'] = 'Tentar novamente';
         $lang['press'] = 'Pressione';
     }elseif($lang['lang'] == 'es'){
-        $lang['name'] = 'Wild West Gun Battle';
         $lang['frozen'] = 'Congelado';
         $lang['you'] = 'Usted';
         $lang['player'] = 'Jugador';
@@ -88,9 +86,9 @@
         $lang['shoot'] = 'Dispara';
         $lang['install'] = 'Instala la aplicación y juega donde quieras';
         $lang['loading'] = 'Cargando...';
-        $lang['ready'] = '<span>¡Juego cargado!<br>Haga clic o toque en cualquier lugar para jugar</span>';
+        $lang['ready'] = '<span>¡Juego cargado!<br>Haga clic o toque aquí para jugar</span>';
         $lang['rotate'] = 'Gira tu dispositivo para jugar...🔄';
-        $lang['description'] = $lang['name'].', Juego de temática del viejo oeste donde los personajes se baten a duelo.';
+        $lang['description'] = $lang['name'].' | Juego de temática del viejo oeste donde los personajes se baten a duelo.';
         $lang['shareAchievement'] = 'Compartir logro';
         $lang['achievementPrompt'] = 'Escribe el nombre/apodo que estará en tu logro de tirador más rápido:';
         $lang['invalid'] = '¡Nombre/apellido no válido, se aceptan un máximo de 40 caracteres!';
@@ -102,7 +100,6 @@
         $lang['tryAgain'] = 'Intentar otra vez';
         $lang['press'] = 'Presione';
     }elseif($lang['lang'] == 'en'){
-        $lang['name'] = 'Wild West Gun Battle';
         $lang['frozen'] = 'Frozen';
         $lang['you'] = 'You';
         $lang['player'] = 'Player';
@@ -132,9 +129,9 @@
         $lang['shoot'] = 'Shoot';
         $lang['install'] = 'Install the app and play everywhere';
         $lang['loading'] = 'Loading...';
-        $lang['ready'] = '<span>Game loaded!<br>Click or tap anywhere to play</span>';
+        $lang['ready'] = '<span>Game loaded!<br>Click or tap here to play</span>';
         $lang['rotate'] = 'Rotate your device to play...🔄';
-        $lang['description'] = $lang['name'].', Wild West themed game where the characters fight a duel.';
+        $lang['description'] = $lang['name'].' | Wild West themed game where the characters fight a duel.';
         $lang['shareAchievement'] = 'Share achievement';
         $lang['achievementPrompt'] = 'Type the name/nickname will be in your fastest shooter achievement:';
         $lang['invalid'] = 'Invalid name, maximum of 40 characters aceppted!!';

@@ -1,3 +1,16 @@
+<?php
+    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+        if(!headers_sent()) {
+        header('Status: 301 Moved Permanently');
+        header(sprintf(
+        'Location: https://%s%s',
+        $_SERVER['HTTP_HOST'],
+        $_SERVER['REQUEST_URI']
+        ));
+        exit();
+        }
+    }
+?>
 <!DOCTYPE html>
 <?php
     require_once 'lang.php';
@@ -6,17 +19,34 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Wild West Gun Battle</title>
-    <!--JSON LD-->
+    <title>TriggerTaps.Top</title>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "TriggerTaps.Top",
+        "description": "<?php echo $lang['description']?>",
+        "operatingSystem": "Any",
+        "applicationCategory": "Game",
+        "url": "https://triggertaps.top",
+        "image": "https://triggertaps.top/img/CowBoyShoot.gif",
+        "screenshot": [
+            "https://triggertaps.top/img/CowBoyShoot.gif"
+        ],
+        "softwareVersion": "1.0.0",
+        "datePublished": "2023-08-18",
+    }
+    </script>
     <script><?php echo 'lang = '.json_encode($lang)?></script>
     <meta id="description" name="description" content="<?php echo $lang['description']?>">
     <meta name="keywords" content="<?php echo $lang['description']?>">
-    <meta name="application-name" content="Wild West Gun Battle">
+    <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta property="og:title" content="Wild West Gun Battle ">
+    <meta property="og:title" content="TriggerTaps.Top ">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $lang['description']?>">
     <meta property="og:image" content="img/CowBoyShoot.gif">
+    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="apple-touch-icon" href="/img/ios/192.png">
     <link rel="icon" href="img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
