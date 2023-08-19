@@ -356,7 +356,6 @@ async function changeCurrentScreen(newScreen) {
     if (newScreen == currentScreen) return
     currentScreen = newScreen
     if (newScreen.name == "game") {
-        await waitForInteractionLeave()
         players.reset(players.first)
         players.reset(players.second)
         countdown.currentTime = 0
@@ -506,11 +505,13 @@ async function userInput(X, Y, key) {
         currentLevel = 0
         if ((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")) {
             mode = "single"
+            await waitForInteractionLeave()
             changeCurrentScreen(screens.game)
             return
         }
         if ((X > 325 && X < 525 && Y > 50 && Y < 200) || (key == "j" || key == "J")) {
             mode = "multi"
+            await waitForInteractionLeave()
             changeCurrentScreen(screens.game)
             return
         }

@@ -30,31 +30,9 @@
 </head>
 
 <body>
-   <!--  <div id="rotateOverlay"></div>    
-    <div id="loadingOverlay"></div>    --> 
-    <div id="upper">
-        <div class="adContainer"></div>
-    </div>
-    <div>
-        <div id="left">
-            <div class="adContainer"></div>
-        </div>
-        <div id="center">
-        <div id="promotion" style="display: none;">
-            <span onclick="installPrompt()"><?php echo $lang['install'];?></span>
-            <img class="storeBagde" src="./img/play-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
-            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
-            <!--Coming soon-->
-            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['lang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')">-->
-        </div>
-            <canvas width="650" height="250">
-                Browser unsupported
-            </canvas>
-        </div>
-        <div id="right">
-            <div class="adContainer"></div>
-        </div>
-    </div>
+    <canvas width="650" height="250">
+        Browser unsupported
+    </canvas>
     <script>
         <?php
             require_once 'game.js';
