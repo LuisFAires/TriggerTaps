@@ -27,7 +27,7 @@
         body{ 
             font-family: game;
             background-color: #deb887;
-            color: #4e463c;
+            color: #000000;
             margin: 0;
             padding: 0 2%;
             height:100%;

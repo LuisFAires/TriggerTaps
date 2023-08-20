@@ -53,7 +53,7 @@
         body{ 
             font-family: game;
             background-color: #deb887;
-            color: #4e463c;
+            color: #000000;
             margin: 0;
             padding: 0 2%;
             height:100%;
@@ -129,25 +129,25 @@
         //play blinking
         let playButton = document.getElementById("play")
         setInterval(() => {
-            playButton.style.color = "#4e463c"
+            playButton.style.color = "#000000"
             playButton.style.transform = "scale(1.3)"
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 75);
             setTimeout(() => {
-                playButton.style.color = "#4e463c"
+                playButton.style.color = "#000000"
             }, 150);
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 225);
             setTimeout(() => {
-                playButton.style.color = "#4e463c"
+                playButton.style.color = "#000000"
             }, 300);
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 375);
             setTimeout(() => {
-                playButton.style.color = "#4e463c"
+                playButton.style.color = "#000000"
             }, 450);
             setTimeout(() => {
                 playButton.style.color = "#fff"

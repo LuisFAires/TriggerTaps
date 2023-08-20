@@ -155,14 +155,14 @@ const screens = {
                 drawFrozenMsg()
                 context.fillText(lang.frozen, 75, 75)
             } else {
-                context.fillStyle = "#4e463c"
+                context.fillStyle = "#000000"
                 context.fillText((mode == "single" ? lang.you : lang.player + " 1"), 75, 75)
             }
             if (players.second.frozen) {
                 drawFrozenMsg()
                 context.fillText(lang.frozen, 575, 75)
             } else {
-                context.fillStyle = "#4e463c"
+                context.fillStyle = "#000000"
                 context.fillText((mode == "single" ? lang.enemy : lang.player + " 2"), 575, 75)
             }
             if (mode == "single" && !players.first.frozen && remainingTimer <= 0 && parseInt(remainingTimer / 150) % 2 == 0) {
@@ -230,7 +230,7 @@ const screens = {
         name: "menu",
         update() {
             drawEveryFrameObjects()
-            context.fillStyle = "#4e463c"
+            context.fillStyle = "#000000"
             context.drawImage(sprites, 500, 400, 100, 100, 35, 25, 45, 45)
             context.font = "50px game"
             context.fillText("?", 85, 63)
@@ -250,7 +250,7 @@ const screens = {
                 context.font = "16px  game"
                 context.fillText(lang.press + " F", 225, 170)
                 context.fillText(lang.press + " J", 425, 170)
-                context.fillStyle = "#4e463c"
+                context.fillStyle = "#000000"
                 context.fillText(lang.press + " H", 65, 75)
             }
             if (getCookie("achievement")) {

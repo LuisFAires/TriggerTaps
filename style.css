@@ -1,6 +1,6 @@
 body {
     font-family: game;
-    color: #4e463c;
+    color: #000000;
     overflow: hidden;
     text-align: center;
     margin: 0;
@@ -22,7 +22,7 @@ body {
     width: 96%;
     height: 100%;
     background-color: #deb887;
-    color: #4e463c;
+    color: #000000;
     font-size: 50px;
     flex-direction: column;
     padding: 0 2%;
