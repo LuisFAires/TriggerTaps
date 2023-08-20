@@ -10,12 +10,10 @@
         exit();
         }
     }
-?>
-<!DOCTYPE html>
-<?php
-    require_once '../generate.php';
+    require_once './read.php';
     require_once '../lang.php';
 ?>
+<!DOCTYPE html>
 <html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
@@ -119,35 +117,50 @@
         <div>
     </div>
     <script>
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let ca = document.cookie.split(';');
+            for (c of ca) {
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
         function share(){
             navigator.share({
                 title: document.title,
                 text: "<?php echo $result['result'];?>"+text.innerHTML,
-                url: window.location.href
+                url: window.location.href + "?name=" + getCookie('achievement')
             })
         }
         //play blinking
         let playButton = document.getElementById("play")
         setInterval(() => {
-            playButton.style.color = "#000000"
+            playButton.style.color = "#5e4700"
             playButton.style.transform = "scale(1.3)"
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 75);
             setTimeout(() => {
-                playButton.style.color = "#000000"
+                playButton.style.color = "#5e4700"
             }, 150);
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 225);
             setTimeout(() => {
-                playButton.style.color = "#000000"
+                playButton.style.color = "#5e4700"
             }, 300);
             setTimeout(() => {
                 playButton.style.color = "#fff"
             }, 375);
             setTimeout(() => {
-                playButton.style.color = "#000000"
+                playButton.style.color = "#5e4700"
             }, 450);
             setTimeout(() => {
                 playButton.style.color = "#fff"

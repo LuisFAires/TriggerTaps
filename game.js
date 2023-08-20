@@ -490,11 +490,11 @@ async function userInput(X, Y, key) {
             if (name != null && name != "" && name.length < 40) {
                 let data = new FormData()
                 data.append('encrypt', name)
-                let response = await fetch("generate.php", { method: 'POST', body: data })
+                let response = await fetch(location.origin + "/achievement/generate.php", { method: 'POST', body: data })
                 response = await response.json()
                 result = encodeURIComponent(response.result)
                 document.cookie = `achievement=${result};expires=${cookieExpires};`;
-                location.href = achievementLocation + `?name=${result}`
+                location.href = achievementLocation
                 return
             }
             window.alert(lang.invalid)
@@ -530,7 +530,7 @@ async function userInput(X, Y, key) {
         }
         let cookieAchievement = getCookie("achievement")
         if ((X > 125 && X < 525 && Y > 205 && Y < 245) && cookieAchievement != "") {
-            location.href = achievementLocation + `?name=${cookieAchievement}`
+            location.href = achievementLocation
         }
         return
     }

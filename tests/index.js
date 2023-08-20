@@ -16,7 +16,7 @@ import fs from 'fs';
   let logStream
   let href
 
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: "new" });
   const page = await browser.newPage();
 
   // Set screen size
@@ -348,11 +348,26 @@ import fs from 'fs';
     testableTexts.achievementSharedTitle = achievementSharedData.title
     testableTexts.achievementSharedText =  achievementSharedData.text
     href = await getHref()
-    if(achievementSharedData.url == href){
+    let cookie = await page.evaluate(() =>{
+      let name = "achievement=";
+      let ca = document.cookie.split(';');
+      for (c of ca) {
+          while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+          }
+      }
+    })
+    if(achievementSharedData.url == href + "?name=" + cookie){
       logForBoth(logStream, 'achievement shared url ✅')
     }else{
       somethingWrong = true
       logForBoth(logStream, 'achievement shared url ❌')
+      console.log(achievementSharedData.url)
+      console.log(href)
+      console.log(cookie)
     }
 
     //screenshot achievement in both orientations
