@@ -16,7 +16,7 @@
     require_once '../generate.php';
     require_once '../lang.php';
 ?>
-<html lang="<?php echo $lang['lang']; ?>" translate="no">
+<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +24,7 @@
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <script>
         <?php
-            if($lang['lang'] == 'en'){
+            if($lang['currentLang'] == 'en'){
                 $title =  $result['result'].$lang['achievementTitle'];
             }else{
                 $title =  $lang['achievementTitle'].$result['result'];

@@ -494,7 +494,7 @@ async function userInput(X, Y, key) {
                 response = await response.json()
                 result = encodeURIComponent(response.result)
                 document.cookie = `achievement=${result};expires=${cookieExpires};`;
-                location.href = achievementLocation + `?name=${result}&lang=${lang.lang}`
+                location.href = achievementLocation + `?name=${result}`
                 return
             }
             window.alert(lang.invalid)
@@ -530,7 +530,7 @@ async function userInput(X, Y, key) {
         }
         let cookieAchievement = getCookie("achievement")
         if ((X > 125 && X < 525 && Y > 205 && Y < 245) && cookieAchievement != "") {
-            location.href = achievementLocation + `?name=${cookieAchievement}&lang=${lang.lang}`
+            location.href = achievementLocation + `?name=${cookieAchievement}`
         }
         return
     }
@@ -538,15 +538,18 @@ async function userInput(X, Y, key) {
         let keyboardOffset = physicalKeyboard ? 0 : 175
         if (X > 425 - keyboardOffset && X < 575 - keyboardOffset) {
             if (Y > 115 && Y < 155) {
-                location.href = location.origin + location.pathname + "?lang=en"
+                document.cookie = `lang=en;expires=${cookieExpires};`;
+                location.reload()
                 return
             }
             if (Y > 160 && Y < 200) {
-                location.href = location.origin + location.pathname + "?lang=es"
+                document.cookie = `lang=es;expires=${cookieExpires};`;
+                location.reload()
                 return
             }
             if (Y > 205 && Y < 245) {
-                location.href = location.origin + location.pathname + "?lang=pt"
+                document.cookie = `lang=pt;expires=${cookieExpires};`;
+                location.reload()
                 return
             }
         }

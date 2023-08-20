@@ -2,7 +2,7 @@
 <?php
     require_once 'lang.php';
 ?>
-<html lang="<?php echo $lang['lang']; ?>" translate="no">
+<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">

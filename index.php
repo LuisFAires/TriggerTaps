@@ -15,7 +15,7 @@
 <?php
     require_once 'lang.php';
 ?>
-<html lang="<?php echo $lang['lang']; ?>" translate="no">
+<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -37,7 +37,6 @@
         "datePublished": "2023-08-18",
     }
     </script>
-    <script><?php echo 'lang = '.json_encode($lang)?></script>
     <meta id="description" name="description" content="<?php echo $lang['description']?>">
     <meta name="keywords" content="<?php echo $lang['description']?>">
     <meta name="application-name" content="TriggerTaps.Top">
@@ -72,10 +71,10 @@
         <div id="center">
         <div id="promotion" style="display: none;">
             <span onclick="installPrompt()"><?php echo $lang['install'];?></span>
-            <img class="storeBagde" src="./img/play-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
-            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['lang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
+            <img class="storeBagde" src="./img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
+            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
             <!--Coming soon-->
-            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['lang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')">-->
+            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')">-->
         </div>
             <canvas width="650" height="250">
                 Browser unsupported
@@ -87,6 +86,7 @@
     </div>
     <script>
         <?php
+            echo 'lang = '.json_encode($lang);
             require_once 'game.js';
             require_once 'main.js';
         ?>

@@ -2,7 +2,7 @@
 <?php
     require_once 'lang.php';
 ?>
-<html lang="<?php echo $lang['lang']; ?>" translate="no">
+<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

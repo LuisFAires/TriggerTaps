@@ -3,7 +3,7 @@ import fs from 'fs';
 
 (async () => {
   console.time('Runing time')
-  const urlOrigin = 'https://triggertaps.top/';
+  const urlOrigin = 'https://dev.triggertaps.top/';
   const urlPathname = 'noads.php';
   const acceptableLanguages = ['pt', 'en', 'es'];
   const userName = 'Automated Tester';
@@ -16,7 +16,7 @@ import fs from 'fs';
   let logStream
   let href
 
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
   // Set screen size
@@ -143,12 +143,18 @@ import fs from 'fs';
 
     //page load
     logForBoth(logStream, 'Loading page');
-    await page.goto(urlOrigin + urlPathname + '?lang=' + language);
+    await page.goto(urlOrigin + urlPathname);
     await page.waitForNetworkIdle({idleTime: 1000});
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Page loaded✅');
+    await page.evaluate((language) =>{
+      document.cookie = `lang=${language};`
+      location.reload()
+    },language)
+    await page.waitForNetworkIdle({idleTime: 1000});
+    await page.waitForSelector('canvas');
+    logForBoth(logStream, 'Language setted✅');
 
-    //coordinates
     logForBoth(logStream, 'Getting canvas coordinates')
     canvasX = await page.evaluate(() => {
       return canvas.positionX
@@ -368,48 +374,10 @@ import fs from 'fs';
       logForBoth(logStream, 'href:', href);
       logForBoth(logStream, 'currenturl:', page.url());
     }
-
-    //test language switch
-
-
-    async function testLangSwitcher(keyboard) {
-      await page.goto(urlOrigin + urlPathname + '?lang=' + language);
-      await page.waitForNetworkIdle()
-      await page.waitForSelector('canvas')
-      let positionX = keyboard ? 500 : 325
-      let langs = [{
-        lang: 'en',
-        position: 135
-      }, {
-        lang: 'es',
-        position: 180
-      }, {
-        lang: 'pt',
-        position: 225
-      }]
-      for (let lang of langs) {
-        await page.evaluate((keyboard) => {
-          physicalKeyboard = keyboard
-        }, keyboard)
-        await page.mouse.click(canvasX + 5, canvasY + 5)
-        await page.mouse.click(positionX, lang.position)
-        await page.waitForNetworkIdle()
-        await page.waitForSelector('canvas')
-        if (page.url())
-          await page.screenshot({ path: directory + `lang switcher keyboard ${keyboard} ${lang.lang}.png` });
-        logForBoth(logStream, `Screenshot lang switcher keyboard ${keyboard} ${lang.lang}✅`)
-        if (page.url().endsWith('?lang=' + lang.lang)) {
-          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}✅`)
-        } else {
-          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}❌`)
-        }
-      }
-    }
-    await testLangSwitcher(true)
-    await testLangSwitcher(false)
-
+    
     //test unavailable page
-    await page.goto(urlOrigin + "/unavailable.php" + '?lang=' + language);
+
+    await page.goto(urlOrigin + "/unavailable.php");
     await page.waitForNetworkIdle()
     await page.screenshot({ path: directory + `unavailable landscape.png` });
     logForBoth(logStream, `Screenshot unavailable landscape`);
@@ -436,6 +404,47 @@ import fs from 'fs';
       logForBoth(logStream, 'currenturl:', page.url());
     }
 
+    //test language switch
+
+    async function testLangSwitcher(keyboard) {
+      await page.goto(urlOrigin + urlPathname);
+      await page.waitForNetworkIdle()
+      await page.waitForSelector('canvas')
+      let positionX = keyboard ? 500 : 325
+      let langs = [{
+        lang: 'en',
+        position: 135
+      }, {
+        lang: 'es',
+        position: 180
+      }, {
+        lang: 'pt',
+        position: 225
+      }]
+      for (let lang of langs) {
+        await page.evaluate((keyboard) => {
+          physicalKeyboard = keyboard
+        }, keyboard)
+        await page.mouse.click(canvasX + 5, canvasY + 5)
+        await page.mouse.click(positionX, lang.position)
+        await page.waitForNetworkIdle()
+        await page.waitForSelector('canvas')
+        await page.screenshot({ path: directory + `lang switcher keyboard ${keyboard} ${lang.lang}.png` });
+        logForBoth(logStream, `Screenshot lang switcher keyboard ${keyboard} ${lang.lang}✅`)
+        let currentLang = await page.evaluate(() => {
+          return lang.currentLang
+        })
+        
+        if (currentLang == lang.lang) {
+          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}✅`)
+        } else {
+          somethingWrong = true
+          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}❌`)
+        }
+      }
+    }
+    await testLangSwitcher(true)
+    await testLangSwitcher(false)
 
     logForBoth(logStream, `\nTestable texts:\n`);
     logForBoth(logStream, JSON.stringify(testableTexts, null, 2));

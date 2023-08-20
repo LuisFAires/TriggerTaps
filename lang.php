@@ -1,19 +1,22 @@
 <?php
     $acceptableLanguages = ['pt', 'en', 'es'];
     if(isset($_GET['lang']) && in_array($_GET['lang'], $acceptableLanguages)){
-        $lang['lang'] = $_GET['lang'];
+        $lang['currentLang'] = $_GET['lang'];
     }
-    if(!isset($lang['lang'])){
+    if(!isset($lang['currentLang']) && isset($_COOKIE['lang']) && in_array($_COOKIE['lang'], $acceptableLanguages)){
+        $lang['currentLang'] = $_COOKIE['lang'];
+    }
+    if(!isset($lang['currentLang'])){
         $browserLanguage = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
         if(in_array($browserLanguage, $acceptableLanguages)){
-            $lang['lang'] = $browserLanguage;
+            $lang['currentLang'] = $browserLanguage;
         }
     }
-    if(!isset($lang['lang'])){
-        $lang['lang'] = 'en';
+    if(!isset($lang['currentLang'])){
+        $lang['currentLang'] = 'en';
     }
     $lang['name'] = 'TriggerTaps.Top';
-    if($lang['lang'] == 'pt'){
+    if($lang['currentLang'] == 'pt'){
         $lang['frozen'] = 'Congelado';
         $lang['you'] = 'Você';
         $lang['player'] = 'Jogador';
@@ -56,7 +59,7 @@
         $lang['noConnection'] = 'Conecte-se à internet uma vez para poder jogar offline!!';
         $lang['tryAgain'] = 'Tentar novamente';
         $lang['press'] = 'Pressione';
-    }elseif($lang['lang'] == 'es'){
+    }elseif($lang['currentLang'] == 'es'){
         $lang['frozen'] = 'Congelado';
         $lang['you'] = 'Usted';
         $lang['player'] = 'Jugador';
@@ -99,7 +102,7 @@
         $lang['noConnection'] = '¡Conéctate a Internet una vez para poder jugar sin conexión!';
         $lang['tryAgain'] = 'Intentar otra vez';
         $lang['press'] = 'Presione';
-    }elseif($lang['lang'] == 'en'){
+    }elseif($lang['currentLang'] == 'en'){
         $lang['frozen'] = 'Frozen';
         $lang['you'] = 'You';
         $lang['player'] = 'Player';
@@ -142,9 +145,9 @@
         $lang['noConnection'] = 'Connect to the internet once to be able to play offline!!';
         $lang['tryAgain'] = 'Try again';
         $lang['press'] = 'Press';
-    }elseif($lang['lang'] == 'fr'){
+    }elseif($lang['currentLang'] == 'fr'){
         //
-    }elseif($lang['lang'] == 'de'){
+    }elseif($lang['currentLang'] == 'de'){
         //
     }
 ?>
