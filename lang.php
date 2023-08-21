@@ -43,6 +43,7 @@
         $lang['about'] = 'Sobre:';
         $lang['developedWith'] = 'Desenvolvido com:';
         $lang['inspired'] = 'Inspirado por:';
+        $lang['contact'] = 'Contato:';
         $lang['credits'] = 'Créditos:';
         $lang['wasFrozen'] = ' estava congelado';
         $lang['yourReaction'] = 'Seu tempo de reação: ';
@@ -93,6 +94,7 @@
         $lang['developedWith'] = 'Desarrollado con:';
         $lang['inspired'] = 'Inspirado por:';
         $lang['credits'] = 'Creditos:';
+        $lang['contact'] = 'Contacto:';
         $lang['wasFrozen'] = ' estaba congelado';
         $lang['yourReaction'] = 'Tu tiempo de reacción: ';
         $lang['enemyReaction'] = 'Tiempo de reacción del enemigo: ';
@@ -142,6 +144,7 @@
         $lang['developedWith'] = 'Developed with:';
         $lang['inspired'] = 'Inspired by:';
         $lang['credits'] = 'Credits:';
+        $lang['contact'] = 'Contact:';
         $lang['wasFrozen'] = ' was frozen';
         $lang['yourReaction'] = 'Your reaction time: ';
         $lang['enemyReaction'] = 'Enemy\'s reaction time: ';

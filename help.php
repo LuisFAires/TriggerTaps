@@ -22,9 +22,10 @@
             <span class="helpSpan">{$lang['description']}</span>
             <h2><li>{$lang['developedWith']}</li></h2>
             <img src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
+            <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white">
+            <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
             <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
             <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-            <img src="https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E">
             <img src="https://img.shields.io/badge/gimp-5C5543?style=for-the-badge&logo=gimp&logoColor=white">
             <h2><li>{$lang['inspired']}</li></h2>
             <a href="https://www.youtube.com/playlist?list=PLTcmLKdIkOWmeNferJ292VYKBXydGeDej" target="_blank">
@@ -38,7 +39,8 @@
             <span class="creditSpan">CraftPix </span><a href="https://free-game-assets.itch.io/free-rpg-desert-tileset" target="_blank" class="creditAnchor">RPG Desert Tileset</a><br>
             <span class="creditSpan">KuraiWolf </span><a href="https://opengameart.org/content/light-machine-gun" target="_blank" class="creditAnchor">Light Machine Gun</a><br>
             <span class="creditSpan">MixKit </span><a href="https://mixkit.co/free-sound-effects/countdown/" target="_blank" class="creditAnchor">Simple countdown</a><br>
-
+            <h2><li>{$lang['contact']}</li></h2>
+            <span class="helpSpan">E-mail: contact@triggertaps.top</span>
         </ul>
         END;
     ?>
