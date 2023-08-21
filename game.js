@@ -483,7 +483,7 @@ async function userInput(X, Y, key) {
             navigator.share({
                 title: document.title,
                 text: lang.description,
-                url: window.location.href
+                url: location.origin + "/?lang=" + lang.currentLang
             })
             return
         }

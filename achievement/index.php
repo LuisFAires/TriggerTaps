@@ -33,10 +33,10 @@
     <meta property="og:title" content="<?php echo $title?>">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $result['result'].$lang['achievement'];?>">
-    <meta property="og:image" content="../img/CowBoyShoot.gif">
+    <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
-    <link rel="apple-touch-icon" href="../img/ios/192.png">
-    <link rel="icon" href="../img/CowBoyShoot.gif">
+    <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
+    <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
     <meta name="robots" content="noindex">
     <title><?php echo $title?></title>
@@ -136,7 +136,7 @@
             navigator.share({
                 title: document.title,
                 text: "<?php echo $result['result'];?>"+text.innerHTML,
-                url: window.location.href + "?name=" + getCookie('achievement')
+                url: window.location.href + "?name=" + getCookie('achievement') + "&lang=<?php echo $lang['currentLang']?>"
             })
         }
         //play blinking

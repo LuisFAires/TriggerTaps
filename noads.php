@@ -15,10 +15,10 @@
     <meta property="og:title" content="TriggerTaps.Top">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $lang['description']?>">
-    <meta property="og:image" content="img/CowBoyShoot.gif">
+    <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
-    <link rel="apple-touch-icon" href="/img/ios/192.png">
-    <link rel="icon" href="img/CowBoyShoot.gif">
+    <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
+    <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
     <link rel="manifest" href="./manifest.json">
     <meta name="robots" content="noindex">
