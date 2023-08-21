@@ -5,10 +5,10 @@ import fs from 'fs';
   console.time('Runing time')
   const urlOrigin = 'https://dev.triggertaps.top/';
   const urlPathname = 'noads.php';
-  const acceptableLanguages = ['pt', 'en', 'es'];
+  const acceptableLanguages = ['en', 'es', 'pt'];
   const userName = 'Automated Tester';
-  const deviceWidth = 650;
-  const deviceHeight = 250;
+  const deviceWidth = 915;
+  const deviceHeight = 412;
   let canvasX;
   let canvasY;
   let somethingWrong;
@@ -78,26 +78,25 @@ import fs from 'fs';
     await page.mouse.click(canvasX + 5, canvasY + 5);
     await page.screenshot({ path: directory + `help keyboard ${keyboard.toString()}.png` });
     logForBoth(logStream, `Screenshot help keyboard ${keyboard.toString()}✅`);
-    await page.mouse.click(canvasX + 5, canvasY + 5);
+    await page.click('#closeHelp')
   }
 
-  async function replaceShareFuntion(){
-    await page.evaluate(()=>{
-      var sharedData
+  async function replaceShareFuntion() {
+    await page.evaluate(() => {
       navigator.share = (obj) => {
         window.sharedData = obj
-      } 
+      }
     })
   }
 
-  async function getSharedData(){
-    let sharedData = await page.evaluate(()=>{
+  async function getSharedData() {
+    let sharedData = await page.evaluate(() => {
       return window.sharedData
     })
     return sharedData
   }
 
-  async function getHref(){
+  async function getHref() {
     let href = await page.evaluate(() => {
       return location.href;
     })
@@ -144,14 +143,14 @@ import fs from 'fs';
     //page load
     logForBoth(logStream, 'Loading page');
     await page.goto(urlOrigin + urlPathname);
-    await page.waitForNetworkIdle({idleTime: 1000});
+    await page.waitForNetworkIdle({ idleTime: 1000 });
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Page loaded✅');
-    await page.evaluate((language) =>{
+    await page.evaluate((language) => {
       document.cookie = `lang=${language};`
       location.reload()
-    },language)
-    await page.waitForNetworkIdle({idleTime: 1000});
+    }, language)
+    await page.waitForNetworkIdle({ idleTime: 1000 });
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Language setted✅');
 
@@ -211,11 +210,11 @@ import fs from 'fs';
     await page.waitForFunction('window.sharedData')
     let menuSharedData = await getSharedData();
     testableTexts.sharedTitle = menuSharedData.title
-    testableTexts.sharedText =  menuSharedData.text
+    testableTexts.sharedText = menuSharedData.text
     href = await getHref()
-    if(menuSharedData.url == href){
+    if (menuSharedData.url == href) {
       logForBoth(logStream, 'menu shared url ✅')
-    }else{
+    } else {
       somethingWrong = true
       logForBoth(logStream, 'menu shared url ❌')
     }
@@ -346,23 +345,23 @@ import fs from 'fs';
     await page.waitForFunction('window.sharedData')
     let achievementSharedData = await getSharedData();
     testableTexts.achievementSharedTitle = achievementSharedData.title
-    testableTexts.achievementSharedText =  achievementSharedData.text
+    testableTexts.achievementSharedText = achievementSharedData.text
     href = await getHref()
-    let cookie = await page.evaluate(() =>{
+    let cookie = await page.evaluate(() => {
       let name = "achievement=";
       let ca = document.cookie.split(';');
       for (c of ca) {
-          while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-          }
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
       }
     })
-    if(achievementSharedData.url == href + "?name=" + cookie){
+    if (achievementSharedData.url == href + "?name=" + cookie) {
       logForBoth(logStream, 'achievement shared url ✅')
-    }else{
+    } else {
       somethingWrong = true
       logForBoth(logStream, 'achievement shared url ❌')
       console.log(achievementSharedData.url)
@@ -389,7 +388,7 @@ import fs from 'fs';
       logForBoth(logStream, 'href:', href);
       logForBoth(logStream, 'currenturl:', page.url());
     }
-    
+
     //test unavailable page
 
     await page.goto(urlOrigin + "/unavailable.php");
@@ -425,41 +424,25 @@ import fs from 'fs';
       await page.goto(urlOrigin + urlPathname);
       await page.waitForNetworkIdle()
       await page.waitForSelector('canvas')
-      let positionX = keyboard ? 500 : 325
-      let langs = [{
-        lang: 'en',
-        position: 135
-      }, {
-        lang: 'es',
-        position: 180
-      }, {
-        lang: 'pt',
-        position: 225
-      }]
-      for (let lang of langs) {
-        await page.evaluate((keyboard) => {
-          physicalKeyboard = keyboard
-        }, keyboard)
+      for (let i = 0; i < acceptableLanguages.length; i++) {
         await page.mouse.click(canvasX + 5, canvasY + 5)
-        await page.mouse.click(positionX, lang.position)
+        await page.click(`.langBtn:nth-of-type(${i + 1})`)
         await page.waitForNetworkIdle()
         await page.waitForSelector('canvas')
-        await page.screenshot({ path: directory + `lang switcher keyboard ${keyboard} ${lang.lang}.png` });
-        logForBoth(logStream, `Screenshot lang switcher keyboard ${keyboard} ${lang.lang}✅`)
+        await page.screenshot({ path: directory + `lang switcher ${acceptableLanguages[i]}.png` });
+        logForBoth(logStream, `Screenshot lang switcher ${acceptableLanguages[i]}✅`)
         let currentLang = await page.evaluate(() => {
           return lang.currentLang
-        })
-        
-        if (currentLang == lang.lang) {
-          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}✅`)
+        });
+        if (currentLang == acceptableLanguages[i]) {
+          logForBoth(logStream, `Lang switcher ${acceptableLanguages[i]}✅`)
         } else {
           somethingWrong = true
-          logForBoth(logStream, `Lang switcher keyboard ${keyboard} ${lang.lang}❌`)
+          logForBoth(logStream, `Lang switcher ${acceptableLanguages[i]}❌`)
         }
       }
     }
-    await testLangSwitcher(true)
-    await testLangSwitcher(false)
+    await testLangSwitcher()
 
     logForBoth(logStream, `\nTestable texts:\n`);
     logForBoth(logStream, JSON.stringify(testableTexts, null, 2));
@@ -526,7 +509,7 @@ import fs from 'fs';
         (testableTexts.achievementTitle == testableTexts.achievementSharedTitle)
       ) &&
       (
-        (userName + langObj.achievementTitle ==  testableTexts.achievementTitle) ||
+        (userName + langObj.achievementTitle == testableTexts.achievementTitle) ||
         (langObj.achievementTitle + userName == testableTexts.achievementTitle)
       )
     ) {

@@ -30,6 +30,7 @@
 </head>
 
 <body>
+    <?php require_once 'help.php'; ?>
     <canvas width="650" height="250">
         Browser unsupported
     </canvas>

@@ -2,7 +2,7 @@
 
 <img align="center" src="https://luisfaires.github.io/TriggerTaps.top/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
 
-Wild West themed game where the characters fight a duel, The winner is the fastest cowboy to pull the trigger. You can play on your own or duel with a friend in the 2 player mode.
+Wild West themed game where the characters fight a duel. The winner is the fastest to pull the trigger. You can play alone to get the fastest shooter achievement or duel with a friend in 2 player mode.
 
 ### [Click here to play](https://TriggerTaps.top/)
 

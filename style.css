@@ -2,7 +2,6 @@ body {
     font-family: game;
     color: #000000;
     overflow: hidden;
-    text-align: center;
     margin: 0;
     background-color: #deb887;
     user-select: none;
@@ -15,7 +14,8 @@ body {
 }
 
 #loadingOverlay,
-#rotateOverlay {
+#rotateOverlay,
+#helpOverlay {
     position: fixed;
     left: 0;
     top: 0;
@@ -24,8 +24,68 @@ body {
     background-color: #deb887;
     color: #000000;
     font-size: 50px;
-    flex-direction: column;
     padding: 0 2%;
+}
+
+#loadingOverlay,
+#rotateOverlay {
+    text-align: center;
+}
+
+#helpOverlay {
+    overflow: auto;
+    display: none;
+}
+
+#closeHelp {
+    font-size: 35px;
+    float: right;
+    position: sticky;
+    top: 10px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 45px;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 30px;
+    margin: 10px 0 0 0;
+}
+
+.helpSpan,
+.creditAnchor,
+.creditSpan {
+    font-size: 25px;
+}
+
+.helpSpan {
+    display: block;
+}
+
+.creditAnchor {
+    color: #55f;
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: square;
+    margin: 0 0 50px 0;
+}
+
+button {
+    font-family: game;
+    margin: 5px;
+    font-size: 25px;
+    background-color: #5e4700;
+    color: #fff;
+    border: 5px solid #fff;
+}
+
+.langBtn {
+    width: 150px;
 }
 
 /* ANY-POINTER MAY NOT WORK ON ALL BROWSERS*/
@@ -40,7 +100,6 @@ canvas {
 }
 
 div {
-    text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,6 +134,9 @@ div {
 
 #promotion {
     height: 50px;
-    font-size: 20px;
     max-width: 650px;
+}
+
+#promotionSpan {
+    font-size: 20px;
 }

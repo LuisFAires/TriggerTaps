@@ -59,8 +59,9 @@
 </head>
 
 <body>
-    <div id="rotateOverlay"></div>    
-    <div id="loadingOverlay"></div>    
+    <div id="rotateOverlay"></div>
+    <div id="loadingOverlay"></div>
+    <?php require_once 'help.php'; ?>
     <div id="upper">
         <div class="adContainer"></div>
     </div>
@@ -70,7 +71,7 @@
         </div>
         <div id="center">
         <div id="promotion" style="display: none;">
-            <span onclick="installPrompt()"><?php echo $lang['install'];?></span>
+            <span id="promotionSpan"onclick="installPrompt()"><?php echo $lang['install'];?></span>
             <img class="storeBagde" src="./img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
             <img class="storeBagde" src="./img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
             <!--Coming soon-->

@@ -263,48 +263,6 @@ const screens = {
                 context.fillText(lang.shareAchievement, 325, 233)
             }
         }
-    },
-    help: {
-        name: "help",
-        async update() {
-            context.fillStyle = "#5e4700"
-            context.fillRect(0, 0, 650, 250)
-            context.fillStyle = "#fff"
-            context.font = "23px game"
-            context.fillText(lang.help1, 325, 30)
-            context.fillText(lang.help2, 325, 55)
-            context.fillText(lang.frozenMsg, 325, 85)
-            if (physicalKeyboard) {
-                context.fillText(lang.help3, 150, 145)
-                context.fillText(lang.help4, 150, 175)
-                context.fillText(lang.help5, 150, 205)
-                context.fillText(lang.help6, 150, 235)
-            }
-            let keyboardOffset = physicalKeyboard ? 0 : 175
-
-            context.fillStyle = "#fff"
-            context.fillRect(425 - keyboardOffset, 115, 150, 40)
-            context.fillStyle = "#5e4700"
-            context.fillRect(430 - keyboardOffset, 120, 140, 30)
-
-            context.fillStyle = "#fff"
-            context.fillRect(425 - keyboardOffset, 160, 150, 40)
-            context.fillStyle = "#5e4700"
-            context.fillRect(430 - keyboardOffset, 165, 140, 30)
-
-            context.fillStyle = "#fff"
-            context.fillRect(425 - keyboardOffset, 205, 150, 40)
-            context.fillStyle = "#5e4700"
-            context.fillRect(430 - keyboardOffset, 210, 140, 30)
-
-            context.fillStyle = "#fff"
-            context.font = "30px game"
-            context.fillText("English", 500 - keyboardOffset, 145)
-            context.fillText("Español", 500 - keyboardOffset, 190)
-            context.fillText("Português", 500 - keyboardOffset, 235)
-            context.font = "40px game"
-            context.fillText("X", 630, 30)
-        }
     }
 }
 
@@ -516,7 +474,8 @@ async function userInput(X, Y, key) {
             return
         }
         if ((X > 0 && X < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")) {
-            changeCurrentScreen(screens.help)
+            helpOverlay.style.display = "block"
+            keyboardMapping.style.display = physicalKeyboard ? "block" : "none";
             return
         }
         if (X > 550 && X < 650 && Y > 0 && Y < 80) {
@@ -533,26 +492,6 @@ async function userInput(X, Y, key) {
             location.href = achievementLocation
         }
         return
-    }
-    if (currentScreen.name == "help") {
-        let keyboardOffset = physicalKeyboard ? 0 : 175
-        if (X > 425 - keyboardOffset && X < 575 - keyboardOffset) {
-            if (Y > 115 && Y < 155) {
-                document.cookie = `lang=en;expires=${cookieExpires};`;
-                location.reload()
-                return
-            }
-            if (Y > 160 && Y < 200) {
-                document.cookie = `lang=es;expires=${cookieExpires};`;
-                location.reload()
-                return
-            }
-            if (Y > 205 && Y < 245) {
-                document.cookie = `lang=pt;expires=${cookieExpires};`;
-                location.reload()
-                return
-            }
-        }
     }
     changeCurrentScreen(screens.menu)
 }
