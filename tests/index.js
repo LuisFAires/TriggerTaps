@@ -211,8 +211,10 @@ import fs from 'fs';
     let menuSharedData = await getSharedData();
     testableTexts.sharedTitle = menuSharedData.title
     testableTexts.sharedText = menuSharedData.text
-    href = await getHref()
-    if (menuSharedData.url == href) {
+    let origin = await page.evaluate(()=>{
+      return location.origin
+    })
+    if (menuSharedData.url == origin + "/?lang=" + language) {
       logForBoth(logStream, 'menu shared url ✅')
     } else {
       somethingWrong = true
@@ -359,14 +361,11 @@ import fs from 'fs';
         }
       }
     })
-    if (achievementSharedData.url == href + "?name=" + cookie) {
+    if (achievementSharedData.url == `${href}?name=${cookie}&lang=${language}`) {
       logForBoth(logStream, 'achievement shared url ✅')
     } else {
       somethingWrong = true
       logForBoth(logStream, 'achievement shared url ❌')
-      console.log(achievementSharedData.url)
-      console.log(href)
-      console.log(cookie)
     }
 
     //screenshot achievement in both orientations

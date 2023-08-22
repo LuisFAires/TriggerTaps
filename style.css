@@ -88,6 +88,11 @@ button {
     width: 150px;
 }
 
+#privacy{
+    white-space: break-spaces;
+    text-align: justify;
+}
+
 /* ANY-POINTER MAY NOT WORK ON ALL BROWSERS*/
 @media (orientation: landscape) or (any-pointer: fine) {
     #rotateOverlay {

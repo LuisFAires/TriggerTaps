@@ -1,6 +1,7 @@
 <?php
     $acceptableLanguages = ['pt', 'en', 'es'];
     if(isset($_GET['lang']) && in_array($_GET['lang'], $acceptableLanguages)){
+        setcookie('lang', $_GET['lang']);
         $lang['currentLang'] = $_GET['lang'];
     }
     if(!isset($lang['currentLang']) && isset($_COOKIE['lang']) && in_array($_COOKIE['lang'], $acceptableLanguages)){
@@ -45,6 +46,7 @@
         $lang['inspired'] = 'Inspirado por:';
         $lang['contact'] = 'Contato:';
         $lang['credits'] = 'Créditos:';
+        $lang['privacy'] = 'Política de privacidade';
         $lang['wasFrozen'] = ' estava congelado';
         $lang['yourReaction'] = 'Seu tempo de reação: ';
         $lang['enemyReaction'] = 'Tempo de reação do Inimigo: ';
@@ -95,6 +97,7 @@
         $lang['inspired'] = 'Inspirado por:';
         $lang['credits'] = 'Creditos:';
         $lang['contact'] = 'Contacto:';
+        $lang['privacy'] = 'Política de privacidad';
         $lang['wasFrozen'] = ' estaba congelado';
         $lang['yourReaction'] = 'Tu tiempo de reacción: ';
         $lang['enemyReaction'] = 'Tiempo de reacción del enemigo: ';
@@ -145,6 +148,7 @@
         $lang['inspired'] = 'Inspired by:';
         $lang['credits'] = 'Credits:';
         $lang['contact'] = 'Contact:';
+        $lang['privacy'] = 'Privacy policy';
         $lang['wasFrozen'] = ' was frozen';
         $lang['yourReaction'] = 'Your reaction time: ';
         $lang['enemyReaction'] = 'Enemy\'s reaction time: ';
