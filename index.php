@@ -56,6 +56,15 @@
     <meta name="viewport" content="user-scalable=no, width=device-width">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
      crossorigin="anonymous"></script>
+     <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7HL7GPTR"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CH7HL7GPTR');
+    </script>
 </head>
 
 <body>
