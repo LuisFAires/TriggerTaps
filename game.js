@@ -469,6 +469,9 @@ async function userInput(X, Y, key) {
         }
         if ((X > 125 && X < 525 && Y > 205 && Y < 245) && currentLevel == 9 && players.first.status != "dead") {
             let name = window.prompt(lang.achievementPrompt)
+            try {
+                gtag('event', 'achievementGenerated')
+            } catch { }
             if (name != null && name != "" && name.length < 40) {
                 let data = new FormData()
                 data.append('encrypt', name)
