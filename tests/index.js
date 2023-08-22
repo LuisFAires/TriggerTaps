@@ -16,7 +16,7 @@ import fs from 'fs';
   let logStream
   let href
 
-  const browser = await puppeteer.launch({ headless: "new" });
+  const browser = await puppeteer.launch({ headless: "new", args: ['--mute-audio'] });
   const page = await browser.newPage();
 
   // Set screen size
@@ -143,14 +143,14 @@ import fs from 'fs';
     //page load
     logForBoth(logStream, 'Loading page');
     await page.goto(urlOrigin + urlPathname);
-    await page.waitForNetworkIdle({ idleTime: 1000 });
+    await new Promise((r) => { setTimeout(r, 500) })
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Page loaded✅');
     await page.evaluate((language) => {
       document.cookie = `lang=${language};`
       location.reload()
     }, language)
-    await page.waitForNetworkIdle({ idleTime: 1000 });
+    await new Promise((r) => { setTimeout(r, 500) })
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Language setted✅');
 
@@ -211,7 +211,7 @@ import fs from 'fs';
     let menuSharedData = await getSharedData();
     testableTexts.sharedTitle = menuSharedData.title
     testableTexts.sharedText = menuSharedData.text
-    let origin = await page.evaluate(()=>{
+    let origin = await page.evaluate(() => {
       return location.origin
     })
     if (menuSharedData.url == origin + "/?lang=" + language) {
@@ -391,7 +391,7 @@ import fs from 'fs';
     //test unavailable page
 
     await page.goto(urlOrigin + "/unavailable.php");
-    await page.waitForNetworkIdle()
+    await new Promise((r) => { setTimeout(r, 500) })
     await page.screenshot({ path: directory + `unavailable landscape.png` });
     logForBoth(logStream, `Screenshot unavailable landscape`);
     await page.setViewport({ width: deviceHeight, height: deviceWidth });
@@ -421,12 +421,12 @@ import fs from 'fs';
 
     async function testLangSwitcher(keyboard) {
       await page.goto(urlOrigin + urlPathname);
-      await page.waitForNetworkIdle()
+      await new Promise((r) => { setTimeout(r, 500) })
       await page.waitForSelector('canvas')
       for (let i = 0; i < acceptableLanguages.length; i++) {
         await page.mouse.click(canvasX + 5, canvasY + 5)
         await page.click(`.langBtn:nth-of-type(${i + 1})`)
-        await page.waitForNetworkIdle()
+        await new Promise((r) => { setTimeout(r, 500) })
         await page.waitForSelector('canvas')
         await page.screenshot({ path: directory + `lang switcher ${acceptableLanguages[i]}.png` });
         logForBoth(logStream, `Screenshot lang switcher ${acceptableLanguages[i]}✅`)

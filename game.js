@@ -435,11 +435,35 @@ async function userInput(X, Y, key) {
         }
         if (remainingTimer >= -500) return
         if ((X > 125 && X < 525 && Y > 50 && Y < 200) || key != undefined) {
+            if (players.first.status == "dead" && mode == "single") {
+                try {
+                    gtag('event', 'wasted')
+                } catch { }
+            }
+            if (players.first.second == "dead" && currentLevel == 9) {
+                try {
+                    gtag('event', `lvl10completed`)
+                } catch { }
+            }
+            if (mode == "multi") {
+                if (players.first.status == "dead") {
+                    try {
+                        gtag('event', 'player2won')
+                    } catch { }
+                } else {
+                    try {
+                        gtag('event', 'player1won')
+                    } catch { }
+                }
+            }
             if (players.first.status == "dead" || mode == "multi" || currentLevel == 9) {
                 changeCurrentScreen(screens.menu)
                 return
             }
             currentLevel++
+            try {
+                gtag('event', `lvl${currentLevel}completed`)
+            } catch { }
             changeCurrentScreen(screens.game)
             return
         }
@@ -480,6 +504,9 @@ async function userInput(X, Y, key) {
         }
         if (X > 550 && X < 650 && Y > 0 && Y < 80) {
             await waitForInteractionLeave()
+            try {
+                gtag('event', 'shareFromMenu')
+            } catch { }
             navigator.share({
                 title: document.title,
                 text: lang.description,

@@ -78,9 +78,9 @@ async function installPrompt() {
     lastPrompt = new Date()
     const { outcome } = await deferredPrompt.userChoice
     if (outcome == "accepted") {
-        //
-    } else {
-        //
+        try {
+            gtag('event', 'install')
+        } catch { }
     }
     return outcome === "accepted"
 }

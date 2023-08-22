@@ -12,23 +12,21 @@
     }
     require_once './read.php';
     require_once '../lang.php';
+
+    if($lang['currentLang'] == 'en'){
+        $title =  $result['result'].$lang['achievementTitle'];
+    }else{
+        $title =  $lang['achievementTitle'].$result['result'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
+    <title><?php echo $title?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <script>
-        <?php
-            if($lang['currentLang'] == 'en'){
-                $title =  $result['result'].$lang['achievementTitle'];
-            }else{
-                $title =  $lang['achievementTitle'].$result['result'];
-            }
-        ?>
-    </script>
     <meta name="description" content="<?php echo $result['result'].$lang['achievement'];?>">
     <meta property="og:title" content="<?php echo $title?>">
     <meta property="og:type" content="game">
@@ -39,7 +37,15 @@
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
     <meta name="robots" content="noindex">
-    <title><?php echo $title?></title>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7HL7GPTR"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CH7HL7GPTR');
+    </script>
     <style>
         @font-face {
             font-family: game;
@@ -112,12 +118,19 @@
             <span id="text"><?php echo $lang['achievement']; ?></span>
             <div>
                 <button id="share" onclick="share()"><?php echo $lang['share'];?></button>
-                <button id="play" onclick="location.href = location.origin"><?php echo $lang['play']; ?></button>
+                <button id="play" onclick="playButtonClick()"><?php echo $lang['play']; ?></button>
             </div>
         <div>
     </div>
     <script>
-
+        function playButtonClick(){
+            if(location.href.includes("?name=")){
+                try{
+                    gtag('event', 'playFromAchievement')
+                }catch{}
+            }
+            location.href = location.origin
+        }
         function getCookie(cname) {
             let name = cname + "=";
             let ca = document.cookie.split(';');
@@ -133,6 +146,9 @@
         }
 
         function share(){
+            try{
+                gtag('event', 'shareFromAchievement')
+            }catch{}
             navigator.share({
                 title: document.title,
                 text: "<?php echo $result['result'];?>"+text.innerHTML,
