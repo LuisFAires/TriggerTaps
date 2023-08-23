@@ -181,7 +181,7 @@ window.addEventListener("load", () => {
 })
 
 if ("serviceWorker" in navigator) {
-    window.addEventListener("beforeinstallprompt", (ev) => {
+    window.addEventListener("beforeinstallprompt", definePrompt = (ev) => {
         ev.preventDefault()
         deferredPrompt = ev
         waitForUserInteraction(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
