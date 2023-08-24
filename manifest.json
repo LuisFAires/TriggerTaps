@@ -577,7 +577,13 @@
         },
         {
             "src": "img/ios/1024.png",
-            "sizes": "1024x1024"
+            "sizes": "1024x1024",
+            "purpose": "any"
+        },
+        {
+            "src": "img/ios/1024.png",
+            "sizes": "1024x1024",
+            "purpose": "maskable"
         }
     ],
     "lang": "en"
