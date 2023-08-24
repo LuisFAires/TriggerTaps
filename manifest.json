@@ -18,6 +18,118 @@
     "short_name": "TriggerTaps.Top",
     "id": "/",
     "start_url": "/",
+    "handle_links": "preferred",
+    "prefer_related_applications": false,
+    "launch_handler": {
+        "client_mode": "navigate-existing"
+    },
+    "edge_side_panel": {
+        "preferred_width": 650
+    },
+    "screenshots": [
+        {
+            "src": "img/CowBoyShoot.gif",
+            "sizes": "480x480",
+            "type": "image/gif",
+            "label": "Icon cowboy shooting"
+        },
+        {
+            "src": "img/screenshots/0.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "In-game English"
+        },
+        {
+            "src": "img/screenshots/1.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "In-game Spanish"
+        },
+        {
+            "src": "img/screenshots/2.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "In-game Portuguese"
+        },
+        {
+            "src": "img/screenshots/3.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Achievement English"
+        },
+        {
+            "src": "img/screenshots/4.png",
+            "sizes": "360x650",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Achievement English"
+        },
+        {
+            "src": "img/screenshots/5.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Achievement Spanish"
+        },
+        {
+            "src": "img/screenshots/6.png",
+            "sizes": "360x650",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Achievement Spanish"
+        },
+        {
+            "src": "img/screenshots/7.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Achievement Portuguese"
+        },
+        {
+            "src": "img/screenshots/8.png",
+            "sizes": "360x650",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Achievement Portuguese"
+        },
+        {
+            "src": "img/screenshots/9.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Game completed English"
+        },
+        {
+            "src": "img/screenshots/10.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Game completed Spanish"
+        },
+        {
+            "src": "img/screenshots/11.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Game completed Portuguese"
+        },
+        {
+            "src": "img/screenshots/12.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Homescreen English"
+        },
+        {
+            "src": "img/screenshots/13.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Homescreen Spanish"
+        },
+        {
+            "src": "img/screenshots/14.png",
+            "sizes": "650x360",
+            "type": "image/png",
+            "label": "Homescreen Portuguese"
+        }
+    ],
     "icons": [
         {
             "src": "img/windows11/SmallTile.scale-100.png",
