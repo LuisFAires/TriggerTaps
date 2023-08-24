@@ -54,6 +54,10 @@
         <?php require_once 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
+    <link rel="preload" href="PixelOperator-Bold.ttf" as="font">
+    <link rel="preload" href="sound/gunfire.mp3" as="audio">
+    <link rel="preload" href="sound/countdown.mp3" as="audio">
+    <link rel="preload" href="img/sprites.webp" as="image">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
      crossorigin="anonymous"></script>
      <!-- Google tag (gtag.js) -->
