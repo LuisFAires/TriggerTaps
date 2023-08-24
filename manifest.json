@@ -55,42 +55,36 @@
             "src": "img/screenshots/3.png",
             "sizes": "650x360",
             "type": "image/png",
-            "form_factor": "wide",
             "label": "Achievement English"
         },
         {
             "src": "img/screenshots/4.png",
             "sizes": "360x650",
             "type": "image/png",
-            "form_factor": "narrow",
             "label": "Achievement English"
         },
         {
             "src": "img/screenshots/5.png",
             "sizes": "650x360",
             "type": "image/png",
-            "form_factor": "wide",
             "label": "Achievement Spanish"
         },
         {
             "src": "img/screenshots/6.png",
             "sizes": "360x650",
             "type": "image/png",
-            "form_factor": "narrow",
             "label": "Achievement Spanish"
         },
         {
             "src": "img/screenshots/7.png",
             "sizes": "650x360",
             "type": "image/png",
-            "form_factor": "wide",
             "label": "Achievement Portuguese"
         },
         {
             "src": "img/screenshots/8.png",
             "sizes": "360x650",
             "type": "image/png",
-            "form_factor": "narrow",
             "label": "Achievement Portuguese"
         },
         {
