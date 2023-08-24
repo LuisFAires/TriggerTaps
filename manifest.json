@@ -16,6 +16,7 @@
     "orientation": "landscape",
     "scope": "/",
     "short_name": "TriggerTaps.Top",
+    "id": "/",
     "start_url": "/",
     "icons": [
         {
