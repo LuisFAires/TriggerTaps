@@ -85,10 +85,10 @@
         <div id="center">
         <div id="promotion" style="display: none;">
             <span id="promotionSpan"onclick="installPrompt()"><?php echo $lang['install'];?></span>
-            <img class="storeBagde" src="./img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')">
-            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')">
+            <img class="storeBagde" src="./img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
+            <img class="storeBagde" src="./img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://apps.microsoft.com')" loading="lazy">
             <!--Coming soon-->
-            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')">-->
+            <!--<img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
         </div>
             <canvas width="650" height="250">
                 Browser unsupported
