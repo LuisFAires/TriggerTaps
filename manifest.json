@@ -28,12 +28,6 @@
     },
     "screenshots": [
         {
-            "src": "img/CowBoyShoot.gif",
-            "sizes": "480x480",
-            "type": "image/gif",
-            "label": "Icon cowboy shooting"
-        },
-        {
             "src": "img/screenshots/0.png",
             "sizes": "650x360",
             "type": "image/png",
