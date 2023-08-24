@@ -1,7 +1,10 @@
 {
     "background_color": "#deb887",
     "theme_color": "#deb887",
-    "description": "TriggerTaps.Top | Wild West themed game where the characters fight a duel",
+    "description": "Wild West themed game where the characters fight a duel. The winner is the fastest to pull the trigger. You can play alone to get the fastest shooter achievement or duel with a friend in 2 player mode.",
+    "categories": [
+        "games"
+    ],
     "dir": "ltr",
     "display": "standalone",
     "name": "TriggerTaps.Top",
