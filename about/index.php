@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About TriggerTaps.top</title>
+    <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <style>
         @font-face {
             font-family: game;
