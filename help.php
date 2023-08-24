@@ -13,17 +13,15 @@
             <h2>
                 <li>{$lang['lang']}</li>
             </h2>
-            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = `lang=en;expires=\${cookieExpires};`; location.reload()">English</button>
-            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = `lang=es;expires=\${cookieExpires};`; location.reload()">Español</button>
-            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = `lang=pt;expires=\${cookieExpires};`; location.reload()">Português</button>
-            <div id="keyboardMapping">
+            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=en;expires=\${cookieExpires};` : 'lang=en'; location.reload()">English</button>
+            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=es;expires=\${cookieExpires};` : 'lang=es'; location.reload()">Español</button>
+            <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=pt;expires=\${cookieExpires};` : 'lang=pt'; location.reload()">Português</button>
             <h2>
                 <li>{$lang['help4']}</li>
             </h2>
             <span class="helpSpan">{$lang['help5']}</span>
             <span class="helpSpan">{$lang['help6']}</span>
             <span class="helpSpan">{$lang['help7']}</span>
-            </div>
             <h2>
                 <li>{$lang['about']}</li>
             </h2>
