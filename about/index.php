@@ -22,7 +22,8 @@
         let cookieExpires
         helpOverlay.style.display = "block"
         privacy.style.display = "block"
-        closeHelp.style.display = "none"
+        document.getElementById("closeHelp").setAttribute("onclick","location.href = location.origin")
+
     </script>
 </body>
 </html>
