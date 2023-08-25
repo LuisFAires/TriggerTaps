@@ -42,12 +42,12 @@ function showRotateOverlay() {
     rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
 }
 
-function promotionAction(os, url) {
+function promotionAction(os, url, openStore) {
     if (deviceOS == os && deferredPrompt != undefined) {
         try {
-            installPrompt()
+            location.href = openStore
         } catch {
-            location.href = url
+            installPrompt()
         }
         return
     }
@@ -163,7 +163,7 @@ window.addEventListener("load", () => {
             clearInterval(loadingInterval)
             document.querySelector("#loadingOverlay").innerHTML = lang.ready
             initializeGame()
-            //showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
+            showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
             await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
             loadingOverlay.style.display = "none"
             await fullscreenLock()

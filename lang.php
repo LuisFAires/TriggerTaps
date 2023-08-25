@@ -53,7 +53,7 @@
         $lang['reaction1'] = 'Tempo de reação do jogador 1: ';
         $lang['reaction2'] = 'Tempo de reação do jogador 2: ';
         $lang['shoot'] = 'Atire';
-        $lang['install'] = 'Instale o app e jogue onde quiser';
+        $lang['install'] = 'Baixe o app e jogar quando quiser';
         $lang['loading'] = 'Carregando...';
         $lang['ready'] = 'Jogo carregado!<br>Clique ou toque aqui para jogar';
         $lang['rotate'] = 'Vire seu dispositivo para jogar...🔄';
@@ -104,7 +104,7 @@
         $lang['reaction1'] = 'Tiempo de reacción del jugador 1: ';
         $lang['reaction2'] = 'Tiempo de reacción del jugador 2: ';
         $lang['shoot'] = 'Dispara';
-        $lang['install'] = 'Instala la aplicación y juega donde quieras';
+        $lang['install'] = 'Descarga la app y juega cuando quieras';
         $lang['loading'] = 'Cargando...';
         $lang['ready'] = '¡Juego cargado!<br>Haga clic o toque aquí para jugar';
         $lang['rotate'] = 'Gira tu dispositivo para jugar...🔄';
@@ -155,7 +155,7 @@
         $lang['reaction1'] = 'Player 1 reaction time: ';
         $lang['reaction2'] = 'Player 2 reaction time: ';
         $lang['shoot'] = 'Shoot';
-        $lang['install'] = 'Install the app and play everywhere';
+        $lang['install'] = 'Download the app and play whenever you want';
         $lang['loading'] = 'Loading...';
         $lang['ready'] = 'Game loaded!<br>Click or tap here to play';
         $lang['rotate'] = 'Rotate your device to play...🔄';
