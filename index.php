@@ -31,7 +31,22 @@
         "url": "https://triggertaps.top",
         "image": "https://triggertaps.top/img/CowBoyShoot.gif",
         "screenshot": [
-            "https://triggertaps.top/img/CowBoyShoot.gif"
+            "https://triggertaps.top/img/CowBoyShoot.gif",
+            "https://triggertaps.top/img/screenshots/0.png",
+            "https://triggertaps.top/img/screenshots/1.png",
+            "https://triggertaps.top/img/screenshots/2.png",
+            "https://triggertaps.top/img/screenshots/3.png",
+            "https://triggertaps.top/img/screenshots/4.png",
+            "https://triggertaps.top/img/screenshots/5.png",
+            "https://triggertaps.top/img/screenshots/6.png",
+            "https://triggertaps.top/img/screenshots/7.png",
+            "https://triggertaps.top/img/screenshots/8.png",
+            "https://triggertaps.top/img/screenshots/9.png",
+            "https://triggertaps.top/img/screenshots/10.png",
+            "https://triggertaps.top/img/screenshots/11.png",
+            "https://triggertaps.top/img/screenshots/12.png",
+            "https://triggertaps.top/img/screenshots/13.png",
+            "https://triggertaps.top/img/screenshots/14.png"
         ],
         "softwareVersion": "1.0.0",
         "datePublished": "2023-08-18",
