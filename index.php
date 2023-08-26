@@ -26,6 +26,8 @@
         "@type": "VideoGame",
         "name": "TriggerTaps.Top",
         "description": "<?php echo $lang['description']?>",
+        "inLanguage": ["English", "Spanish", "Portuguese"],
+        "genre": ["Action", "Adventure", "Shooting, "Challenge"],
         "operatingSystem": "Any",
         "applicationCategory": "Game",
         "url": "https://triggertaps.top",
@@ -48,6 +50,16 @@
             "https://triggertaps.top/img/screenshots/13.png",
             "https://triggertaps.top/img/screenshots/14.png"
         ],
+        "numberOfPlayers": {
+            "@type": "QuantitativeValue",
+            "minValue": 1,
+            "maxValue": 2
+        },
+        "author": {
+            "@type": "Person",
+            "name": "Luis Fillipe Aires Souza",
+            "url": "https://linkedin.com/in/luisfaires/"
+        },
         "softwareVersion": "1.0.0",
         "datePublished": "2023-08-18",
     }

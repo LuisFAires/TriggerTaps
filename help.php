@@ -45,7 +45,7 @@
                 <li>{$lang['credits']}</li>
             </h2>
             <a href="https://linkedin.com/in/luisfaires/" target="_blank">
-                <img src="https://img.shields.io/badge/Luis_Fillipe-Software_Developer_-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="LinkedIn - Luis Fillipe" style="height: 40px;" loading="lazy">
+                <img src="https://img.shields.io/badge/Luis_Fillipe-Software_Developer_-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="LinkedIn - Luis Fillipe Aires Souza" style="height: 40px;" loading="lazy">
             </a><br>
             <span class="creditSpan">Samuel Lee </span><a href="https://samuellee.itch.io/cow-boy-animated-pixel-art" target="_blank" class="creditAnchor">Cowboy (Animated Pixel Art)</a><br>
             <span class="creditSpan">CraftPix </span><a href="https://free-game-assets.itch.io/free-rpg-desert-tileset" target="_blank" class="creditAnchor">RPG Desert Tileset</a><br>
