@@ -42,6 +42,7 @@ body {
     float: right;
     position: sticky;
     top: 10px;
+    margin: 0;
 }
 
 h1 {
@@ -62,6 +63,10 @@ h2 {
 }
 
 .helpSpan {
+    display: block;
+}
+
+#keyboardMapping{ 
     display: block;
 }
 
@@ -89,7 +94,7 @@ button {
 }
 
 #privacy{
-    white-space: break-spaces;
+    white-space: pre-line;
     text-align: justify;
 }
 
