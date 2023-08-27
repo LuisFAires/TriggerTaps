@@ -44,7 +44,7 @@
         $lang['install'] = 'Baixe o app e jogar quando quiser';
         $lang['inspired'] = 'Inspirado por:';
         $lang['invalid'] = 'Nome/apelido invalido, são aceitos no maximo 40 caracteres!';
-        $lang['lang'] = 'Idioma:';
+        $lang['lang'] = 'Configuração de idioma:';
         $lang['loading'] = 'Carregando...';
         $lang['lvl'] = 'Nível ';
         $lang['noConnection'] = 'Conecte-se à internet uma vez para poder jogar offline!!';
@@ -153,7 +153,7 @@
         $lang['inspired'] = 'Inspirado por:';
         $lang['install'] = 'Descarga la app y juega cuando quieras';
         $lang['invalid'] = '¡Nombre/apellido no válido, se aceptan un máximo de 40 caracteres!';
-        $lang['lang'] = 'Language:';
+        $lang['lang'] = 'Configuración de idioma:';
         $lang['loading'] = 'Cargando...';
         $lang['lvl'] = 'Fase ';
         $lang['noConnection'] = '¡Conéctate a Internet una vez para poder jugar sin conexión!';
@@ -262,7 +262,7 @@
         $lang['inspired'] = 'Inspired by:';
         $lang['install'] = 'Download the app and play whenever you want';
         $lang['invalid'] = 'Invalid name, maximum of 40 characters aceppted!!';
-        $lang['lang'] = 'Language:';
+        $lang['lang'] = 'Language settings:';
         $lang['loading'] = 'Loading...';
         $lang['lvl'] = 'Level ';
         $lang['noConnection'] = 'Connect to the internet once to be able to play offline!!';
