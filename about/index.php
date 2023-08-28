@@ -6,10 +6,6 @@
     <title>About TriggerTaps.top</title>
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <style>
-        @font-face {
-            font-family: game;
-            src: url(../PixelOperator-Bold.ttf);
-        }
         <?php require_once '../style.css'; ?>
     </style>
 </head>
@@ -20,10 +16,8 @@
     ?>
     <script>
         let cookieExpires
-        helpOverlay.style.display = "block"
-        privacy.style.display = "block"
-        document.getElementById("closeHelp").setAttribute("onclick","location.href = location.origin")
-
+        document.getElementById("backToMain").setAttribute("onclick","location.href = location.origin")
+        document.getElementsByTagName('body')[0].style.overflow = 'unset'
     </script>
 </body>
 </html>

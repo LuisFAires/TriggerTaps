@@ -25,6 +25,7 @@ let currentLevel
 let timerUpdateInterval
 let frameUpdateInterval
 let playersUpdateInterval
+let canvasBoudingsTimeout
 let gameAssetsLoaded
 let physicalKeyboard
 let achievementLocation = location.origin + "/achievement/"
@@ -501,8 +502,9 @@ async function userInput(X, Y, key) {
             return
         }
         if ((X > 0 && X < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")) {
-            helpOverlay.style.display = "block"
-            keyboardMapping.style.display = physicalKeyboard ? "block" : "none";
+            articleContainer.style.display = "block"
+            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
+            location.href = location.origin + location.pathname+ "#articleContainer"
             return
         }
         if (X > 550 && X < 650 && Y > 0 && Y < 80) {
@@ -526,7 +528,7 @@ async function userInput(X, Y, key) {
     changeCurrentScreen(screens.menu)
 }
 
-function setCanvasBoundings() {// Set canvas position, called at start and resize event
+function setCanvasBoundings() {// Set canvas position, called at start and on resize and scroll events
     let boundingClientRect = canvas.getBoundingClientRect()
     canvas.positionX = boundingClientRect.x
     canvas.positionY = boundingClientRect.y
@@ -596,10 +598,14 @@ async function initializeGame() {
         setCanvasBoundings()
         changeCurrentScreen(screens.menu)
 
-        window.addEventListener('resize', setCanvasBoundings)
+        window.addEventListener('resize', setCanvasBoundingsTimeout = () => {
+            clearTimeout(canvasBoudingsTimeout)
+            canvasBoudingsTimeout = setTimeout(setCanvasBoundings, 200)
+        })
+        window.addEventListener('scroll', setCanvasBoundingsTimeout)
         canvas.addEventListener('touchstart', function (event) {
             touchPressed = true
-            event.preventDefault()//prevents mousedown event
+            if (currentScreen.name == "end") event.preventDefault()//prevents mousedown event
             userInput(event.targetTouches[event.targetTouches.length - 1].clientX, event.targetTouches[event.targetTouches.length - 1].clientY, null)
         });
         canvas.addEventListener('touchend', function () {

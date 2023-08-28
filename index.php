@@ -68,23 +68,23 @@
     <meta name="keywords" content="<?php echo $lang['description']?>">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta property="og:title" content="TriggerTaps.Top ">
+    <meta property="og:title" content="TriggerTaps.Top">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $lang['description']?>">
-    <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
+    <meta property="og:image" content="/img/CowBoyShoot.gif">
     <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
-    <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
-    <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
+    <link rel="apple-touch-icon" href="/img/ios/192.png">
+    <link rel="icon" href="/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
     <link rel="manifest" href="./manifest.json">
     <style>
         <?php require_once 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
-    <link rel="preload" href="PixelOperator-Bold.ttf" as="font">
-    <link rel="preload" href="sound/gunfire.mp3" as="audio">
-    <link rel="preload" href="sound/countdown.mp3" as="audio">
-    <link rel="preload" href="img/sprites.webp" as="image">
+    <link rel="prefetch" href="/PixelOperator-Bold.ttf" as="font">
+    <link rel="prefetch" href="/sound/gunfire.mp3" as="audio">
+    <link rel="prefetch" href="/sound/countdown.mp3" as="audio">
+    <link rel="prefetch" href="/img/sprites.webp" as="image">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
      crossorigin="anonymous"></script>
      <!-- Google tag (gtag.js) -->
@@ -101,30 +101,32 @@
 <body>
     <div id="rotateOverlay"></div>
     <div id="loadingOverlay"></div>
-    <?php require_once 'help.php'; ?>
-    <div id="upper">
-        <div class="adContainer"></div>
-    </div>
-    <div>
-        <div id="left">
+    <div id="main">
+        <div id="upper">
             <div class="adContainer"></div>
         </div>
-        <div id="center">
-            <canvas width="650" height="250">
-                Browser unsupported
-            </canvas>
-            <div id="promotion" style="display: none;">
-                <span id="promotionSpan"onclick="installPrompt()"><?php echo $lang['install'];?></span>
-                <img class="storeBagde" src="./img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
-                <!--Coming soon-->
-                <!--<img class="storeBagde" src="./img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
-                <img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
+        <div id="bottom">
+            <div id="left">
+                <div class="adContainer"></div>
+            </div>
+            <div id="center">
+                <canvas width="650" height="250">
+                    Browser unsupported
+                </canvas>
+                <div id="promotion" style="display: none;" onclick="installPrompt()">
+                    <span><?php echo $lang['install'];?></span>
+                    <img class="storeBagde" src="/img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
+                    <!--Coming soon-->
+                    <!--<img class="storeBagde" src="/img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
+                    <img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
+                </div>
+            </div>
+            <div id="right">
+                <div class="adContainer"></div>
             </div>
         </div>
-        <div id="right">
-            <div class="adContainer"></div>
-        </div>
     </div>
+    <?php require_once 'help.php'; ?>
     <script>
         <?php
             echo 'lang = '.json_encode($lang);

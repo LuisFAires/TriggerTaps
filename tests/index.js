@@ -78,7 +78,7 @@ import fs from 'fs';
     await page.mouse.click(canvasX + 5, canvasY + 5);
     await page.screenshot({ path: directory + `help keyboard ${keyboard.toString()}.png` });
     logForBoth(logStream, `Screenshot help keyboard ${keyboard.toString()}✅`);
-    await page.click('#closeHelp')
+    await page.click('#backToMain')
   }
 
   async function replaceShareFuntion() {
@@ -144,6 +144,9 @@ import fs from 'fs';
     logForBoth(logStream, 'Loading page');
     await page.goto(urlOrigin + urlPathname);
     await new Promise((r) => { setTimeout(r, 500) })
+    await page.evaluate(() => {
+      scrollTo(0, 0)
+    })
     await page.waitForSelector('canvas');
     logForBoth(logStream, 'Page loaded✅');
     await page.evaluate((language) => {
@@ -390,7 +393,7 @@ import fs from 'fs';
 
     //test unavailable page
 
-    await page.goto(urlOrigin + "/unavailable.php");
+    await page.goto(urlOrigin + "unavailable.php");
     await new Promise((r) => { setTimeout(r, 500) })
     await page.screenshot({ path: directory + `unavailable landscape.png` });
     logForBoth(logStream, `Screenshot unavailable landscape`);

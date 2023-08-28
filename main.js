@@ -42,13 +42,14 @@ function showRotateOverlay() {
     rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
 }
 
-function promotionAction(os, url, openStore) {
-    if (deviceOS == os && deferredPrompt != undefined) {
-        try {
-            location.href = openStore
-        } catch {
-            installPrompt()
-        }
+async function promotionAction(os, url, openStore) {
+    let outcome
+    if (deferredPrompt != undefined) {
+        let outcome = await installPrompt()
+        if (outcome) return
+    }
+    if (deviceOS === os) {
+        location.href = openStore
         return
     }
     location.href = url
@@ -109,7 +110,7 @@ function calculateDivs() {
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null) return
 
-    let sideDivWidth = (window.innerWidth - center.clientWidth) / 2
+    let sideDivWidth = (bottom.clientWidth - center.clientWidth) / 2
     left.style.width = right.style.width = (sideDivWidth >= 0 ? sideDivWidth : 0) + "px"
 
     promotion.style.display = (window.innerHeight >= gameArea.height + 50 && showPromotion) ? "flex" : "none"
@@ -161,10 +162,12 @@ window.addEventListener("load", () => {
     let loadingInterval = setInterval(async () => {
         if (gameAssetsLoaded) {
             clearInterval(loadingInterval)
+            window.scrollTo(0, 0)
             document.querySelector("#loadingOverlay").innerHTML = lang.ready
             initializeGame()
             showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
             await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
+            document.getElementsByTagName('body')[0].style.overflow = 'unset'
             loadingOverlay.style.display = "none"
             await fullscreenLock()
             await showRotateOverlay()
