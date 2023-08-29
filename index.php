@@ -19,7 +19,7 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>TriggerTaps.Top</title>
+    <title>TriggerTaps.Top🔫🔥💥🤠🌵🏜️</title>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
