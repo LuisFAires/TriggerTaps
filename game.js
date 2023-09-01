@@ -42,8 +42,8 @@ const players = {
         positionX: 25,
         initialsourceY: 0,
         moving: false,
-        frozen: false,
-        unfreezeTimeout: undefined,
+        stuck: false,
+        unstuckTimeout: undefined,
         reactionTime: undefined
     },
     second: {
@@ -53,8 +53,8 @@ const players = {
         positionX: 525,
         initialsourceY: 100,
         moving: false,
-        frozen: false,
-        unfreezeTimeout: undefined,
+        stuck: false,
+        unstuckTimeout: undefined,
         reactionTime: undefined
     },
     draw(player) {
@@ -71,7 +71,7 @@ const players = {
         player.sourceX = 0
         player.sourceY = player.initialsourceY
         player.moving = false
-        player.frozen = false
+        player.stuck = false
         player.reactionTime = undefined
     },
     doWithdraw(player) {
@@ -152,21 +152,21 @@ const screens = {
             drawEveryFrameObjects()
             drawTimer()
             context.font = "24px game"
-            if (players.first.frozen) {
-                drawFrozenMsg()
-                context.fillText(lang.frozen, 75, 75)
+            if (players.first.stuck) {
+                drawStuckMsg()
+                context.fillText(lang.stuck, 75, 75)
             } else {
                 context.fillStyle = "#000000"
                 context.fillText((mode == "single" ? lang.you : lang.player + " 1"), 75, 75)
             }
-            if (players.second.frozen) {
-                drawFrozenMsg()
-                context.fillText(lang.frozen, 575, 75)
+            if (players.second.stuck) {
+                drawStuckMsg()
+                context.fillText(lang.stuck, 575, 75)
             } else {
                 context.fillStyle = "#000000"
                 context.fillText((mode == "single" ? lang.enemy : lang.player + " 2"), 575, 75)
             }
-            if (mode == "single" && !players.first.frozen && remainingTimer <= 0 && parseInt(remainingTimer / 150) % 2 == 0) {
+            if (mode == "single" && !players.first.stuck && remainingTimer <= 0 && parseInt(remainingTimer / 150) % 2 == 0) {
                 context.drawImage(sprites, 500, 200, 100, 100, 40, 120, 80, 80)
             }
         },
@@ -176,12 +176,12 @@ const screens = {
         update() {
             document.cookie = `tutorial=done;expires=${cookieExpires};`
             drawEveryFrameObjects()
-            let frozenReaction = ((players.first.frozen && players.first.reactionTime == undefined) || (players.second.frozen && players.second.reactionTime == undefined))
+            let stuckReaction = ((players.first.stuck && players.first.reactionTime == undefined) || (players.second.stuck && players.second.reactionTime == undefined))
             if (players.first.moving == false && players.second.moving == false) {
                 clearInterval(frameUpdateInterval)
                 clearInterval(playersUpdateInterval)
                 clearInterval(timerUpdateInterval)
-                if (frozenReaction) drawFrozenMsg()
+                if (stuckReaction) drawStuckMsg()
             }
             context.fillStyle = "#fff"
             context.fillRect(125, 50, 400, 150)
@@ -190,18 +190,18 @@ const screens = {
             context.fillStyle = "#fff"
             context.font = "16px game"
             context.fillStyle = "#fff"
-            if (players.first.frozen && players.first.reactionTime == undefined) {
-                context.fillText((mode == "single" ? lang.you : lang.player + " 1") + lang.wasFrozen, 325, 160)
+            if (players.first.stuck && players.first.reactionTime == undefined) {
+                context.fillText((mode == "single" ? lang.you : lang.player + " 1") + lang.wasStuck, 325, 160)
             } else if (players.first.reactionTime >= 0) {
                 context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1) + players.first.reactionTime + "ms", 325, 160)
             }
-            if (players.second.frozen && players.second.reactionTime == undefined) {
-                context.fillText(lang.player + " 2 " + lang.wasFrozen, 325, 180)
+            if (players.second.stuck && players.second.reactionTime == undefined) {
+                context.fillText(lang.player + " 2 " + lang.wasStuck, 325, 180)
             } else if (players.second.reactionTime >= 0) {
                 context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2) + players.second.reactionTime + "ms", 325, 180)
             }
             if (currentLevel != 9 || players.first.status == "dead") {
-                if (frozenReaction && parseInt(remainingTimer / 50) % 2 != 0) drawFrozenMsg()
+                if (stuckReaction && parseInt(remainingTimer / 50) % 2 != 0) drawStuckMsg()
                 context.font = "25px game"
                 context.fillText(lang.taphere, 325, 125)
                 if (mode == "single") {
@@ -305,10 +305,10 @@ function drawTimer() {
     }
 }
 
-function drawFrozenMsg() {
+function drawStuckMsg() {
     context.fillStyle = "#fff"
     context.font = "23px game"
-    context.fillText(lang.frozenMsg, 325, 25)
+    context.fillText(lang.stuckMsg, 325, 25)
 }
 
 async function changeCurrentScreen(newScreen) {
@@ -342,8 +342,8 @@ async function changeCurrentScreen(newScreen) {
             clearInterval(playersUpdateInterval)
             playersUpdateInterval = setInterval(() => {
                 if (remainingTimer < 100) {
-                    if (!players.first.frozen) players.doWithdraw(players.first)
-                    if (!players.second.frozen) players.doWithdraw(players.second)
+                    if (!players.first.stuck) players.doWithdraw(players.first)
+                    if (!players.second.stuck) players.doWithdraw(players.second)
                 }
             }, 30)
         }, 2850)
@@ -374,8 +374,8 @@ async function changeCurrentScreen(newScreen) {
                 players.undoWithdraw(players.second)
             }
         }, 80)
-        if (players.first.frozen && players.first.reactionTime == undefined) clearTimeout(players.first.unfreezeTimeout)
-        if (players.second.frozen && players.second.reactionTime == undefined) clearTimeout(players.second.unfreezeTimeout)
+        if (players.first.stuck && players.first.reactionTime == undefined) clearTimeout(players.first.unstuckTimeout)
+        if (players.second.stuck && players.second.reactionTime == undefined) clearTimeout(players.second.unstuckTimeout)
         gunfire.currentTime = 0
         gunfire.play()
         return
@@ -409,13 +409,13 @@ async function userInput(X, Y, key) {
     if (X < 125 || (mode == "single" && key != undefined) || ((mode == "multi") && (key == "f" || key == "F"))) leftSideinput = true
     if (mode == "multi" && (X > 525 || key == "j" || key == "J")) rightSideinput = true
     if (currentScreen.name == "game") {
-        if (leftSideinput && !isPlayerAlreadyFrozen(players.first) && remainingTimer <= 0 && players.first.status != "dead") {
+        if (leftSideinput && !isPlayerAlreadyStuck(players.first) && remainingTimer <= 0 && players.first.status != "dead") {
             players.first.reactionTime = -remainingTimer
             players.action(players.first, players.second)
             changeCurrentScreen(screens.end)
             return
         }
-        if (rightSideinput && !isPlayerAlreadyFrozen(players.second) && remainingTimer <= 0 && players.second.status != "dead") {
+        if (rightSideinput && !isPlayerAlreadyStuck(players.second) && remainingTimer <= 0 && players.second.status != "dead") {
             players.second.reactionTime = -remainingTimer
             players.action(players.second, players.first)
             changeCurrentScreen(screens.end)
@@ -424,12 +424,12 @@ async function userInput(X, Y, key) {
         return
     }
     if (currentScreen.name == "end") {
-        if (leftSideinput && !players.first.reactionTime && !players.first.frozen) {
+        if (leftSideinput && !players.first.reactionTime && !players.first.stuck) {
             players.first.reactionTime = -remainingTimer
             currentScreen.update()
             return
         }
-        if (rightSideinput && !players.second.reactionTime && !players.second.frozen) {
+        if (rightSideinput && !players.second.reactionTime && !players.second.stuck) {
             players.second.reactionTime = -remainingTimer
             currentScreen.update()
             return
@@ -533,22 +533,22 @@ function setCanvasBoundings() {// Set canvas position, called at start and on re
     canvas.positionY = boundingClientRect.y
 }
 
-function isPlayerAlreadyFrozen(player) {
-    if (player.frozen) {
-        clearTimeout(player.unfreezeTimeout)
-        player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
+function isPlayerAlreadyStuck(player) {
+    if (player.stuck) {
+        clearTimeout(player.unstuckTimeout)
+        player.unstuckTimeout = setTimeout(unstuckPlayer, 1500, player)
         return true
     }
-    player.frozen = true
+    player.stuck = true
     setTimeout(() => {
         currentScreen.update()
     }, 50);
-    player.unfreezeTimeout = setTimeout(unfreezePlayer, 1500, player)
+    player.unstuckTimeout = setTimeout(unstuckPlayer, 1500, player)
     return false
 }
 
-function unfreezePlayer(player) {
-    player.frozen = false
+function unstuckPlayer(player) {
+    player.stuck = false
     if (currentScreen.name == "game") currentScreen.update()
 }
 

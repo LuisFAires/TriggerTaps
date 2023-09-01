@@ -1,18 +1,18 @@
-import isPlayerfrozen from "./isPlayerFozen.js";
-export default async function freezeTest(page, coordinates, language, mode, playerTofreeze = 'first') {
+import isPlayerstuck from "./isPlayerStuck.js";
+export default async function stuckTest(page, coordinates, language, mode, playerTostuck = 'first') {
   if (mode != 'single' && mode != 'multi') {
     return false
   }
-  if (playerTofreeze != 'first' && playerTofreeze != 'second') {
+  if (playerTostuck != 'first' && playerTostuck != 'second') {
     return false
   }
   let playerToShootX;
-  let playerTofreezeX;
-  if (playerTofreeze == 'first') {
-    playerTofreezeX = 60;
+  let playerTostuckX;
+  if (playerTostuck == 'first') {
+    playerTostuckX = 60;
     playerToShootX = 585;
   } else {
-    playerTofreezeX = 585;
+    playerTostuckX = 585;
     playerToShootX = 60;
   }
   if (mode == 'single') {
@@ -21,23 +21,23 @@ export default async function freezeTest(page, coordinates, language, mode, play
     await page.mouse.click(coordinates.X + 425, coordinates.Y + 125);
   }
   await page.waitForFunction('remainingTimer < 150');
-  await page.mouse.click(coordinates.X + playerTofreezeX, coordinates.Y + 125);
-  let currentScreenshotPath = `./reports/${language}/countdown ${mode} frozen ${playerTofreeze}.png`
+  await page.mouse.click(coordinates.X + playerTostuckX, coordinates.Y + 125);
+  let currentScreenshotPath = `./reports/${language}/countdown ${mode} stuck ${playerTostuck}.png`
   await page.screenshot({ path: currentScreenshotPath });
   console.log(currentScreenshotPath);
   await page.waitForFunction('remainingTimer < 0');
   await page.mouse.click(coordinates.X + playerToShootX, coordinates.Y + 125);
   await page.waitForFunction('!players.first.moving && !players.second.moving && currentScreen.name == "end"')
-  let frozenResult = await isPlayerfrozen(page, 'first')
-  currentScreenshotPath = `./reports/${language}/end ${mode} frozen ${playerTofreeze}.png`
+  let stuckResult = await isPlayerstuck(page, 'first')
+  currentScreenshotPath = `./reports/${language}/end ${mode} stuck ${playerTostuck}.png`
   await page.screenshot({ path: currentScreenshotPath });
   console.log(currentScreenshotPath);
   await page.mouse.click(coordinates.X + 225, coordinates.Y + 125);
-  if (frozenResult) {
-    console.log(`${playerTofreeze} player in mode ${mode} is frozen as expected✅`);
+  if (stuckResult) {
+    console.log(`${playerTostuck} player in mode ${mode} is stuck as expected✅`);
     return true
   } else {
-    console.log(`${playerTofreeze} player in mode ${mode} is not frozen❌`);
+    console.log(`${playerTostuck} player in mode ${mode} is not stuck❌`);
     return false
   }
 }

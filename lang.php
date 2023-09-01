@@ -29,8 +29,8 @@
         $lang['developedWith'] = 'Desenvolvido com:';
         $lang['enemy'] = 'Inimigo';
         $lang['enemyReaction'] = 'Tempo de reação do Inimigo: ';
-        $lang['frozen'] = 'Congelado';
-        $lang['frozenMsg'] = 'Tentativas durante a contagem regressiva congelam o atirador.';
+        $lang['stuck'] = 'Travado';
+        $lang['stuckMsg'] = 'Tentativas durante a contagem regressiva travam o atirador.';
         $lang['gameCompleted1'] = 'Jogo concluído!!';
         $lang['gameCompleted2'] = 'Você é o atirador';
         $lang['gameCompleted3'] = 'mais rápido!!';
@@ -120,7 +120,7 @@
         $lang['shoot'] = 'Atire';
         $lang['taphere'] = 'Clique/Toque aqui para continuar';
         $lang['tryAgain'] = 'Tentar novamente';
-        $lang['wasFrozen'] = ' estava congelado';
+        $lang['wasStuck'] = ' estava travado';
         $lang['wasted'] = 'Você foi EXTERMINADO!!';
         $lang['won1'] = 'Jogador 1 venceu!!';
         $lang['won2'] = 'Jogador 2 venceu!!';
@@ -138,8 +138,8 @@
         $lang['developedWith'] = 'Desarrollado con:';
         $lang['enemy'] = 'Enemigo';
         $lang['enemyReaction'] = 'Tiempo de reacción del enemigo: ';
-        $lang['frozen'] = 'Congelado';
-        $lang['frozenMsg'] = 'Intentos durante la cuenta regresiva congelan al tirador.';
+        $lang['stuck'] = 'Atascado';
+        $lang['stuckMsg'] = 'Intentos durante la cuenta regresiva atascaron al tirador.';
         $lang['gameCompleted1'] = '¡Juego completado!';
         $lang['gameCompleted2'] = '¡Tu eres el tirador';
         $lang['gameCompleted3'] = 'mas rápido!';
@@ -229,7 +229,7 @@
         $lang['shoot'] = 'Dispara';
         $lang['taphere'] = 'Clic/Toca aquí para continuar';
         $lang['tryAgain'] = 'Intentar otra vez';
-        $lang['wasFrozen'] = ' estaba congelado';
+        $lang['wasStuck'] = ' estaba atascado';
         $lang['wasted'] = '¡Fuiste EXTERMINADO!';
         $lang['won1'] = '¡Jugador 1 ganaste!';
         $lang['won2'] = '¡Jugador 2 ganaste!';
@@ -247,8 +247,8 @@
         $lang['developedWith'] = 'Developed with:';
         $lang['enemy'] = 'Enemy';
         $lang['enemyReaction'] = 'Enemy\'s reaction time: ';
-        $lang['frozen'] = 'Frozen';
-        $lang['frozenMsg'] = 'Attempts during the countdown freeze the shooter.';
+        $lang['stuck'] = 'Stuck';
+        $lang['stuckMsg'] = 'Attempts during the countdown stuck the shooter.';
         $lang['gameCompleted1'] = 'Game completed!!';
         $lang['gameCompleted2'] = 'You are the';
         $lang['gameCompleted3'] = 'fastest shooter!!';
@@ -339,7 +339,7 @@
         $lang['taphere'] = 'Click/Tap here to continue';
         $lang['tryAgain'] = 'Try again';
         $lang['wasted'] = 'You are WASTED!!';
-        $lang['wasFrozen'] = ' was frozen';
+        $lang['wasStuck'] = ' was stuck';
         $lang['won1'] = 'Player 1 won!!';
         $lang['won2'] = 'Player 2 won!!';
         $lang['you'] = 'You';

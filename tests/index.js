@@ -4,7 +4,7 @@ import getCanvasCoordinates from './modules/getCanvasCoordinates.js';
 import getTextsMainPage from './modules/getTextsMainPage.js';
 import screenshotMenuAndArticle from './modules/screenshotMenuAndArticle.js';
 import mainShare from './modules/mainShare.js';
-import freezeTest from './modules/freezeTest.js';
+import stuckTest from './modules/stuckTest.js';
 import levels from './modules/levels.js';
 import generateAchievement from './modules/generateAchievement.js';
 import getTextsAchievement from './modules/getTextsAchievement.js';
@@ -65,9 +65,9 @@ import testTexts from './modules/testTexts.js';
             }
         )
 
-        await freezeTest(page, coordinates, testingLanguage, 'single')
-        await freezeTest(page, coordinates, testingLanguage, 'multi')
-        await freezeTest(page, coordinates, testingLanguage, 'multi', 'second')
+        await stuckTest(page, coordinates, testingLanguage, 'single')
+        await stuckTest(page, coordinates, testingLanguage, 'multi')
+        await stuckTest(page, coordinates, testingLanguage, 'multi', 'second')
 
         await levels(page, coordinates, testingLanguage)
 

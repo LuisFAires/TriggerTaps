@@ -14,7 +14,7 @@
                 </li>
                 <p class="helpParagraph">{$lang['help2']}</p>
                 <p class="helpParagraph">{$lang['help3']}</p>
-                <p class="helpParagraph">{$lang['frozenMsg']}</p>
+                <p class="helpParagraph">{$lang['stuckMsg']}</p>
             </section>
             <section>
                 <li>
