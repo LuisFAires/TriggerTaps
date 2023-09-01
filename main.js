@@ -164,10 +164,10 @@ window.addEventListener("load", () => {
             clearInterval(loadingInterval)
             window.scrollTo(0, 0)
             document.querySelector("#loadingOverlay").innerHTML = lang.ready
-            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             initializeGame()
             showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
             await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
+            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             document.getElementsByTagName('body')[0].style.overflow = 'unset'
             loadingOverlay.style.display = "none"
             await fullscreenLock()
