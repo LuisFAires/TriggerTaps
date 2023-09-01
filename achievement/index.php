@@ -14,9 +14,9 @@
     require_once '../lang.php';
 
     if($lang['currentLang'] == 'en'){
-        $title =  $result['result'].$lang['achievementTitle'];
+        $title =  $result.$lang['achievementTitle'];
     }else{
-        $title =  $lang['achievementTitle'].$result['result'];
+        $title =  $lang['achievementTitle'].$result;
     }
 ?>
 <!DOCTYPE html>
@@ -27,10 +27,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta name="description" content="<?php echo $result['result'].$lang['achievement'];?>">
+    <meta name="description" content="<?php echo $result.$lang['achievement'];?>">
     <meta property="og:title" content="<?php echo $title?>">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="<?php echo $result['result'].$lang['achievement'];?>">
+    <meta property="og:description" content="<?php echo $result.$lang['achievement'];?>">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
@@ -114,7 +114,7 @@
     <div id="outterContainer">
         <img src="../img/CowBoyShoot.gif">
         <div id="textContainer">
-            <span id="name"><?php echo $result['result']; ?></span>
+            <span id="name"><?php echo $result; ?></span>
             <span id="text"><?php echo $lang['achievement']; ?></span>
             <div>
                 <button id="share" onclick="share()"><?php echo $lang['share'];?></button>
@@ -151,7 +151,7 @@
             }catch{}
             navigator.share({
                 title: document.title,
-                text: "<?php echo $result['result'];?>"+text.innerHTML,
+                text: "<?php echo $result;?>"+text.innerHTML,
                 url: window.location.href + "?name=" + getCookie('achievement') + "&lang=<?php echo $lang['currentLang']?>"
             })
         }

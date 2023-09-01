@@ -11,13 +11,7 @@
         $iv = substr($toDecrypt, 0, $ivlen);
         $encrypted = substr($toDecrypt, $ivlen);
         
-        $result['result'] = openssl_decrypt($encrypted, $method, $key, 0, $iv);
-        //echo json_encode($result);
-
-        //$result['toDecrypt'] = $toDecrypt;
-        //$result['iv'] = $iv;
-        //$result['encrypted'] = $encrypted;
-        //var_dump($result);
+        $result = openssl_decrypt($encrypted, $method, $key, 0, $iv);
     }else{
         header("Location: https://triggertaps.top");
     }

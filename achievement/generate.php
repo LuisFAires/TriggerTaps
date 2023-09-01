@@ -7,10 +7,5 @@
        
         $result['result'] = $combination;
         echo json_encode($result);
-
-        //$result['iv'] = $iv;
-        //$result['encrypted'] = $encrypted;
-        //var_dump($result);
-        
     }
 ?>
