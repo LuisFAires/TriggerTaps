@@ -503,7 +503,7 @@ async function userInput(X, Y, key) {
         }
         if ((X > 0 && X < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")) {
             articleContainer.style.display = "block"
-            location.href = location.origin + location.pathname+ "#articleContainer"
+            location.hash = "#articleContainer"
             return
         }
         if (X > 550 && X < 650 && Y > 0 && Y < 80) {

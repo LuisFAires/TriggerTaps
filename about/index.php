@@ -12,7 +12,7 @@
 <body>
     <?php 
         require_once '../lang.php';
-        require_once '../help.php'; 
+        require_once '../article.php'; 
     ?>
     <script>
         let cookieExpires

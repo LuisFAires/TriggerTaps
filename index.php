@@ -126,7 +126,7 @@
             </div>
         </div>
     </div>
-    <?php require_once 'help.php'; ?>
+    <?php require_once 'article.php'; ?>
     <script>
         <?php
             echo 'lang = '.json_encode($lang);
