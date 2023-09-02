@@ -43,14 +43,12 @@ function showRotateOverlay() {
 }
 
 async function promotionAction(os, url, openStore) {
-    let outcome
+    if (deviceOS === os) {
+        location.href = openStore
+    }
     if (deferredPrompt != undefined) {
         let outcome = await installPrompt()
         if (outcome) return
-    }
-    if (deviceOS === os) {
-        location.href = openStore
-        return
     }
     location.href = url
 }

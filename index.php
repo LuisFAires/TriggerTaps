@@ -115,10 +115,10 @@
                 </canvas>
                 <div id="promotion" style="display: none;" onclick="installPrompt()">
                     <span><?php echo $lang['install'];?></span>
-                    <img class="storeBagde" src="/img/microsoft-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
+                    <img class="storeBagde" src="/img/microsoft-<?php echo $lang['currentLang'];?>.png" alt="Microsoft Store" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
                     <!--Coming soon-->
-                    <!--<img class="storeBagde" src="/img/play-<?php echo $lang['currentLang'];?>.png" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
-                    <img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
+                    <!--<img class="storeBagde" src="/img/play-<?php echo $lang['currentLang'];?>.png" alt="Google Play" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
+                    <img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" alt="App Store" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
                 </div>
             </div>
             <div id="right">
