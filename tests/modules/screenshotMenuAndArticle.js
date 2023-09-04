@@ -12,6 +12,6 @@ export default async function screenshotMenuAndArticle(page, coordinates, keyboa
   await page.screenshot({ path: currentScreenshotPath });
   console.log(currentScreenshotPath)
 
-  await page.click('#backToMain')
+  await page.click('#backToGame')
   return true
 }

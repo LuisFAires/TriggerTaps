@@ -168,6 +168,7 @@ window.addEventListener("load", () => {
             keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             document.getElementsByTagName('body')[0].style.overflow = 'unset'
             loadingOverlay.style.display = "none"
+            backToGame.style.display = "block"
             await fullscreenLock()
             await showRotateOverlay()
             await calculateDivs()

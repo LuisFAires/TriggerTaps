@@ -16,8 +16,9 @@
     ?>
     <script>
         let cookieExpires
-        document.getElementById("backToMain").setAttribute("onclick","location.href = location.origin")
+        document.getElementById("backToGame").setAttribute("onclick","location.href = location.origin")
         document.getElementsByTagName('body')[0].style.overflow = 'unset'
+        backToGame.style.display = "block"
     </script>
 </body>
 </html>

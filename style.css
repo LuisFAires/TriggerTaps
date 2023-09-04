@@ -35,8 +35,8 @@ body {
     padding: 0 2%;
 }
 
-#backToMain {
-    font-size: 35px;
+#backToGame {
+    display: none;
     float: right;
     position: sticky;
     top: 10px;

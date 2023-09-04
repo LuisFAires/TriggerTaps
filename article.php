@@ -1,7 +1,7 @@
 <?php 
     echo <<<END
     <article id="articleContainer">
-        <button id="backToMain" onclick="location.hash = '';location.hash = '#main'">X</button>
+        <button id="backToGame" onclick="location.hash = '';location.hash = '#main'">{$lang['back']}</button>
         <h1>{$lang['name']}</h1>
         <figure>
             <img id="logo" src="/img/CowBoyShoot.gif" alt="TriggerTaps.Top character shooting">

@@ -22,6 +22,7 @@
         $lang['achievement'] = ' alcançou conquista de atirador mais rápido 🏆 jogue e demonstre que pode fazer o mesmo!';
         $lang['achievementPrompt'] = 'Digite o nome/apelido que estará na sua conquista de atirador mais rápido:';
         $lang['achievementTitle'] = 'Conquista de ';
+        $lang['back'] = 'Voltar ao jogo';
         $lang['completed'] = ' concluído';
         $lang['contact'] = 'Contato:';
         $lang['credits'] = 'Créditos:';
@@ -131,6 +132,7 @@
         $lang['achievement'] = ' ha conseguido el logro del tirador más rápido 🏆 ¡juega y demuestra que tú puedes hacer lo mismo!';
         $lang['achievementPrompt'] = 'Escribe el nombre/apodo que estará en tu logro de tirador más rápido:';
         $lang['achievementTitle'] = 'Logro de ';
+        $lang['back'] = 'Volver al juego';
         $lang['completed'] = ' completa';
         $lang['contact'] = 'Contacto:';
         $lang['credits'] = 'Creditos:';
@@ -240,6 +242,7 @@
         $lang['achievement'] = ' has accomplished the fastest shooter achievement 🏆 play and prove that you can do the same!';
         $lang['achievementPrompt'] = 'Type the name/nickname will be in your fastest shooter achievement:';
         $lang['achievementTitle'] = '\'s Achievement';
+        $lang['back'] = 'Back to game';
         $lang['completed'] = ' completed';
         $lang['contact'] = 'Contact:';
         $lang['credits'] = 'Credits:';
