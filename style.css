@@ -37,9 +37,9 @@ body {
 
 #backToGame {
     display: none;
-    float: right;
-    position: sticky;
-    top: 10px;
+    position: fixed;
+    right: 2%;
+    bottom: 10px;
     margin: 0;
 }
 
@@ -67,7 +67,8 @@ h2 {
     margin: 20px 0 0 0;
 }
 
-.helpParagraph {
+.articleParagraph {
+    white-space: pre-line;
     margin: 0;
     font-size: 25px;
     text-align: justify;
@@ -98,15 +99,14 @@ button {
     width: 150px;
 }
 
-#privacyText {
-    white-space: pre-line;
-}
-
 #rotateOverlay,
 #loadingOverlay,
 #bottom,
 #center,
-#promotion {
+#promotion,
+#upper,
+#left,
+#right {
     display: flex;
     align-items: center;
     justify-content: center;

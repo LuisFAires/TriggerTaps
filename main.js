@@ -168,7 +168,6 @@ window.addEventListener("load", () => {
             keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             document.getElementsByTagName('body')[0].style.overflow = 'unset'
             loadingOverlay.style.display = "none"
-            backToGame.style.display = "block"
             await fullscreenLock()
             await showRotateOverlay()
             await calculateDivs()
@@ -181,6 +180,12 @@ window.addEventListener("load", () => {
             })
         }
     })
+})
+
+backToGame.style.opacity = 0
+window.addEventListener("scroll", () => {
+    backToGame.style.display = window.scrollY > window.innerHeight * 0.25 ? "block" : "none"
+    backToGame.style.opacity = (window.scrollY / window.innerHeight);
 })
 
 if ("serviceWorker" in navigator) {
