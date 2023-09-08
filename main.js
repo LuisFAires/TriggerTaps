@@ -184,8 +184,16 @@ window.addEventListener("load", () => {
 
 backToGame.style.opacity = 0
 window.addEventListener("scroll", () => {
-    backToGame.style.display = window.scrollY > window.innerHeight * 0.25 ? "block" : "none"
-    backToGame.style.opacity = (window.scrollY / window.innerHeight);
+    if(scrollY < 50){
+        backToGame.style.display = "none"
+        backToGame.style.opacity  = 0
+    }else if(scrollY < 150){
+        backToGame.style.display = "block"
+        backToGame.style.opacity = ((scrollY - 50) / 150);
+    }else{
+        backToGame.style.display = "block"
+        backToGame.style.opacity = 1
+    }
 })
 
 if ("serviceWorker" in navigator) {
