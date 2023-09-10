@@ -27,8 +27,6 @@ body {
 
 #main {
     flex-direction: column;
-    width: 100%;
-    height: 100vh;
 }
 
 #articleContainer {
@@ -114,11 +112,6 @@ button {
 
 #upper {
     max-height: 30vh;
-    width: 100%;
-}
-
-#bottom {
-    width: 100%;
 }
 
 #center {

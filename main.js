@@ -108,7 +108,7 @@ function calculateDivs() {
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null) return
 
-    let sideDivWidth = (bottom.clientWidth - center.clientWidth) / 2
+    let sideDivWidth = parseInt((bottom.clientWidth - center.clientWidth) / 2)
     left.style.width = right.style.width = (sideDivWidth >= 0 ? sideDivWidth : 0) + "px"
 
     promotion.style.display = (window.innerHeight >= gameArea.height + 50 && showPromotion) ? "flex" : "none"
