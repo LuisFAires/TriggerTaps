@@ -27,7 +27,7 @@
         "name": "TriggerTaps.Top",
         "description": "<?php echo $lang['description']?>",
         "inLanguage": ["English", "Spanish", "Portuguese"],
-        "genre": ["Action", "Adventure", "Shooting, "Challenge"],
+        "genre": ["Action", "Adventure", "Shooting", "Challenge"],
         "operatingSystem": "Any",
         "applicationCategory": "Game",
         "url": "https://triggertaps.top",
@@ -61,7 +61,7 @@
             "url": "https://linkedin.com/in/luisfaires/"
         },
         "softwareVersion": "1.0.0",
-        "datePublished": "2023-08-18",
+        "datePublished": "2023-08-18"
     }
     </script>
     <meta id="description" name="description" content="<?php echo $lang['description']?>">
