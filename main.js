@@ -143,9 +143,9 @@ function insertAds() {
     }
 
     function adString(adHeight = 50) {
-        console.log("Ad placed")
-        //setTimeout(()=>{(adsbygoogle = window.adsbygoogle || []).push({});},100)
-        return ""//`<ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="1070652247" data-full-width-responsive="true" data-adtest="on"></ins>`
+        //console.log("Ad placed")
+        setTimeout(()=>{(adsbygoogle = window.adsbygoogle || []).push({});},100)
+        return `<ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="3752036653" data-full-width-responsive="true"></ins>`
     }
 }
 
