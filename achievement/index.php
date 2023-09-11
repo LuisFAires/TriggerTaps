@@ -8,11 +8,7 @@
     require_once './read.php';
     require_once '../lang.php';
 
-    if($lang['currentLang'] == 'en'){
-        $title =  $result.$lang['achievementTitle'];
-    }else{
-        $title =  $lang['achievementTitle'].$result;
-    }
+    $title =  $lang['achievementTitle'].$result;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang['currentLang']; ?>" translate="no">

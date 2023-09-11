@@ -289,7 +289,7 @@
         END;
         $lang['achievement'] = ' has accomplished the fastest shooter achievement 🏆 play and prove that you can do the same!';
         $lang['achievementPrompt'] = 'Type the name/nickname will be in your fastest shooter achievement:';
-        $lang['achievementTitle'] = '\'s Achievement';
+        $lang['achievementTitle'] = 'Achievement of ';
         $lang['back'] = 'Back to game';
         $lang['completed'] = ' completed';
         $lang['contact'] = 'Contact:';
