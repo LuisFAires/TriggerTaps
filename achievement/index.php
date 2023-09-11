@@ -1,13 +1,8 @@
 <?php
-    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+    if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on' || str_contains($_SERVER['HTTP_HOST'], 'www.')) {
         if(!headers_sent()) {
-        header('Status: 301 Moved Permanently');
-        header(sprintf(
-        'Location: https://%s%s',
-        $_SERVER['HTTP_HOST'],
-        $_SERVER['REQUEST_URI']
-        ));
-        exit();
+            header('Location: https://'.str_replace('www.', '', $_SERVER['HTTP_HOST']).$_SERVER['REQUEST_URI'], true, 301);
+            exit();
         }
     }
     require_once './read.php';
@@ -28,6 +23,7 @@
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta name="description" content="<?php echo $result.$lang['achievement'];?>">
+    <meta name="twitter:card" content="summary">
     <meta property="og:title" content="<?php echo $title?>">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $result.$lang['achievement'];?>">
