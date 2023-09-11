@@ -1,6 +1,6 @@
 <?php 
     echo <<<END
-    <article id="articleContainer">
+    <article id="article">
         <button id="backToGame" onclick="location.hash = '';location.hash = '#main'">{$lang['back']}</button>
         <h1>{$lang['name']}</h1>
         <figure>
