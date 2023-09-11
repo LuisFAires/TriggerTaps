@@ -28,7 +28,7 @@
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?php echo $result.$lang['achievement'];?>">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
-    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
+    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?php echo $achievementValue.'&lang='.$lang['currentLang'] ?>">
     <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
@@ -116,7 +116,7 @@
                 <button id="share" onclick="share()"><?php echo $lang['share'];?></button>
                 <button id="play" onclick="playButtonClick()"><?php echo $lang['play']; ?></button>
             </div>
-        <div>
+        </div>
     </div>
     <script>
         function playButtonClick(){
@@ -148,7 +148,7 @@
             navigator.share({
                 title: document.title,
                 text: "<?php echo $result;?>"+text.innerHTML,
-                url: window.location.href + "?name=" + getCookie('achievement') + "&lang=<?php echo $lang['currentLang']?>"
+                url: "https://triggertaps.top/achievement/?name=<?php echo $achievementValue.'&lang='.$lang['currentLang'] ?>"
             })
         }
         //play blinking
