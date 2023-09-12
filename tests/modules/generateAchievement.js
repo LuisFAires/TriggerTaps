@@ -29,9 +29,9 @@ export default async function generateAchievement(page, coordinates, data, userN
   console.log('Dialog listener removed✅')
   if(achievementPromptTested && invalidTested){
     console.log('Dialogs texts✅')
-    return true
+    return {result: true, function: 'generateAchievement'}
   }else{
     console.log('Dialogs texts❌')
-    return false
+    return {result: false, function: 'generateAchievement'}
   }
 }

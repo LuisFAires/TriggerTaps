@@ -19,8 +19,8 @@ import testTexts from './modules/testTexts.js';
     const url = 'https://dev.triggertaps.top/';
     const languagesToTest = ['en', 'es', 'pt'];
     const userName = 'Automated Tester';
-    const deviceWidth = 1024;
-    const deviceHeight = 768;
+    const deviceWidth = 800;
+    const deviceHeight = 600;
 
     const browser = await puppeteer.launch({ headless: "new", args: ['--mute-audio'] });
     const page = await browser.newPage();
@@ -40,22 +40,27 @@ import testTexts from './modules/testTexts.js';
 
     await page.setViewport({ width: deviceWidth, height: deviceHeight });
 
-    let folderCreated = await createFolder('./', 'reports')
-    if (!folderCreated) return
+    let results = []
+
+    results.push(await createFolder('./', 'reports'))
+
 
     for (let testingLanguage of languagesToTest) {
         console.log('Current testing language:', testingLanguage)
 
-        await createFolder('./reports/', testingLanguage)
+        results.push(await createFolder('./reports/', testingLanguage))
 
         let coordinates = await getCanvasCoordinates(page, url, testingLanguage)
+        results.push(coordinates)
+        coordinates = coordinates.coordinates
+
 
         let texts = await getTextsMainPage(page)
 
-        await screenshotMenuAndArticle(page, coordinates, false, testingLanguage);
-        await screenshotMenuAndArticle(page, coordinates, true, testingLanguage);
+        results.push(await screenshotMenuAndArticle(page, coordinates, false, testingLanguage))
+        results.push(await screenshotMenuAndArticle(page, coordinates, true, testingLanguage))
 
-        await mainShare(
+        results.push(await mainShare(
             page,
             coordinates,
             {
@@ -63,45 +68,52 @@ import testTexts from './modules/testTexts.js';
                 text: texts.lang.description,
                 url: url + "?lang=" + testingLanguage
             }
-        )
+        ))
 
-        await stuckTest(page, coordinates, testingLanguage, 'single')
-        await stuckTest(page, coordinates, testingLanguage, 'multi')
-        await stuckTest(page, coordinates, testingLanguage, 'multi', 'second')
+        results.push(await stuckTest(page, coordinates, testingLanguage, 'single'))
+        results.push(await stuckTest(page, coordinates, testingLanguage, 'multi'))
+        results.push(await stuckTest(page, coordinates, testingLanguage, 'multi', 'second'))
 
-        await levels(page, coordinates, testingLanguage)
+        results.push(await levels(page, coordinates, testingLanguage))
 
-        await generateAchievement(page, coordinates,
+        results.push(await generateAchievement(page, coordinates,
             {
                 invalid: texts.lang.invalid,
                 achievementPrompt: texts.lang.achievementPrompt
             },
             userName
-        )
+        ))
         
         texts.achievementPage = await getTextsAchievement(page, userName)
 
-        await achievementShare(page, testingLanguage, {
-            title: testingLanguage == 'en' ? userName + texts.lang.achievementTitle : texts.lang.achievementTitle + userName,
+        results.push(await achievementShare(page, testingLanguage, {
+            title: texts.lang.achievementTitle + userName,
             text: userName + texts.lang.achievement,
-            url: url
-        })
+            url: "https://triggertaps.top/"
+        }))
 
-        await achievementScreenshot(page, testingLanguage, deviceWidth, deviceHeight)
+        results.push(await achievementScreenshot(page, testingLanguage, deviceWidth, deviceHeight))
 
-        await achievementPlay(page, url)
+        results.push(await achievementPlay(page, url))
 
-        await unavailable(page, url, testingLanguage, deviceWidth, deviceHeight, {
+        results.push(await unavailable(page, url, testingLanguage, deviceWidth, deviceHeight, {
             noConnection: texts.lang.noConnection,
             tryAgain: texts.lang.tryAgain
-        })
+        }))
 
-        await testLangSwitcher(page, coordinates, url, testingLanguage, languagesToTest)
+        results.push(await testLangSwitcher(page, coordinates, url, testingLanguage, languagesToTest))
 
         await testTexts(texts)
     }
 
     await browser.close();
+
+    console.log(results)
+    for(let result of results){
+        if(result.result != true){
+            console.log('something went wrong❌❌❌')
+        }
+    }
 
     console.log('Everything done!!!')
     console.timeEnd('Runing time');

@@ -24,10 +24,9 @@ export default async function getCanvasCoordinates(page, url, language) {
   })
   console.log(`Canvas coordinates: X:`,  { X: canvasX, Y: canvasY });
   if (canvasX >= 0 & canvasY >= 0) {
-    return { X: canvasX, Y: canvasY }
+    return {result: true, function: 'getCanvasCoordinates', coordinates: { X: canvasX, Y: canvasY }}
   } else {
-    
-    return false
+    return {result: false, function: 'getCanvasCoordinates', coordinates: false}
   }
 }
 

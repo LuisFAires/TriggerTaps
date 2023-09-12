@@ -17,14 +17,14 @@ export default async function achievementShare(page, language, data) {
     }
   })
   if (data.url+`achievement/?name=${cookie}&lang=${language}` != achievementSharedData.url) {
-    return false
+    return {result: false, function: 'achievementShare', error: 'url'}
   }
   if (data.title != achievementSharedData.title) {
-    return false
+    return {result: false, function: 'achievementShare', error: 'title'}
   }
   if (data.text != achievementSharedData.text) {
-    return false
+    return {result: false, function: 'achievementShare', error: 'text'}
   }
   console.log("Achievement shared data ✅")
-  return true
+  return {result: true, function: 'achievementShare'}
 }

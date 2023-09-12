@@ -29,5 +29,5 @@ export default async function testLangSwitcher(page, coordinates, url, language,
       somethingWrong = true
     }
   }
-  return !somethingWrong
+  return {result: !somethingWrong, function: 'testLangSwitcher'}
 }

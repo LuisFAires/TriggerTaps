@@ -3,7 +3,7 @@ export default async function createFolder(path = './', foldername = 'folder'){
     let fullPath = `${path}${foldername}/`
     if (fs.existsSync(fullPath)) {
         console.log(`${fullPath} already exists✅`)
-        return true
+        return {result: true, function: 'createFolder'}
     } else {
         await fs.mkdir(fullPath, (err) => {
           if (err) {
@@ -13,8 +13,9 @@ export default async function createFolder(path = './', foldername = 'folder'){
     console.log(`${fullPath} created✅`);
     }
     if (fs.existsSync(fullPath)) {
-        return true
+        return {result: true, function: 'createFolder'}
     }else{
-        return false
+        return {result: false, function: 'createFolder'}
     }
+
 }

@@ -8,5 +8,5 @@ export default async function achievementScreenshot(page, language, deviceWidth,
     await page.screenshot({ path: currentScreenshotPath });
     console.log(currentScreenshotPath);
     await page.setViewport({ width: deviceWidth, height: deviceHeight });
-    return true
+    return {result: true, function: 'achievementScreenshot'}
 }

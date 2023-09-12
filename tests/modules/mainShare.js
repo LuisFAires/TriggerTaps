@@ -15,5 +15,5 @@ export default async function mainShare(page, coordinates, data) {
     return false
   }
   console.log('menu shared data✅')
-  return true
+  return {result: true, function: 'mainShare'}
 }

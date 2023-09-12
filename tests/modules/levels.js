@@ -28,7 +28,7 @@ export default async function levels(page, coordinates, language) {
     console.log('Player 2 is dead as expected✅');
   } else {
     console.log('Players 2 is alive he must dead❌');
-    return false
+    return {result: false, function: 'levels'}
   }
   do {
     currentScreenshotPath = `./reports/${language}/end level ${lvl}.png`
@@ -45,5 +45,5 @@ export default async function levels(page, coordinates, language) {
   currentScreenshotPath = `./reports/${language}/end level 10 game completed.png`
   await page.screenshot({ path: currentScreenshotPath });
   console.log(currentScreenshotPath);
-  return true
+  return {result: true, function: 'levels'}
 }

@@ -35,9 +35,9 @@ export default async function stuckTest(page, coordinates, language, mode, playe
   await page.mouse.click(coordinates.X + 225, coordinates.Y + 125);
   if (stuckResult) {
     console.log(`${playerTostuck} player in mode ${mode} is stuck as expected✅`);
-    return true
+    return {result: true, function:'stuckTest'}
   } else {
     console.log(`${playerTostuck} player in mode ${mode} is not stuck❌`);
-    return false
+    return {result: false, function:'stuckTest'}
   }
 }

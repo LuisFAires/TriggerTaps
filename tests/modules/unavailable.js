@@ -25,8 +25,8 @@ export default async function unavailable(page, url, language, deviceWidth, devi
   await page.click("#tryAgain");
   if (url != page.url()) {
     console.log("Try again button isn't working❌");
-    return false
+    return {result: false, function: 'unavailable'}
   }
   console.log('Try again button works✅');
-  return true
+  return {result: true, function: 'unavailable'}
 }
