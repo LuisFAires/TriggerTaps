@@ -1,6 +1,7 @@
 @font-face {
     font-family: game;
     src: url(/PixelOperator-Bold.ttf);
+    font-display: swap;
 }
 
 body {
