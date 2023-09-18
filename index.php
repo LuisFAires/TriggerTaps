@@ -81,20 +81,6 @@
         <?php require_once 'style.css'; ?>
     </style>
     <meta name="viewport" content="user-scalable=no, width=device-width">
-    <!-- adsense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
-     crossorigin="anonymous"></script>
-     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7HL7GPTR"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-CH7HL7GPTR');
-    </script>
-    <!-- adblock msg -->
-    <script async src="https://fundingchoicesmessages.google.com/i/pub-4327628330003063?ers=1" nonce="KD_ZOof8y929rPIo-PJDiw"></script><script nonce="KD_ZOof8y929rPIo-PJDiw">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
 </head>
 
 <body>
@@ -133,6 +119,20 @@
             require_once 'main.js';
         ?>
     </script>
+    <!-- adsense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"
+    crossorigin="anonymous"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7HL7GPTR"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-CH7HL7GPTR');
+    </script>
+    <!-- adblock msg -->
+    <script async src="https://fundingchoicesmessages.google.com/i/pub-4327628330003063?ers=1" nonce="KD_ZOof8y929rPIo-PJDiw"></script><script nonce="KD_ZOof8y929rPIo-PJDiw">(function() {function signalGooglefcPresent() {if (!window.frames['googlefcPresent']) {if (document.body) {const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe);} else {setTimeout(signalGooglefcPresent, 0);}}}signalGooglefcPresent();})();</script>
 </body>
 
 </html>
