@@ -588,12 +588,13 @@ function waitForInteractionLeave() {
 async function initializeGame() {
     if (gameAssetsLoaded) {
         clearInterval(initializeGame)
-        if (navigator.keyboard) {
-            let keyboard = await navigator.keyboard.getLayoutMap()
-            physicalKeyboard = keyboard.size == 0 ? false : true
-        } else {
-            physicalKeyboard = true
+        let keyboard = {}
+        try{
+            keyboard = await navigator.keyboard.getLayoutMap()
+        }catch{
+            keyboard.size = 1
         }
+        physicalKeyboard = keyboard.size == 0 ? false : true
         setCanvasBoundings()
         changeCurrentScreen(screens.menu)
 
