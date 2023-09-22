@@ -7,7 +7,15 @@
             <img id="logo" src="/img/CowBoyShoot.gif" alt="TriggerTaps.Top character shooting">
             <figcaption>TriggerTaps.Top character shooting</figcaption>
         </figure>
-        <ul>
+        <ul> 
+            <li>
+                <h2 id="lang">{$lang['lang']}</h2>
+                <section>
+                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=en;expires=\${cookieExpires};` : 'lang=en'; location.reload()">English</button>
+                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=es;expires=\${cookieExpires};` : 'lang=es'; location.reload()">Español</button>
+                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=pt;expires=\${cookieExpires};` : 'lang=pt'; location.reload()">Português</button>
+                </section>
+            </li>
             <li>
                 <h2 id="about">{$lang['about']}</h2>
                 <section>
@@ -28,14 +36,6 @@
                         <br>
                         <p class="articleParagraph">{$lang['keyboardMapping']}</p>
                     </div>
-                </section>
-            </li>
-            <li>
-                <h2 id="lang">{$lang['lang']}</h2>
-                <section>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=en;expires=\${cookieExpires};` : 'lang=en'; location.reload()">English</button>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=es;expires=\${cookieExpires};` : 'lang=es'; location.reload()">Español</button>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=pt;expires=\${cookieExpires};` : 'lang=pt'; location.reload()">Português</button>
                 </section>
             </li>
             <li>
