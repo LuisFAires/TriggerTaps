@@ -13,6 +13,8 @@ const left = document.getElementById("left")
 const center = document.getElementById("center")
 const right = document.getElementById("right")
 const promotion = document.getElementById("promotion")
+const touchDevice = navigator.maxTouchPoints > 0 ? true : false
+const isInIframe = window.self !== window.top
 
 let afterResizeTimeout
 let lastWidth
@@ -20,10 +22,7 @@ let lastHeigth
 let lastPrompt = 0
 let lastAdUpdate = 0
 let deferredPrompt
-
 let showPromotion
-
-const touchDevice = navigator.maxTouchPoints > 0 ? true : false
 
 let deviceOS
 if (/iPad|iPhone|iPod/.test(window.navigator.userAgent)) {
@@ -45,6 +44,7 @@ function showRotateOverlay() {
 async function promotionAction(os, url, openStore) {
     if (deviceOS === os) {
         location.href = openStore
+        return
     }
     if (deferredPrompt != undefined) {
         let outcome = await installPrompt()
@@ -139,7 +139,7 @@ function insertAds() {
     for (container of containers) {
         let containerWidth = container.clientWidth
         let containerHeight = container.clientHeight
-        container.innerHTML = containerWidth >= 135 && containerHeight >= 50 ? adString(containerHeight) : ""
+        container.innerHTML = containerWidth >= 135 && containerHeight >= 50 && !isInIframe ? adString(containerHeight) : ""
     }
 
     function adString(adHeight = 50) {
