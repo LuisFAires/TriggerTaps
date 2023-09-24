@@ -11,9 +11,9 @@
             <li>
                 <h2 id="lang">{$lang['lang']}</h2>
                 <section>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=en;expires=\${cookieExpires};` : 'lang=en'; location.reload()">English</button>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=es;expires=\${cookieExpires};` : 'lang=es'; location.reload()">Español</button>
-                    <button class="langBtn" onclick="window.history.replaceState({}, document.title, window.location.pathname); document.cookie = cookieExpires ? `lang=pt;expires=\${cookieExpires};` : 'lang=pt'; location.reload()">Português</button>
+                    <button class="langBtn" onclick="languageSwitcher('en')">English</button>
+                    <button class="langBtn" onclick="languageSwitcher('es')">Español</button>
+                    <button class="langBtn" onclick="languageSwitcher('pt')">Português</button>
                 </section>
             </li>
             <li>
@@ -95,4 +95,7 @@
             </li>
         </ul>
     </article>
+    <script>
     END;
+    require_once 'article.js';
+    echo '</script>';
