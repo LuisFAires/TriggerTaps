@@ -28,7 +28,8 @@ let playersUpdateInterval
 let canvasBoudingsTimeout
 let gameAssetsLoaded
 let physicalKeyboard
-let achievementLocation = location.origin + "/achievement/"
+let cookieAchievement
+let achievementUrl
 let touchPressed = false
 let cookieExpires = new Date()
 cookieExpires.setFullYear(cookieExpires.getFullYear() + 1)
@@ -254,7 +255,7 @@ const screens = {
                 context.fillStyle = "#000000"
                 context.fillText(lang.press + " H", 65, 75)
             }
-            if (getCookie("achievement")) {
+            if (achievementUrl) {
                 context.font = "30px game"
                 context.fillStyle = "#fff"
                 context.fillRect(125, 205, 400, 40)
@@ -479,8 +480,10 @@ async function userInput(X, Y, key) {
                 let response = await fetch(location.origin + "/achievement/generate.php", { method: 'POST', body: data })
                 response = await response.json()
                 result = encodeURIComponent(response.result)
-                document.cookie = `achievement=${result};expires=${cookieExpires};`;
-                location.href = achievementLocation
+                document.cookie = `achievement=${result};expires=${cookieExpires};`
+                cookieAchievement = getCookie("achievement")
+                setAchievementUrl(result)
+                window.open(achievementUrl, '_blank')
                 return
             }
             window.alert(lang.invalid)
@@ -518,9 +521,8 @@ async function userInput(X, Y, key) {
             })
             return
         }
-        let cookieAchievement = getCookie("achievement")
-        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && cookieAchievement != "") {
-            location.href = achievementLocation
+        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && achievementUrl) {
+            window.open(achievementUrl, '_blank')
         }
         return
     }
@@ -585,16 +587,28 @@ function waitForInteractionLeave() {
     })
 }
 
+function setAchievementUrl(result) {
+    if (cookieAchievement) {
+        achievementUrl = location.origin + `/achievement/`
+    } else {
+        achievementUrl = location.origin + `/achievement/?name=${result}&lang=${lang.currentLang}`
+    }
+}
+
 async function initializeGame() {
     if (gameAssetsLoaded) {
         clearInterval(initializeGame)
         let keyboard = {}
-        try{
+        try {
             keyboard = await navigator.keyboard.getLayoutMap()
-        }catch{
+        } catch {
             keyboard.size = 1
         }
         physicalKeyboard = keyboard.size == 0 ? false : true
+
+        cookieAchievement = getCookie("achievement")
+        if (cookieAchievement) setAchievementUrl()
+
         setCanvasBoundings()
         changeCurrentScreen(screens.menu)
 
