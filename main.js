@@ -1,5 +1,5 @@
 /*
-This file is responsible for everything that happens out side of canvas tag
+This file is responsible for everything that happens into the main div
 
 Every time that the canvas is moved the X and Y cordinates must be refreshed by calling setCanvasBoundings()
 */
@@ -182,20 +182,6 @@ window.addEventListener("load", () => {
     })
 })
 
-backToGame.style.opacity = 0
-window.addEventListener("scroll", () => {
-    if(scrollY < 50){
-        backToGame.style.display = "none"
-        backToGame.style.opacity  = 0
-    }else if(scrollY < 150){
-        backToGame.style.display = "block"
-        backToGame.style.opacity = ((scrollY - 50) / 150);
-    }else{
-        backToGame.style.display = "block"
-        backToGame.style.opacity = 1
-    }
-})
-
 if ("serviceWorker" in navigator) {
     window.addEventListener("beforeinstallprompt", definePrompt = (ev) => {
         ev.preventDefault()
@@ -225,4 +211,3 @@ if ("serviceWorker" in navigator) {
     })
     navigator.serviceWorker.register("./serviceworker.js")
 }
-
