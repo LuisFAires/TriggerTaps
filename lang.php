@@ -1,7 +1,7 @@
 <?php
     $acceptableLanguages = ['pt', 'en', 'es'];
     if(isset($_GET['lang']) && in_array($_GET['lang'], $acceptableLanguages)){
-        setcookie('lang', $_GET['lang']);
+        setcookie('lang', $_GET['lang'], time()+60*60*24*365, '/');
         $lang['currentLang'] = $_GET['lang'];
     }
     if(!isset($lang['currentLang']) && isset($_COOKIE['lang']) && in_array($_COOKIE['lang'], $acceptableLanguages)){
