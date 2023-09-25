@@ -7,7 +7,7 @@
         $toDecrypt = base64_decode(htmlspecialchars($_COOKIE['achievement']));
         $achievementValue = urlencode($_COOKIE['achievement']);
     }
-    if(isset($toDecrypt)){
+    if(isset($toDecrypt) && isset($achievementValue)){
         
         $ivlen = openssl_cipher_iv_length($method);
         $iv = substr($toDecrypt, 0, $ivlen);
