@@ -17,9 +17,13 @@
                 </section>
             </li>
             <li>
-                <h2 id="about">{$lang['about']}</h2>
+                <h2 id="howToPlay">{$lang['howToPlay']}</h2>
                 <section>
-                    <p class="articleParagraph">{$lang['aboutText']}</p>
+                    <p class="articleParagraph">{$lang['howToPlayText']}</p>
+                    <div id="keyboardMapping">
+                        <br>
+                        <p class="articleParagraph">{$lang['keyboardMapping']}</p>
+                    </div>
                 </section>
             </li>
             <li>
@@ -29,13 +33,9 @@
                 </section>
             </li>
             <li>
-                <h2 id="howToPlay">{$lang['howToPlay']}</h2>
+                <h2 id="about">{$lang['about']}</h2>
                 <section>
-                    <p class="articleParagraph">{$lang['howToPlayText']}</p>
-                    <div id="keyboardMapping">
-                        <br>
-                        <p class="articleParagraph">{$lang['keyboardMapping']}</p>
-                    </div>
+                    <p class="articleParagraph">{$lang['aboutText']}</p>
                 </section>
             </li>
             <li>
