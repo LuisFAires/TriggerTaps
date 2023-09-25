@@ -514,11 +514,16 @@ async function userInput(X, Y, key) {
             try {
                 gtag('event', 'shareFromMenu')
             } catch { }
-            navigator.share({
+            let dataToShare = {
                 title: document.title,
                 text: lang.description,
                 url: location.origin + "/?lang=" + lang.currentLang
-            })
+            }
+            if (navigator.canShare(dataToShare)) {
+                navigator.share(dataToShare)
+            } else {
+                window.open(location.origin, '_blank')
+            }
             return
         }
         if ((X > 125 && X < 525 && Y > 205 && Y < 245) && achievementUrl) {
