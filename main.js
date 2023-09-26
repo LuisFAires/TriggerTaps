@@ -106,7 +106,7 @@ function calculateDivs() {
     if (loadingOverlay.style.display != "none") return
     if (rotateOverlay.style.display != "none") return
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
-    if (touchDevice && document.fullscreenElement === null) return
+    if (touchDevice && document.fullscreenElement === null && !isInIframe) return
 
     let sideDivWidth = parseInt((bottom.clientWidth - center.clientWidth) / 2)
     left.style.width = right.style.width = (sideDivWidth >= 0 ? sideDivWidth : 0) + "px"
