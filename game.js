@@ -483,7 +483,7 @@ async function userInput(X, Y, key) {
                 document.cookie = `achievement=${result};expires=${cookieExpires};`
                 cookieAchievement = getCookie("achievement")
                 setAchievementUrl(result)
-                window.open(achievementUrl, '_blank')
+                location.href = achievementUrl
                 return
             }
             window.alert(lang.invalid)
@@ -527,7 +527,7 @@ async function userInput(X, Y, key) {
             return
         }
         if ((X > 125 && X < 525 && Y > 205 && Y < 245) && achievementUrl) {
-            window.open(achievementUrl, '_blank')
+            location.href = achievementUrl
         }
         return
     }
