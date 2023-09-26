@@ -47,10 +47,10 @@ async function promotionAction(os, url, openStore) {
         return
     }
     if (deferredPrompt != undefined) {
-        let outcome = await installPrompt()
-        if (outcome) return
+        await installPrompt()
+        return
     }
-    location.href = url
+    window.open(url, '_blank')
 }
 
 async function fullscreenLock() {
