@@ -71,6 +71,7 @@
     <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="apple-touch-icon" href="/img/ios/192.png">
     <link rel="icon" href="/img/CowBoyShoot.gif">
+    <meta name="robots" content="max-image-preview:large">
     <meta name="theme-color" content="#deb887">
     <link rel="manifest" href="./manifest.json">
     <link rel="prefetch" href="/PixelOperator-Bold.ttf" as="font">
