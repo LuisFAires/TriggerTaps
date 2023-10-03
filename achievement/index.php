@@ -141,11 +141,16 @@
             try{
                 gtag('event', 'shareFromAchievement')
             }catch{}
-            navigator.share({
+            let dataToShare = {
                 title: document.title,
                 text: "<?php echo $result;?>"+text.innerHTML,
                 url: "https://triggertaps.top/achievement/?name=<?php echo $achievementValue.'&lang='.$lang['currentLang'] ?>"
-            })
+            } 
+            if(navigator.canShare(dataToShare)){
+                navigator.share(dataToShare)
+            }else{
+                window.open(dataToShare.url, '_blank')
+            }
         }
         //play blinking
         let playButton = document.getElementById("play")
