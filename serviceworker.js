@@ -7,7 +7,7 @@ const offlineFallbackFiles = [
     "/PixelOperator-Bold.ttf",
     "/img/sprites.webp",
     "/img/CowBoyShoot.gif",
-    "/unavailable.php"
+    "/unavailable/"
 ]
 
 self.addEventListener("install", (event) => {
@@ -56,7 +56,7 @@ self.addEventListener('fetch', (event) => {
             //If its unable to get the resource show the unvailable page
             () => {
                 return caches.match(event.request).then((res) =>{
-                    return (res || caches.match('/unavailble.php'))
+                    return (res || caches.match('/unavailble'))
                 })
             }
         )

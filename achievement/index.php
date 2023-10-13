@@ -6,7 +6,7 @@
         }
     }
     require_once './read.php';
-    require_once '../lang.php';
+    require_once './lang.php';
 
     $title =  $lang['achievementTitle'].$result;
 ?>

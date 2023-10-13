@@ -20,12 +20,12 @@ export default async function testLangSwitcher(page, coordinates, url, language,
     await page.screenshot({ path: currentScreenshotPath });
     console.log(currentScreenshotPath)
     let currentLang = await page.evaluate(() => {
-      return lang.currentLang
+      return document.documentElement.lang
     });
     if (currentLang == languagesOrder[i]) {
       console.log(`Lang switcher ${languagesOrder[i]}✅`)
     } else {
-      console.log(`Lang switcher ${languagesOrder[i]}❌`)
+      console.log(`Lang switcher ❌❌❌ wating for ${languagesOrder[i]} found ${currentLang}`)
       somethingWrong = true
     }
   }

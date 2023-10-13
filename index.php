@@ -115,7 +115,7 @@
     <?php require_once 'article.php'; ?>
     <script>
         <?php
-            echo 'lang = '.json_encode($lang);
+            echo 'lang = '.json_encode($lang['dinamic']);
             require_once 'game.js';
             require_once 'main.js';
         ?>

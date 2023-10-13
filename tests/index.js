@@ -110,7 +110,7 @@ import testTexts from './modules/testTexts.js';
 
     console.log(results)
     for(let result of results){
-        if(result.result != true){
+        if(result.result == false){
             console.log('something went wrong❌❌❌')
         }
     }

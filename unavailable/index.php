@@ -19,7 +19,7 @@
     <style>
         @font-face {
             font-family: game;
-            src: url(./PixelOperator-Bold.ttf);
+            src: url(../PixelOperator-Bold.ttf);
         }
         html{
             height: 100%;
@@ -80,7 +80,7 @@
 </head>
 <body>
     <div id="outterContainer">
-        <img src="./img/CowBoyShoot.gif">
+        <img src="../img/CowBoyShoot.gif">
         <div id="textContainer" class="side">
             <span id="noConnection" class="side"></span>
             <div>
