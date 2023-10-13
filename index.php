@@ -5,11 +5,9 @@
             exit();
         }
     }
-?>
-<!DOCTYPE html>
-<?php
     require_once 'lang.php';
 ?>
+<!DOCTYPE html>
 <html lang="<?php echo $lang['currentLang']; ?>" translate="no">
 
 <head>
