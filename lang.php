@@ -1,5 +1,5 @@
 <?php
-    require_once './setCurrentLang.php';
+    require_once 'setCurrentLang.php';
     if($lang['currentLang'] == 'en'){
         $lang['about'] = 'About the game:';
         $lang['aboutText'] = <<<END
@@ -124,6 +124,7 @@
         $lang['dinamic']['won2'] = 'Player 2 won!!';
         $lang['dinamic']['you'] = 'You';
         $lang['dinamic']['yourReaction'] = 'Your reaction time: ';
+        return;
     }elseif($lang['currentLang'] == 'es'){
         $lang['about'] = 'Sobre el juego:';
         $lang['aboutText'] = <<<END
@@ -248,6 +249,7 @@
         $lang['dinamic']['won2'] = '¡Jugador 2 ganaste!';
         $lang['dinamic']['you'] = 'Usted';
         $lang['dinamic']['yourReaction'] = 'Tu tiempo de reacción: ';
+        return;
     }elseif($lang['currentLang'] == 'pt'){
         $lang['about'] = 'Sobre o jogo:';
         $lang['aboutText'] = <<<END
@@ -372,5 +374,5 @@
         $lang['dinamic']['won2'] = 'Jogador 2 venceu!!';
         $lang['dinamic']['you'] = 'Você';
         $lang['dinamic']['yourReaction'] = 'Seu tempo de reação: ';
+        return;
     }
-?>

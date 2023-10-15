@@ -1,3 +1,7 @@
+<?php
+    require_once '../redirect.php';
+    require_once '../lang.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +15,6 @@
 </head>
 <body>
     <?php 
-        require_once '../lang.php';
         require_once '../article.php'; 
     ?>
     <script>

@@ -2,7 +2,7 @@
     echo <<<END
     <article id="article">
         <button id="backToGame" onclick="location.hash = '';location.hash = '#main'">{$lang['back']}</button>
-        <h1>{$lang['name']}</h1>
+        <h1>TriggerTaps.Top</h1>
         <figure>
             <img id="logo" src="/img/CowBoyShoot.gif" alt="TriggerTaps.Top character shooting">
             <figcaption>TriggerTaps.Top character shooting</figcaption>
@@ -95,7 +95,4 @@
             </li>
         </ul>
     </article>
-    <script>
     END;
-    require_once 'article.js';
-    echo '</script>';
