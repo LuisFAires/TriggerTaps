@@ -3,7 +3,7 @@
     require_once 'lang.php';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
+<html lang="<?= $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     <meta property="og:type" content="game">
     <meta property="og:description" content="Unavailable">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
-    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
+    <meta property="og:url" content="<?= "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="robots" content="noindex">
     <title>Unavailable</title>
@@ -90,7 +90,7 @@
         <div>
     </div>
     <script>
-        <?php echo 'lang = '.json_encode($lang).';'; ?>
+        <?= 'lang = '.json_encode($lang).';'; ?>
         noConnection.innerText = lang.noConnection
         tryAgain.innerText =  lang.tryAgain
     </script>

@@ -6,20 +6,20 @@
     $title =  $lang['achievementTitle'].$result;
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
+<html lang="<?= $lang['currentLang']; ?>" translate="no">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $title?></title>
+    <title><?= $title?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta name="description" content="<?php echo $result.$lang['achievement'];?>">
+    <meta name="description" content="<?= $result.$lang['achievement'];?>">
     <meta name="twitter:card" content="summary">
-    <meta property="og:title" content="<?php echo $title?>">
+    <meta property="og:title" content="<?= $title?>">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="<?php echo $result.$lang['achievement'];?>">
+    <meta property="og:description" content="<?= $result.$lang['achievement'];?>">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
-    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?php echo $achievementValue.'&lang='.$lang['currentLang'] ?>">
+    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?= $achievementValue.'&lang='.$lang['currentLang'] ?>">
     <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
@@ -101,11 +101,11 @@
     <div id="outterContainer">
         <img src="../img/CowBoyShoot.gif">
         <div id="textContainer">
-            <span id="name"><?php echo $result; ?></span>
-            <span id="text"><?php echo $lang['achievement']; ?></span>
+            <span id="name"><?= $result; ?></span>
+            <span id="text"><?= $lang['achievement']; ?></span>
             <div>
-                <button id="share" onclick="share()"><?php echo $lang['share'];?></button>
-                <button id="play" onclick="playButtonClick()"><?php echo $lang['play']; ?></button>
+                <button id="share" onclick="share()"><?= $lang['share'];?></button>
+                <button id="play" onclick="playButtonClick()"><?= $lang['play']; ?></button>
             </div>
         </div>
     </div>
@@ -138,8 +138,8 @@
             }catch{}
             let dataToShare = {
                 title: document.title,
-                text: "<?php echo $result;?>"+text.innerHTML,
-                url: "https://triggertaps.top/achievement/?name=<?php echo $achievementValue.'&lang='.$lang['currentLang'] ?>"
+                text: "<?= $result;?>"+text.innerHTML,
+                url: "https://triggertaps.top/achievement/?name=<?= $achievementValue.'&lang='.$lang['currentLang'] ?>"
             } 
             if(navigator.canShare(dataToShare)){
                 navigator.share(dataToShare)

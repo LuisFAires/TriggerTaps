@@ -3,7 +3,7 @@
     require_once 'lang.php';
 ?>
 <!DOCTYPE html>
-<html lang="<?php echo $lang['currentLang']; ?>" translate="no">
+<html lang="<?= $lang['currentLang']; ?>" translate="no">
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -13,7 +13,7 @@
         "@context": "https://schema.org",
         "@type": "VideoGame",
         "name": "TriggerTaps.Top",
-        "description": "<?php echo $lang['description']?>",
+        "description": "<?= $lang['description']?>",
         "inLanguage": ["English", "Spanish", "Portuguese"],
         "genre": ["Action", "Adventure", "Shooting", "Challenge"],
         "operatingSystem": "Any",
@@ -52,16 +52,16 @@
         "datePublished": "2023-08-18"
     }
     </script>
-    <meta id="description" name="description" content="<?php echo $lang['description']?>">
-    <meta name="keywords" content="<?php echo $lang['description']?>">
+    <meta id="description" name="description" content="<?= $lang['description']?>">
+    <meta name="keywords" content="<?= $lang['description']?>">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta name="twitter:card" content="summary">
     <meta property="og:title" content="TriggerTaps.Top">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="<?php echo $lang['description']?>">
+    <meta property="og:description" content="<?= $lang['description']?>">
     <meta property="og:image" content="/img/CowBoyShoot.gif">
-    <meta property="og:url" content="<?php echo "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
+    <meta property="og:url" content="<?= "https://triggertaps.top{$_SERVER['REQUEST_URI']}"?>">
     <link rel="apple-touch-icon" href="/img/ios/192.png">
     <link rel="icon" href="/img/CowBoyShoot.gif">
     <meta name="robots" content="max-image-preview:large">
@@ -93,11 +93,11 @@
                     Browser unsupported
                 </canvas>
                 <div id="promotion" style="display: none;" onclick="installPrompt()">
-                    <span><?php echo $lang['install'];?></span>
-                    <img class="storeBagde" src="/img/microsoft-<?php echo $lang['currentLang'];?>.png" alt="Microsoft Store" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
+                    <span><?= $lang['install'];?></span>
+                    <img class="storeBagde" src="/img/microsoft-<?= $lang['currentLang'];?>.png" alt="Microsoft Store" onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')" loading="lazy">
                     <!--Coming soon-->
-                    <!--<img class="storeBagde" src="/img/play-<?php echo $lang['currentLang'];?>.png" alt="Google Play" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
-                    <img class="storeBagde" src="/img/apple-<?php echo $lang['currentLang'];?>.svg" alt="App Store" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
+                    <!--<img class="storeBagde" src="/img/play-<?= $lang['currentLang'];?>.png" alt="Google Play" onclick="promotionAction('Andorid', 'https://play.google.com')" loading="lazy">
+                    <img class="storeBagde" src="/img/apple-<?= $lang['currentLang'];?>.svg" alt="App Store" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/')" loading="lazy">-->
                 </div>
             </div>
             <div id="right">
