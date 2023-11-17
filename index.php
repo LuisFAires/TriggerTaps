@@ -111,8 +111,20 @@
             echo 'lang = '.json_encode($lang['json']);
             require_once 'game.js';
             require_once 'main.js';
-            require_once 'article.js';
         ?>
+        backToGame.style.opacity = 0
+        window.addEventListener("scroll", () => {
+            if (scrollY < 50) {
+                backToGame.style.display = "none"
+                backToGame.style.opacity = 0
+            } else if (scrollY < 150) {
+                backToGame.style.display = "block"
+                backToGame.style.opacity = ((scrollY - 50) / 150);
+            } else {
+                backToGame.style.display = "block"
+                backToGame.style.opacity = 1
+            }
+        })
     </script>
     <!-- adsense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4327628330003063"

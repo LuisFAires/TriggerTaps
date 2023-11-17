@@ -96,3 +96,11 @@
         </ul>
     </article>
     END;
+?>
+<script>
+    function languageSwitcher(language) {
+        document.cookie = cookieExpires ? `lang=${language};expires=${cookieExpires};` : `lang=${language}`
+        window.history.replaceState({}, document.title, `/?lang=${language}`);
+        location.reload();
+    }
+</script>
