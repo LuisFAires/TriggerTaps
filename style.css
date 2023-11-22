@@ -61,11 +61,20 @@ h1 {
     width: auto;
 }
 
-.creditBadge {
-    width: auto;
-    height: 40px;
-    max-width: 100%;
+#creditSection {
+    display: flex;
+    flex-direction: column;
+
+}
+
+#creditBadge {
+    width: 90%;
+    max-width: 600px;
     object-fit: contain;
+}
+
+.creditSpan{
+    font-size: 25px;
 }
 
 figure {

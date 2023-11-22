@@ -40,14 +40,14 @@
             </li>
             <li>
                 <h2 id="credits">{$lang['credits']}</h2>
-                <section>
+                <section id="creditSection">
                     <a href="https://linkedin.com/in/luisfaires/" target="_blank">
-                        <img src="https://img.shields.io/badge/Luis_Fillipe-Software_Developer_-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="LinkedIn - Luis Fillipe Aires Souza" class="creditBadge" loading="lazy">
+                        <img src="https://img.shields.io/badge/Luis_Fillipe-Software_Developer_-0077B5?style=for-the-badge&amp;logo=linkedin&amp;logoColor=white" alt="LinkedIn - Luis Fillipe Aires Souza" id="creditBadge" loading="lazy">
                     </a>
-                    <p class="articleParagraph">Samuel Lee <a href="https://samuellee.itch.io/cow-boy-animated-pixel-art" target="_blank" class="anchor">Cowboy (Animated Pixel Art)</a></p>
-                    <p class="articleParagraph">CraftPix <a href="https://free-game-assets.itch.io/free-rpg-desert-tileset" target="_blank" class="anchor">RPG Desert Tileset</a></p>
-                    <p class="articleParagraph">KuraiWolf <a href="https://opengameart.org/content/light-machine-gun" target="_blank" class="anchor">Light Machine Gun</a></p>
-                    <p class="articleParagraph">MixKit <a href="https://mixkit.co/free-sound-effects/countdown/" target="_blank" class="anchor">Simple countdown</a></p>
+                    <span class="creditSpan">Samuel Lee <a href="https://samuellee.itch.io/cow-boy-animated-pixel-art" target="_blank" class="anchor">Cowboy (Animated Pixel Art)</a></span>
+                    <span class="creditSpan">CraftPix <a href="https://free-game-assets.itch.io/free-rpg-desert-tileset" target="_blank" class="anchor">RPG Desert Tileset</a></span>
+                    <span class="creditSpan">KuraiWolf <a href="https://opengameart.org/content/light-machine-gun" target="_blank" class="anchor">Light Machine Gun</a></span>
+                    <span class="creditSpan">MixKit <a href="https://mixkit.co/free-sound-effects/countdown/" target="_blank" class="anchor">Simple countdown</a></span>
                 </section>
             </li>
             <li>
