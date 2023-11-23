@@ -185,47 +185,59 @@ const screens = {
                 clearInterval(timerUpdateInterval)
                 if (stuckReaction) drawStuckMsg()
             }
+            if (stuckReaction && parseInt(remainingTimer / 50) % 2 != 0) drawStuckMsg()
             context.fillStyle = "#fff"
             context.fillRect(125, 50, 400, 150)
             context.fillStyle = "#5e4700"
             context.fillRect(130, 55, 390, 140)
             context.fillStyle = "#fff"
-            context.font = "16px game"
-            context.fillStyle = "#fff"
-            if (players.first.stuck && players.first.reactionTime == undefined) {
-                context.fillText((mode == "single" ? lang.you : lang.player + " 1") + lang.wasStuck, 325, 160)
-            } else if (players.first.reactionTime >= 0) {
-                context.fillText((mode == "single" ? lang.yourReaction : lang.reaction1) + players.first.reactionTime + "ms", 325, 160)
-            }
-            if (players.second.stuck && players.second.reactionTime == undefined) {
-                context.fillText(lang.player + " 2 " + lang.wasStuck, 325, 180)
-            } else if (players.second.reactionTime >= 0) {
-                context.fillText((mode == "single" ? lang.enemyReaction : lang.reaction2) + players.second.reactionTime + "ms", 325, 180)
-            }
-            if (currentLevel != 9 || players.first.status == "dead") {
-                if (stuckReaction && parseInt(remainingTimer / 50) % 2 != 0) drawStuckMsg()
-                context.font = "25px game"
-                context.fillText(lang.taphere, 325, 125)
-                if (mode == "single") {
+            context.font = "25px game"
+            if (mode == "single") {
+                if (currentLevel != 9 || players.first.status == "dead") {
                     context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl + (currentLevel + 1) + lang.completed), 325, 95)
-                    return
+                    context.fillText(lang.taphere, 325, 125)
                 } else {
-                    context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325, 95)
-                    return
+                    context.font = "30px game"
+                    context.fillText(lang.gameCompleted1, 325, 85)
+                    context.fillText(lang.gameCompleted2, 325, 115)
+                    context.fillText(lang.gameCompleted3, 325, 140)
+                    let colorsSwitch = parseInt(remainingTimer / 50) % 2 == 0 ? true : false
+                    context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
+                    context.fillRect(125, 205, 400, 40)
+                    context.fillStyle = (colorsSwitch ? "#5e4700" : "#fff")
+                    context.fillRect(130, 210, 390, 30)
+                    context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
+                    context.fillText(lang.shareAchievement, 325, 233)
+                }
+                context.font = "16px game"
+                if (players.first.stuck && players.first.reactionTime == undefined) {
+                    context.fillText(lang.you + lang.wasStuck, 325, 160)
+                } else if (players.first.reactionTime >= 0) {
+                    context.fillText(lang.yourReaction + players.first.reactionTime + "ms", 325, 160)
+                }
+                if (players.second.reactionTime >= 0) {
+                    context.fillText(lang.enemyReaction + players.second.reactionTime + "ms", 325, 180)
                 }
             } else {
-                context.font = "30px game"
-                context.fillText(lang.gameCompleted1, 325, 85)
-                context.fillText(lang.gameCompleted2, 325, 115)
-                context.fillText(lang.gameCompleted3, 325, 140)
-                let colorsSwitch = parseInt(remainingTimer / 50) % 2 == 0 ? true : false
-                context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
-                context.fillRect(125, 205, 400, 40)
-                context.fillStyle = (colorsSwitch ? "#5e4700" : "#fff")
-                context.fillRect(130, 210, 390, 30)
-                context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
-                context.fillText(lang.shareAchievement, 325, 233)
-                return
+                context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325, 95)
+                context.fillText(lang.taphere, 325, 125)
+                context.font = "16px game"
+                if (players.first.stuck && players.first.reactionTime == undefined) {
+                    context.fillText(lang.player + " 1" + lang.wasStuck, 325, 160)
+                } else if (players.first.reactionTime >= 0) {
+                    if (players.first.status == "dead" && players.first.reactionTime == players.second.reactionTime) {
+                        players.first.reactionTime += randomIntFromInterval(0, 5);
+                    }
+                    context.fillText(lang.reaction1 + players.first.reactionTime + "ms", 325, 160)
+                }
+                if (players.second.stuck && players.second.reactionTime == undefined) {
+                    context.fillText(lang.player + " 2 " + lang.wasStuck, 325, 180)
+                } else if (players.second.reactionTime >= 0) {
+                    if (players.second.status == "dead" && players.first.reactionTime == players.second.reactionTime) {
+                        players.second.reactionTime += randomIntFromInterval(0, 5);
+                    }
+                    context.fillText(lang.reaction2 + players.second.reactionTime + "ms", 325, 180)
+                }
             }
         }
     },
@@ -633,7 +645,7 @@ async function initializeGame() {
             touchEventHasBeenTriggered = true
         });
         canvas.addEventListener('mousedown', function (event) {
-            if(touchEventHasBeenTriggered){
+            if (touchEventHasBeenTriggered) {
                 touchEventHasBeenTriggered = false
                 return
             }
