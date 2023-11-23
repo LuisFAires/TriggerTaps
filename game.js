@@ -31,6 +31,7 @@ let physicalKeyboard
 let cookieAchievement
 let achievementUrl
 let touchPressed = false
+let touchEventHasBeenTriggered = false
 let cookieExpires = new Date()
 cookieExpires.setFullYear(cookieExpires.getFullYear() + 1)
 cookieExpires = cookieExpires.toUTCString()
@@ -401,7 +402,7 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-async function userInput(X, Y, key) {
+async function userInput(X, Y, key = undefined) {
     //console.log(X, Y)
     Y -= canvas.positionY
     X -= canvas.positionX
@@ -624,14 +625,19 @@ async function initializeGame() {
         window.addEventListener('scroll', setCanvasBoundingsTimeout)
         canvas.addEventListener('touchstart', function (event) {
             touchPressed = true
-            if (currentScreen.name == "end") event.preventDefault()//prevents mousedown event
-            userInput(event.targetTouches[event.targetTouches.length - 1].clientX, event.targetTouches[event.targetTouches.length - 1].clientY, null)
+            //if (currentScreen.name == "end") event.preventDefault()//prevents mousedown event
+            userInput(event.targetTouches[event.targetTouches.length - 1].clientX, event.targetTouches[event.targetTouches.length - 1].clientY)
         });
         canvas.addEventListener('touchend', function () {
             touchPressed = false
+            touchEventHasBeenTriggered = true
         });
         canvas.addEventListener('mousedown', function (event) {
-            userInput(event.clientX, event.clientY, undefined)
+            if(touchEventHasBeenTriggered){
+                touchEventHasBeenTriggered = false
+                return
+            }
+            userInput(event.clientX, event.clientY)
         });
         window.addEventListener('keydown', function (event) {
             userInput(undefined, undefined, event.key)
