@@ -72,7 +72,7 @@
             END,           
             'privacy' => 'Privacy policy',
             'privacyText' => <<<END
-            is mp>ortant. It is TriggerTaps.Top's policy to respect your privacy regarding any information we may collect from you on the TriggerTaps.Top website/app
+            Your privacy is important. It is TriggerTaps.Top's policy to respect your privacy regarding any information we may collect from you on the TriggerTaps.Top website/app
 
             We only ask for personal information when we really need it to provide you with a service. We do this by fair and lawful means, with your knowledge and consent. We also let you know why we are collecting it and how it will be used.
 
