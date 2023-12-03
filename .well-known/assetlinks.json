@@ -3,6 +3,9 @@
       "target": {
         "namespace": "android_app",
         "package_name": "top.triggertaps.twa",
-        "sha256_cert_fingerprints": ["A9:F3:B5:32:F0:0A:FC:BC:CE:A0:A4:A3:B2:49:C0:0B:C1:51:B3:D7:AB:56:6A:27:7E:12:79:1E:48:6A:45:5A"]
+        "sha256_cert_fingerprints": [
+          "A9:F3:B5:32:F0:0A:FC:BC:CE:A0:A4:A3:B2:49:C0:0B:C1:51:B3:D7:AB:56:6A:27:7E:12:79:1E:48:6A:45:5A",
+          "A9:06:FD:0D:BE:6B:AD:8A:41:94:D4:52:65:D5:97:E8:51:E9:81:56:27:03:E7:39:03:0B:79:8E:F9:85:F4:A9"
+        ]
       }
     }]
