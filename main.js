@@ -24,33 +24,8 @@ let lastAdUpdate = 0
 let deferredPrompt
 let showPromotion
 
-let deviceOS
-if (/iPad|iPhone|iPod/.test(window.navigator.userAgent)) {
-    deviceOS = "IOS"
-} else if (/Macintosh|Mac|Mac OS|MacIntel|MacPPC|Mac68K/gi.test(window.navigator.userAgent)) {
-    deviceOS = "Mac"
-} else if (/Win32|Win64|Windows|Windows NT|WinCE/gi.test(window.navigator.userAgent)) {
-    deviceOS = "Win"
-} else if (/Android/gi.test(window.navigator.userAgent)) {
-    deviceOS = "Android"
-} else if (/Linux/gi.test(window.navigator.userAgent)) {
-    deviceOS = "Linux"
-}
-
 function showRotateOverlay() {
     rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
-}
-
-async function promotionAction(os, url, openStore) {
-    if (deviceOS === os) {
-        location.href = openStore
-        return
-    }
-    if (deferredPrompt != undefined) {
-        await installPrompt()
-        return
-    }
-    window.open(url, '_blank')
 }
 
 async function fullscreenLock() {
@@ -144,7 +119,7 @@ function insertAds() {
 
     function adString(adHeight = 50) {
         //console.log("Ad placed")
-        setTimeout(()=>{(adsbygoogle = window.adsbygoogle || []).push({});},100)
+        setTimeout(() => { (adsbygoogle = window.adsbygoogle || []).push({}); }, 100)
         return `<ins class="adsbygoogle" style="display:block; height: ${adHeight}px;" data-ad-client="ca-pub-4327628330003063" data-ad-slot="3752036653" data-full-width-responsive="true"></ins>`
     }
 }
@@ -163,7 +138,7 @@ window.addEventListener("load", () => {
             window.scrollTo(0, 0)
             document.querySelector("#loadingOverlay").innerHTML = lang.ready
             initializeGame()
-            showPromotion = window.matchMedia("(display-mode: standalone)").matches ? false : true
+            showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
             await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
             keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             document.getElementsByTagName('body')[0].style.overflow = 'unset'

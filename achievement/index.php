@@ -1,25 +1,26 @@
 <?php
-    require_once '../redirect.php';
-    require_once 'lang.php';
-    require_once 'read.php';
+require_once '../redirect.php';
+require_once 'lang.php';
+require_once 'read.php';
 
-    $title =  $lang['achievementTitle'].$result;
+$title =  $lang['achievementTitle'] . $result;
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lang['currentLang']; ?>" translate="no">
+
 <head>
     <meta charset="UTF-8">
-    <title><?= $title?></title>
+    <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TriggerTaps.Top">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta name="description" content="<?= $result.$lang['achievement'];?>">
+    <meta name="description" content="<?= $result . $lang['achievement']; ?>">
     <meta name="twitter:card" content="summary">
-    <meta property="og:title" content="<?= $title?>">
+    <meta property="og:title" content="<?= $title ?>">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="<?= $result.$lang['achievement'];?>">
+    <meta property="og:description" content="<?= $result . $lang['achievement']; ?>">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
-    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?= $achievementValue.'&lang='.$lang['currentLang'] ?>">
+    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?= $achievementValue . '&lang=' . $lang['currentLang'] ?>">
     <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
@@ -27,39 +28,47 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-CH7HL7GPTR"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-CH7HL7GPTR');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-CH7HL7GPTR');
     </script>
     <style>
         @font-face {
             font-family: game;
             src: url(../PixelOperator-Bold.ttf);
         }
-        html{
+
+        html {
             height: 100%;
         }
-        body{ 
+
+        body {
             font-family: game;
             background-color: #deb887;
             color: #000000;
             margin: 0;
             padding: 0 2%;
-            height:100%;
+            height: 100%;
         }
-        #outterContainer{
+
+        #outterContainer {
             width: 100%;
             height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        #textContainer{
+
+        #textContainer {
             text-align: center;
         }
-        button{
+
+        button {
             font-family: game;
             margin: 5px;
             font-size: 25px;
@@ -68,56 +77,77 @@
             border: 5px solid #fff;
         }
 
-        #text, #name{
+        #text,
+        #name {
             font-size: 30px;
         }
-        #name{
+
+        #name {
             color: #fff;
         }
-        @media (max-width: 600px){/*vertical*/
-            #outterContainer{
+
+        .storeBadge {
+            height: 40px;
+            padding: 5px;
+        }
+
+        @media (max-width: 600px) {
+
+            /*vertical*/
+            #outterContainer {
                 flex-direction: column;
             }
-            img{
+
+            #gif {
                 max-width: 48vw;
                 max-height: 80vh;
             }
-            #textContainer{
+
+            #textContainer {
                 padding-top: 35px;
             }
         }
-        @media (min-width: 599px){/*horizontal*/
-            #outterContainer{
+
+        @media (min-width: 599px) {
+
+            /*horizontal*/
+            #outterContainer {
                 flex-direction: row;
             }
-            img{
+
+            #gif {
                 max-width: 80vh;
                 max-height: 48vw;
             }
         }
     </style>
 </head>
+
 <body>
     <div id="outterContainer">
-        <img src="../img/CowBoyShoot.gif">
+        <img id="gif" src="../img/CowBoyShoot.gif">
         <div id="textContainer">
             <span id="name"><?= $result; ?></span>
             <span id="text"><?= $lang['achievement']; ?></span>
             <div>
-                <button id="share" onclick="share()"><?= $lang['share'];?></button>
+                <button id="share" onclick="share()"><?= $lang['share']; ?></button>
                 <button id="play" onclick="playButtonClick()"><?= $lang['play']; ?></button>
+            </div>
+            <div>
+                <?php require_once '../badges.php' ?>
             </div>
         </div>
     </div>
     <script>
-        function playButtonClick(){
-            if(location.href.includes("?name=")){
-                try{
+        function playButtonClick() {
+            if (location.href.includes("?name=")) {
+                try {
                     gtag('event', 'playFromAchievement')
-                }catch{}
+                } catch {}
             }
             location.href = location.origin
         }
+
         function getCookie(cname) {
             let name = cname + "=";
             let ca = document.cookie.split(';');
@@ -132,18 +162,18 @@
             return "";
         }
 
-        function share(){
-            try{
+        function share() {
+            try {
                 gtag('event', 'shareFromAchievement')
-            }catch{}
+            } catch {}
             let dataToShare = {
                 title: document.title,
-                text: "<?= $result;?>"+text.innerHTML,
-                url: "https://triggertaps.top/achievement/?name=<?= $achievementValue.'&lang='.$lang['currentLang'] ?>"
-            } 
-            if(navigator.canShare(dataToShare)){
+                text: "<?= $result; ?>" + text.innerHTML,
+                url: "https://triggertaps.top/achievement/?name=<?= $achievementValue . '&lang=' . $lang['currentLang'] ?>"
+            }
+            if (navigator.canShare(dataToShare)) {
                 navigator.share(dataToShare)
-            }else{
+            } else {
                 window.open(dataToShare.url, '_blank')
             }
         }
