@@ -13,10 +13,10 @@
         "minimal-ui",
         "window-controls-overlay"
     ],
-    "name": "TriggerTaps.Top",
+    "name": "TriggerTaps",
     "orientation": "landscape",
     "scope": "/",
-    "short_name": "TriggerTaps.Top",
+    "short_name": "TriggerTaps",
     "id": "/",
     "start_url": "/",
     "iarc_rating_id": "4e39fa7c-9b20-40c4-a7cc-ca65e7fd1a3e",

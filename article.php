@@ -2,10 +2,10 @@
     echo <<<END
     <article id="article">
         <button id="backToGame" onclick="location.hash = '';location.hash = '#main'">{$lang['back']}</button>
-        <h1>TriggerTaps.Top</h1>
+        <h1>TriggerTaps</h1>
         <figure>
-            <img id="logo" src="/img/CowBoyShoot.gif" alt="TriggerTaps.Top character shooting">
-            <figcaption>TriggerTaps.Top character shooting</figcaption>
+            <img id="logo" src="/img/CowBoyShoot.gif" alt="TriggerTaps character shooting">
+            <figcaption>TriggerTaps character shooting</figcaption>
         </figure>
         <ul> 
             <li>

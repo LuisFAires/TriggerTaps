@@ -1,14 +1,14 @@
-# TriggerTaps.top  
+# TriggerTaps  
 
-<img src="https://luisfaires.github.io/TriggerTaps.top/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
+<img src="https://luisfaires.github.io/TriggerTaps/img/CowBoyShoot.gif" alt="Cowboy shooting" style="height:200px;">
 
-TriggerTaps.Top is a simple but fun game that will make you feel like a real wild west gunslinger. In this game, you have to face your opponents in deadly duels, testing your reflexes and your reaction ability to pull the trigger before them. The game is easy to play but hard to master, ideal for anyone who likes a challenge.
+TriggerTaps is a simple but fun game that will make you feel like a real wild west gunslinger. In this game, you have to face your opponents in deadly duels, testing your reflexes and your reaction ability to pull the trigger before them. The game is easy to play but hard to master, ideal for anyone who likes a challenge.
 
 You can play alone to get the fastest shooter achievement or duel with a friend in 2 player mode.
 
 The game has simple but well-made graphics, with pixel art characters reminiscent of 8-bit era games and a cartoon-style desert setting that creates a wild west atmosphere. The sound effects are immersive, with an impactful countdown and realistic gunfire sound.
 
-If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps.Top, the addictive duel game set in the Wild West!
+If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps, the addictive duel game set in the Wild West!
 
 <a href="https://www.microsoft.com/store/apps/9NWKWXKQW468">
     <img height="50px" src="https://triggertaps.top/img/microsoft-en.png" alt="Microsoft Store">

@@ -12,7 +12,7 @@ $title =  $lang['achievementTitle'] . $result;
     <meta charset="UTF-8">
     <title><?= $title ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="TriggerTaps.Top">
+    <meta name="application-name" content="TriggerTaps">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta name="description" content="<?= $result . $lang['achievement']; ?>">
     <meta name="twitter:card" content="summary">

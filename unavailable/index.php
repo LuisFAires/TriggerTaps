@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="application-name" content="TriggerTaps.Top">
+    <meta name="application-name" content="TriggerTaps">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta property="og:title" content="Unavailable">
     <meta property="og:type" content="game">

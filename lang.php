@@ -4,13 +4,13 @@
         $lang += [
             'about' => 'About the game:',
             'aboutText' => <<<END
-            TriggerTaps.Top is a simple but fun game that will make you feel like a real wild west gunslinger. In this game, you have to face your opponents in deadly duels, testing your reflexes and your reaction ability to pull the trigger before them. The game is easy to play but hard to master, ideal for anyone who likes a challenge.
+            TriggerTaps is a simple but fun game that will make you feel like a real wild west gunslinger. In this game, you have to face your opponents in deadly duels, testing your reflexes and your reaction ability to pull the trigger before them. The game is easy to play but hard to master, ideal for anyone who likes a challenge.
     
             The game has simple but well-made graphics, with pixel art characters reminiscent of 8-bit era games and a cartoon-style desert setting that creates a wild west atmosphere. The sound effects are immersive, with an impactful countdown and realistic gunfire sound.
     
-            You can play TriggerTaps.Top anytime and anywhere as it is compatible with most web browsers. You can also install the game as a PWA (Progressive web app) on multiple platforms or as a standalone app on major app stores for free. The game is rated free for all ages and supports Portuguese, English and Spanish languages. Plus, you can use your mouse, keyboard, or touchscreen to play the game the way you like.
+            You can play TriggerTaps anytime and anywhere as it is compatible with most web browsers. You can also install the game as a PWA (Progressive web app) on multiple platforms or as a standalone app on major app stores for free. The game is rated free for all ages and supports Portuguese, English and Spanish languages. Plus, you can use your mouse, keyboard, or touchscreen to play the game the way you like.
             
-            If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps.Top, the addictive duel game set in the Wild West!
+            If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps, the addictive duel game set in the Wild West!
             END,
             'back' => 'Back to game',
             'contact' => 'Contact:',
@@ -72,7 +72,7 @@
             END,           
             'privacy' => 'Privacy policy',
             'privacyText' => <<<END
-            Your privacy is important. It is TriggerTaps.Top's policy to respect your privacy regarding any information we may collect from you on the TriggerTaps.Top website/app
+            Your privacy is important. It is TriggerTaps's policy to respect your privacy regarding any information we may collect from you on the TriggerTaps website/app
 
             We only ask for personal information when we really need it to provide you with a service. We do this by fair and lawful means, with your knowledge and consent. We also let you know why we are collecting it and how it will be used.
 
@@ -88,13 +88,13 @@
             END,
             'userCommitment' => 'User Commitment',
             'userCommitmentText' => <<<END
-            The user undertakes to make proper use of the contents and information that TriggerTaps.Top offers on the website/app and with an enunciative, but not limiting, character:
+            The user undertakes to make proper use of the contents and information that TriggerTaps offers on the website/app and with an enunciative, but not limiting, character:
 
             A) Not to engage in activities that are illegal or contrary to good faith and public order;
 
             B) Not to disseminate propaganda or content of a racist, xenophobic nature, or online betting, games of chance, any type of illegal pornography, apology for terrorism or against human rights;
 
-            C) Not to cause damage to the physical (hardware) and logical (software) systems of TriggerTaps.Top, its suppliers or third parties, to introduce or disseminate malware or any other hardware or software systems that are capable of causing damage mentioned above.
+            C) Not to cause damage to the physical (hardware) and logical (software) systems of TriggerTaps, its suppliers or third parties, to introduce or disseminate malware or any other hardware or software systems that are capable of causing damage mentioned above.
             END,
         ];
         $lang['json'] = [
@@ -133,13 +133,13 @@
         $lang += [
             'about' => 'Sobre el juego:',
             'aboutText' => <<<END
-            TriggerTaps.Top es un juego simple pero divertido que te hará sentir como un auténtico pistolero del lejano oeste. En este juego tendrás que enfrentarte a tus oponentes en duelos mortales, poniendo a prueba tus reflejos y tu capacidad de reacción para apretar el gatillo antes que ellos. El juego es fácil de jugar pero difícil de dominar, ideal para cualquiera a quien le gusten los desafíos.
+            TriggerTaps es un juego simple pero divertido que te hará sentir como un auténtico pistolero del lejano oeste. En este juego tendrás que enfrentarte a tus oponentes en duelos mortales, poniendo a prueba tus reflejos y tu capacidad de reacción para apretar el gatillo antes que ellos. El juego es fácil de jugar pero difícil de dominar, ideal para cualquiera a quien le gusten los desafíos.
     
             El juego tiene gráficos simples pero bien hechos, con personajes de estilo pixel art que recuerdan a los juegos de la era de los 8 bits y un escenario desértico al estilo de los dibujos animados que crea una atmósfera occidental. Los efectos de sonido son inmersivos, con una cuenta regresiva impactante y un sonido de disparo realista.
     
-            Puedes jugar TriggerTaps.Top en cualquier momento y en cualquier lugar, ya que es compatible con la mayoría de los navegadores web. También puedes instalar el juego como PWA (aplicación web progresiva) en múltiples plataformas o como una aplicación independiente en las principales tiendas de aplicaciones de forma gratuita. El juego tiene clasificación libre para todas las edades y admite los idiomas portugués, inglés y español. Además, puedes usar el mouse, el teclado o la pantalla táctil para jugar como quieras.
+            Puedes jugar TriggerTaps en cualquier momento y en cualquier lugar, ya que es compatible con la mayoría de los navegadores web. También puedes instalar el juego como PWA (aplicación web progresiva) en múltiples plataformas o como una aplicación independiente en las principales tiendas de aplicaciones de forma gratuita. El juego tiene clasificación libre para todas las edades y admite los idiomas portugués, inglés y español. Además, puedes usar el mouse, el teclado o la pantalla táctil para jugar como quieras.
     
-            Si te gustan los juegos occidentales y quieres divertirte solo o con tus amigos, no pierdas el tiempo y juega a TriggerTaps.Top, ¡el adictivo juego de duelo ambientado en el Salvaje Oeste!
+            Si te gustan los juegos occidentales y quieres divertirte solo o con tus amigos, no pierdas el tiempo y juega a TriggerTaps, ¡el adictivo juego de duelo ambientado en el Salvaje Oeste!
             END,
             'back' => 'Volver al juego',
             'contact' => 'Contacto:',
@@ -201,7 +201,7 @@
             END,
             'privacy' => 'Política de privacidad',
             'privacyText' => <<<END
-            Su privacidad es importante. Es política de TriggerTaps.Top respetar su privacidad con respecto a cualquier información que podamos recopilar de usted en el sitio web/aplicación de TriggerTaps.Top.
+            Su privacidad es importante. Es política de TriggerTaps respetar su privacidad con respecto a cualquier información que podamos recopilar de usted en el sitio web/aplicación de TriggerTaps.
 
             Solo solicitamos información personal cuando realmente la necesitamos para brindarle un servicio. Hacemos esto por medios justos y legales, con su conocimiento y consentimiento. También le informamos por qué lo recopilamos y cómo se utilizará.
 
@@ -217,13 +217,13 @@
             END,
             'userCommitment' => 'Compromiso del usuario',
             'userCommitmentText' => <<<END
-            El usuario se obliga a hacer un uso correcto de los contenidos e información que TriggerTaps.Top ofrece en el sitio web/app y con carácter enunciativo, pero no limitativo:
+            El usuario se obliga a hacer un uso correcto de los contenidos e información que TriggerTaps ofrece en el sitio web/app y con carácter enunciativo, pero no limitativo:
     
             A) No realizar actividades ilegales o contrarias a la buena fe y al orden público;
         
             B) No difundir propaganda o contenidos de carácter racista, xenófobo, apuestas online, juegos de azar, cualquier tipo de pornografía ilegal, apología del terrorismo o atentatorio contra los derechos humanos;
         
-            C) No provocar daños en los sistemas físicos (hardware) y lógicos (software) de TriggerTaps.Top, de sus proveedores o de terceras personas, introducir o difundir virus informáticos o cualesquiera otros sistemas hardware o software que sean susceptibles de provocar los daños anteriormente mencionados .
+            C) No provocar daños en los sistemas físicos (hardware) y lógicos (software) de TriggerTaps, de sus proveedores o de terceras personas, introducir o difundir virus informáticos o cualesquiera otros sistemas hardware o software que sean susceptibles de provocar los daños anteriormente mencionados .
             END,
         ];
         $lang['json'] = [
@@ -262,13 +262,13 @@
         $lang += [
             'about' => 'Sobre o jogo:',
             'aboutText' => <<<END
-            TriggerTaps.Top é um jogo simples, mas divertido, que vai te fazer sentir como um verdadeiro pistoleiro do velho oeste. Neste jogo, você precisa enfrentar seus adversários em duelos mortais, testando seus reflexos e sua habilidade de reação para puxar o gatilho antes deles. O jogo é fácil de jogar, mas difícil de dominar, ideal para quem gosta de um desafio.
+            TriggerTaps é um jogo simples, mas divertido, que vai te fazer sentir como um verdadeiro pistoleiro do velho oeste. Neste jogo, você precisa enfrentar seus adversários em duelos mortais, testando seus reflexos e sua habilidade de reação para puxar o gatilho antes deles. O jogo é fácil de jogar, mas difícil de dominar, ideal para quem gosta de um desafio.
 
             O jogo tem gráficos simples, mas bem feitos, com personagens em estilo pixel art que lembram os games da era 8-bits e um cenário desértico em estilo cartunesco que cria uma atmosfera de faroeste. Os efeitos sonoros são envolventes, com uma contagem regressiva impactante e som de tiros realistas.
             
-            Você pode jogar TriggerTaps.Top em qualquer hora e qualquer lugar, pois ele é compatível com a maioria dos navegadores web. Você também pode instalar o jogo como PWA (Progressive web app) em várias plataformas ou como aplicação independente nas principais lojas de aplicativos de forma gratuita. O jogo tem classificação livre para todas as idades e suporta os idiomas português, inglês e espanhol. Além disso, você pode usar mouse, teclado ou tela sensível ao toque para jogar da maneira que preferir.
+            Você pode jogar TriggerTaps em qualquer hora e qualquer lugar, pois ele é compatível com a maioria dos navegadores web. Você também pode instalar o jogo como PWA (Progressive web app) em várias plataformas ou como aplicação independente nas principais lojas de aplicativos de forma gratuita. O jogo tem classificação livre para todas as idades e suporta os idiomas português, inglês e espanhol. Além disso, você pode usar mouse, teclado ou tela sensível ao toque para jogar da maneira que preferir.
             
-            Se você gosta de jogos de faroeste e quer se divertir sozinho ou com seus amigos, não perca tempo e jogue TriggerTaps.Top, o jogo viciante de duelo no Velho Oeste!        
+            Se você gosta de jogos de faroeste e quer se divertir sozinho ou com seus amigos, não perca tempo e jogue TriggerTaps, o jogo viciante de duelo no Velho Oeste!        
             END,
             'back' => 'Voltar ao jogo',
             'contact' => 'Contato:',
@@ -330,7 +330,7 @@
             END,
             'privacy' => 'Política de privacidade',
             'privacyText' => <<<END
-            A sua privacidade é importante. É política do TriggerTaps.Top respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site/app TriggerTaps.Top.
+            A sua privacidade é importante. É política do TriggerTaps respeitar a sua privacidade em relação a qualquer informação sua que possamos coletar no site/app TriggerTaps.
     
             Solicitamos informações pessoais apenas quando realmente precisamos delas para lhe fornecer um serviço. Fazemo-lo por meios justos e legais, com o seu conhecimento e consentimento. Também informamos por que estamos coletando e como será usado.
     
@@ -346,13 +346,13 @@
             END,
             'userCommitment' => 'Compromisso do Usuário',
             'userCommitmentText' => <<<END
-            O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o TriggerTaps.Top oferece no site/app e com caráter enunciativo, mas não limitativo:
+            O usuário se compromete a fazer uso adequado dos conteúdos e da informação que o TriggerTaps oferece no site/app e com caráter enunciativo, mas não limitativo:
     
             A) Não se envolver em atividades que sejam ilegais ou contrárias à boa fé a à ordem pública;
         
             B) Não difundir propaganda ou conteúdo de natureza racista, xenofóbica, ou apostas online, jogos de sorte e azar, qualquer tipo de pornografia ilegal, de apologia ao terrorismo ou contra os direitos humanos;
         
-            C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do TriggerTaps.Top, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados.
+            C) Não causar danos aos sistemas físicos (hardwares) e lógicos (softwares) do TriggerTaps, de seus fornecedores ou terceiros, para introduzir ou disseminar vírus informáticos ou quaisquer outros sistemas de hardware ou software que sejam capazes de causar danos anteriormente mencionados.
             END
         ];
         $lang['json'] = [

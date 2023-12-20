@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About TriggerTaps.top</title>
+    <title>About TriggerTaps</title>
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <style>
         <?php require_once '../style.css'; ?>

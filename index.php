@@ -7,12 +7,12 @@
 
 <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>TriggerTaps.Top🔫🔥💥🤠🌵🏜️</title>
+    <title>TriggerTaps🔫🔥💥🤠🌵🏜️</title>
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "VideoGame",
-        "name": "TriggerTaps.Top",
+        "name": "TriggerTaps",
         "description": "<?= $lang['description']?>",
         "inLanguage": ["English", "Spanish", "Portuguese"],
         "genre": ["Action", "Adventure", "Shooting", "Challenge"],
@@ -54,10 +54,10 @@
     </script>
     <meta id="description" name="description" content="<?= $lang['description']?>">
     <meta name="keywords" content="<?= $lang['description']?>">
-    <meta name="application-name" content="TriggerTaps.Top">
+    <meta name="application-name" content="TriggerTaps">
     <meta name="creator" content="Luis Fillipe Aires Souza">
     <meta name="twitter:card" content="summary">
-    <meta property="og:title" content="TriggerTaps.Top">
+    <meta property="og:title" content="TriggerTaps">
     <meta property="og:type" content="game">
     <meta property="og:description" content="<?= $lang['description']?>">
     <meta property="og:image" content="/img/CowBoyShoot.gif">
