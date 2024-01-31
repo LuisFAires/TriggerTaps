@@ -100,6 +100,7 @@
         $lang['json'] = [
             'achievementPrompt' => 'Type the name/nickname will be in your fastest shooter achievement:',
             'completed' => ' completed',
+            'currentLang' => 'en',
             'description' => $lang['description'],
             'enemy' => 'Enemy',
             'enemyReaction' => 'Enemy\'s reaction time: ',
@@ -229,6 +230,7 @@
         $lang['json'] = [
             'achievementPrompt' => 'Escribe el nombre/apodo que estará en tu logro de tirador más rápido:',
             'completed' => ' completa',
+            'currentLang' => 'es',
             'description' => $lang['description'],
             'enemy' => 'Enemigo',
             'enemyReaction' => 'Tiempo de reacción del enemigo: ',
@@ -358,6 +360,7 @@
         $lang['json'] = [
             'achievementPrompt' => 'Digite o nome/apelido que estará na sua conquista de atirador mais rápido:',
             'completed' => ' concluído',
+            'currentLang' => 'pt',
             'description' => $lang['description'],
             'enemy' => 'Inimigo',
             'enemyReaction' => 'Tempo de reação do Inimigo: ',
