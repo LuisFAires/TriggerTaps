@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "triggertaps.twa",
+      "sha256_cert_fingerprints": [
+        "46:2A:65:9C:B1:F3:FA:D3:A6:51:F8:FD:95:3C:D0:A6:01:81:46:55:CC:5B:1D:AD:F1:D6:16:2C:F6:D0:CD:8B"
+      ]
+    }
+  }
+]
