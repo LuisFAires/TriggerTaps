@@ -66,6 +66,9 @@ $title =  $lang['achievementTitle'] . $result;
 
         #textContainer {
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         button {
@@ -127,8 +130,10 @@ $title =  $lang['achievementTitle'] . $result;
     <div id="outterContainer">
         <img id="gif" src="../img/CowBoyShoot.gif">
         <div id="textContainer">
-            <span id="name"><?= $result; ?></span>
-            <span id="text"><?= $lang['achievement']; ?></span>
+            <div>
+                <span id="name"><?= $result; ?></span>
+                <span id="text"><?= $lang['achievement']; ?></span>
+            </div>
             <div>
                 <button id="share" onclick="share()"><?= $lang['share']; ?></button>
                 <button id="play" onclick="playButtonClick()"><?= $lang['play']; ?></button>

@@ -10,6 +10,9 @@ The game has simple but well-made graphics, with pixel art characters reminiscen
 
 If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps, the addictive duel game set in the Wild West!
 
+<a href="https://play.google.com/store/apps/details?id=triggertaps.twa">
+    <img height="50px" src="https://triggertaps.top/img/play-en.png" alt="Google Play">
+</a>
 <a href="https://www.microsoft.com/store/apps/9NWKWXKQW468">
     <img height="50px" src="https://triggertaps.top/img/microsoft-en.png" alt="Microsoft Store">
 </a>

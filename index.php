@@ -93,7 +93,7 @@
                     Browser unsupported
                 </canvas>
                 <div id="promotion" style="display: none;" onclick="installPrompt()">
-                    <span><?= $lang['install'];?></span>
+                    <span id="promotionLabel"><?= $lang['install'];?></span>
                     <?php require_once 'badges.php';?>
                 </div>
             </div>
