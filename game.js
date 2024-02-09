@@ -191,9 +191,9 @@ const screens = {
             context.fillStyle = "#5e4700"
             context.fillRect(130, 55, 390, 140)
             context.fillStyle = "#fff"
-            context.font = "25px game"
             if (mode == "single") {
                 if (currentLevel != 9 || players.first.status == "dead") {
+                    context.font = "25px game"
                     context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl + (currentLevel + 1) + lang.completed), 325, 95)
                     context.fillText(lang.taphere, 325, 125)
                 } else {
@@ -210,6 +210,7 @@ const screens = {
                     context.fillText(lang.shareAchievement, 325, 233)
                 }
                 context.font = "16px game"
+                context.fillStyle = "#fff"
                 if (players.first.stuck && players.first.reactionTime == undefined) {
                     context.fillText(lang.you + lang.wasStuck, 325, 160)
                 } else if (players.first.reactionTime >= 0) {
