@@ -314,7 +314,7 @@
             Você precisa estar atento aos sinais sonoros e visuais que indicam quando você pode atirar. Se você demorar muito, seu adversário dispara contra você e você perde. Se você atirar antes da hora, seu personagem fica travado e você também perde. Você precisa encontrar o equilíbrio entre velocidade e precisão para pressionar no seu personagem e atirar no momento certo para acertar seus oponentes antes que eles acertem você.
             END,
             'inspired' => 'Inspirado por:',
-            'install' => 'Baixe o app e jogar quando quiser',
+            'install' => 'Baixe o app e jogue quando quiser',
             'keyboardMapping' => <<<END
             Disposição das teclas:
             1 Jogador: Qualquer tecla
