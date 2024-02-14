@@ -12,6 +12,10 @@ countdown.src = "./sound/countdown.mp3"
 const gameFont = new FontFace("game", "url(PixelOperator-Bold.ttf)");
 document.fonts.add(gameFont);
 gameFont.load()
+let fontLoaded = false
+document.fonts.onloadingdone = () =>{
+    fontLoaded = true
+}
 
 const canvas = document.querySelector('canvas')
 const context = canvas.getContext("2d")
@@ -36,7 +40,7 @@ cookieExpires = cookieExpires.toUTCString()
 
 let gameAssetsLoaded
 let checkAssetsInterval = setInterval(() => {
-    if (gunfire.readyState === 4 && countdown.readyState === 4 && sprites.complete === true && document.fonts.check("16px game")) {
+    if (gunfire.readyState === 4 && countdown.readyState === 4 && sprites.complete === true && fontLoaded === true) {
         gameAssetsLoaded = true
         clearInterval(checkAssetsInterval)
     }
