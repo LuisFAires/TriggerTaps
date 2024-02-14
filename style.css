@@ -135,6 +135,10 @@ button {
     justify-content: center;
 }
 
+#rotateOverlay{
+    display: none;
+}
+
 #upper {
     max-height: 30vh;
 }

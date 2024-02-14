@@ -1,7 +1,5 @@
 /*
 This file is responsible for everything that happens into the main div
-
-Every time that the canvas is moved the X and Y cordinates must be refreshed by calling setCanvasBoundings()
 */
 
 loadingOverlay.innerText = lang.loading
@@ -24,42 +22,63 @@ let lastAdUpdate = 0
 let deferredPrompt
 let showPromotion
 
-function showRotateOverlay() {
-    rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
-}
-
-async function fullscreenLock() {
-    if (!touchDevice) return
-    if (document.fullscreenElement === null) {
-        await waitForInteractionLeave()
-        try {
-            await document.documentElement.requestFullscreen()
-            try {
-                await screen.orientation.lock("landscape")
-            } catch {
-                console.log("unable to get orientation locked")
-            }
-        } catch {
-            //console.log("unable to get fullscreen")
+window.addEventListener("load", () => {
+    let loadingInterval = setInterval(async () => {
+        if (gameAssetsLoaded) {
+            clearInterval(loadingInterval)
+            window.scrollTo(0, 0)
+            document.querySelector("#loadingOverlay").innerHTML = lang.ready
+            initializeGame()
+            showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
+            await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
+            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
+            document.getElementsByTagName('body')[0].style.overflow = 'unset'
+            loadingOverlay.style.display = "none"
+            await fullScreenOrientationLock()
+            await showRotateOverlay()
+            await calculateDivs()
+            updateAds()
+            screen.orientation.addEventListener("change", showRotateOverlay)
+            window.addEventListener("resize", showRotateOverlay)
+            window.addEventListener("resize", () => {
+                clearTimeout(afterResizeTimeout)
+                afterResizeTimeout = setTimeout(calculateDivs, 500)
+            })
         }
+    })
+})
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("beforeinstallprompt", definePrompt = (ev) => {
+        ev.preventDefault()
+        deferredPrompt = ev
+        waitForInteractionWithElement(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
+    })
+
+    function endScreenInstallPrompt() {
+        setTimeout(async () => {
+            let installed
+            if (
+                currentScreen.name == "end" &&
+                ((mode == "single" && players.second.status == "dead" && currentLevel > 1) || mode == "multi") &&
+                new Date() - lastPrompt > 180000
+            ) {
+                installed = await installPrompt()
+            }
+            if (!installed) {
+                waitForInteractionWithElement(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
+            }
+        }, 500)
     }
-    waitForUserInteraction(document, ["touchstart", "mousedown"], fullscreenLock, true)
+
+    window.addEventListener("appinstalled", () => {
+        window.removeEventListener("beforeinstallprompt", definePrompt)
+        deferredPrompt = null
+    })
+    navigator.serviceWorker.register("./serviceworker.js")
 }
 
-async function installPrompt() {
-    await waitForInteractionLeave()
-    deferredPrompt.prompt()
-    lastPrompt = new Date()
-    const { outcome } = await deferredPrompt.userChoice
-    if (outcome == "accepted") {
-        try {
-            gtag('event', 'install')
-        } catch { }
-    }
-    return outcome === "accepted"
-}
-
-function waitForUserInteraction(element, interactions, callback = undefined, keyboard = false) {
+function waitForInteractionWithElement(element, interactions, callback = undefined, keyboard = false) {
     return new Promise((resolve) => {
         function triggeredEvent() {
             for (interaction of interactions) {
@@ -76,8 +95,42 @@ function waitForUserInteraction(element, interactions, callback = undefined, key
     })
 }
 
+function showRotateOverlay() {
+    rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
+}
+
+async function fullScreenOrientationLock() {
+    if (!touchDevice) return
+    if (document.fullscreenElement === null) {
+        await waitForInteractionLeave()
+        try {
+            await document.documentElement.requestFullscreen()
+            try {
+                await screen.orientation.lock("landscape")
+            } catch {
+                console.log("unable to get orientation locked")
+            }
+        } catch {
+            console.log("unable to get fullscreen")
+        }
+    }
+    waitForInteractionWithElement(document, ["touchstart", "mousedown"], fullScreenOrientationLock, true)
+}
+
+async function installPrompt() {
+    await waitForInteractionLeave()
+    deferredPrompt.prompt()
+    lastPrompt = new Date()
+    const { outcome } = await deferredPrompt.userChoice
+    if (outcome == "accepted") {
+        try {
+            gtag('event', 'install')
+        } catch { }
+    }
+    return outcome === "accepted"
+}
+
 function calculateDivs() {
-    //set external divs size
     if (loadingOverlay.style.display != "none") return
     if (rotateOverlay.style.display != "none") return
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
@@ -104,8 +157,6 @@ function calculateDivs() {
 
 
     insertAds()
-
-    setCanvasBoundings()
 }
 
 function insertAds() {
@@ -128,61 +179,5 @@ function updateAds() {
     if (new Date() - lastAdUpdate > 60000 && currentScreen.name == "menu") {
         insertAds()
     }
-    waitForUserInteraction(gameArea, ["mousedown", "touchstart"], updateAds, true)
-}
-
-window.addEventListener("load", () => {
-    let loadingInterval = setInterval(async () => {
-        if (gameAssetsLoaded) {
-            clearInterval(loadingInterval)
-            window.scrollTo(0, 0)
-            document.querySelector("#loadingOverlay").innerHTML = lang.ready
-            initializeGame()
-            showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
-            await waitForUserInteraction(loadingOverlay, ["click"], undefined, true)
-            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
-            document.getElementsByTagName('body')[0].style.overflow = 'unset'
-            loadingOverlay.style.display = "none"
-            await fullscreenLock()
-            await showRotateOverlay()
-            await calculateDivs()
-            updateAds()
-            screen.orientation.addEventListener("change", showRotateOverlay)
-            window.addEventListener("resize", showRotateOverlay)
-            window.addEventListener("resize", () => {
-                clearTimeout(afterResizeTimeout)
-                afterResizeTimeout = setTimeout(calculateDivs, 500)
-            })
-        }
-    })
-})
-
-if ("serviceWorker" in navigator) {
-    window.addEventListener("beforeinstallprompt", definePrompt = (ev) => {
-        ev.preventDefault()
-        deferredPrompt = ev
-        waitForUserInteraction(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
-    })
-
-    function endScreenInstallPrompt() {
-        setTimeout(async () => {
-            let installed
-            if (
-                currentScreen.name == "end" &&
-                ((mode == "single" && players.second.status == "dead" && currentLevel > 1) || mode == "multi") &&
-                new Date() - lastPrompt > 180000
-            ) {
-                installed = await installPrompt()
-            }
-            if (!installed) {
-                waitForUserInteraction(gameArea, ["touchstart", "mousedown"], endScreenInstallPrompt, true)
-            }
-        }, 500)
-    }
-
-    window.addEventListener("appinstalled", () => {
-        window.removeEventListener("beforeinstallprompt", definePrompt)
-        deferredPrompt = null
-    })
-    navigator.serviceWorker.register("./serviceworker.js")
+    waitForInteractionWithElement(gameArea, ["mousedown", "touchstart"], updateAds, true)
 }
