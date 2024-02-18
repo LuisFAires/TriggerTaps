@@ -33,10 +33,10 @@ window.addEventListener("load", () => {
             await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
             keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
             document.getElementsByTagName('body')[0].style.overflow = 'unset'
-            loadingOverlay.style.display = "none"
             await fullScreenOrientationLock()
             await showRotateOverlay()
             await calculateDivs()
+            loadingOverlay.style.display = "none"
             updateAds()
             screen.orientation.addEventListener("change", showRotateOverlay)
             window.addEventListener("resize", showRotateOverlay)
@@ -131,7 +131,6 @@ async function installPrompt() {
 }
 
 function calculateDivs() {
-    if (loadingOverlay.style.display != "none") return
     if (rotateOverlay.style.display != "none") return
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null && !isInIframe) return
