@@ -13,7 +13,7 @@ const gameFont = new FontFace("game", "url(PixelOperator-Bold.ttf)");
 document.fonts.add(gameFont);
 gameFont.load()
 let fontLoaded = false
-document.fonts.onloadingdone = () =>{
+document.fonts.onloadingdone = () => {
     fontLoaded = true
 }
 
@@ -555,6 +555,8 @@ const screens = {
 const drawables = {
     EveryFrameObjects() { //Backgorund and both characters.
         context.clearRect(0, 0, 650, 250)
+        context.fillStyle = "#deb887"
+        context.fillRect(0, 0, 650, 250)
         context.drawImage(sprites, 0, 600, 455, 229, 100, 10, 455, 229)
         players.draw(players.first)
         players.draw(players.second)
