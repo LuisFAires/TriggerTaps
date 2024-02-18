@@ -17,10 +17,12 @@ export default async function getCanvasCoordinates(page, url, language) {
   await page.click('#loadingOverlay')
 
   let canvasX = await page.evaluate(() => {
-    return canvas.positionX
+    let boundingClientRect = canvas.getBoundingClientRect()
+    return boundingClientRect.x
   })
   let canvasY = await page.evaluate(() => {
-    return canvas.positionY
+    let boundingClientRect = canvas.getBoundingClientRect()
+    return boundingClientRect.y
   })
   console.log(`Canvas coordinates: X:`,  { X: canvasX, Y: canvasY });
   if (canvasX >= 0 & canvasY >= 0) {

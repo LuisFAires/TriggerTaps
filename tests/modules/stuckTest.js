@@ -28,7 +28,7 @@ export default async function stuckTest(page, coordinates, language, mode, playe
   await page.waitForFunction('remainingTimer < 0');
   await page.mouse.click(coordinates.X + playerToShootX, coordinates.Y + 125);
   await page.waitForFunction('!players.first.moving && !players.second.moving && currentScreen.name == "end"')
-  let stuckResult = await isPlayerstuck(page, 'first')
+  let stuckResult = await isPlayerstuck(page, playerTostuck)
   currentScreenshotPath = `./reports/${language}/end ${mode} stuck ${playerTostuck}.png`
   await page.screenshot({ path: currentScreenshotPath });
   console.log(currentScreenshotPath);

@@ -19,8 +19,8 @@ import testTexts from './modules/testTexts.js';
     const url = 'https://dev.triggertaps.top/';
     const languagesToTest = ['en', 'es', 'pt'];
     const userName = 'Automated Tester';
-    const deviceWidth = 800;
-    const deviceHeight = 600;
+    const deviceWidth = 667;
+    const deviceHeight = 375;
 
     const browser = await puppeteer.launch({ headless: "new", args: ['--mute-audio'] });
     const page = await browser.newPage();
@@ -51,7 +51,6 @@ import testTexts from './modules/testTexts.js';
         results.push(await createFolder('./reports/', testingLanguage))
 
         let coordinates = await getCanvasCoordinates(page, url, testingLanguage)
-        results.push(coordinates)
         coordinates = coordinates.coordinates
 
 
@@ -64,7 +63,7 @@ import testTexts from './modules/testTexts.js';
             page,
             coordinates,
             {
-                title: texts.lang.name,
+                title: texts.mainPage.title,
                 text: texts.lang.description,
                 url: url + "?lang=" + testingLanguage
             }
@@ -83,7 +82,7 @@ import testTexts from './modules/testTexts.js';
             },
             userName
         ))
-        
+
         texts.achievementPage = await getTextsAchievement(page, userName)
 
         results.push(await achievementShare(page, testingLanguage, {
@@ -109,8 +108,8 @@ import testTexts from './modules/testTexts.js';
     await browser.close();
 
     console.log(results)
-    for(let result of results){
-        if(result.result == false){
+    for (let result of results) {
+        if (result.result == false) {
             console.log('something went wrong❌❌❌')
         }
     }
