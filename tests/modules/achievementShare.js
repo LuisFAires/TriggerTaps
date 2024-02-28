@@ -21,5 +21,5 @@ export default async function achievementShare(page, language, data) {
   }
   console.log(achievementSharedData)
   console.log("Achievement shared data ✅")
-  return {result: undefined, function: 'achievementShare'}
+  return {result: true, function: 'achievementShare'}
 }
