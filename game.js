@@ -30,8 +30,6 @@ let frameUpdateInterval
 let playersUpdateInterval
 let canvasBoudingsTimeout
 let physicalKeyboard
-let cookieAchievement
-let achievementUrl
 let touchPressed = false
 let touchEventHasBeenTriggered = false
 let cookieExpires = new Date()
@@ -57,9 +55,6 @@ async function initializeGame() {
         }
         physicalKeyboard = keyboard.size == 0 ? false : true
 
-        cookieAchievement = getCookie("achievement")
-        if (cookieAchievement) setAchievementUrl()
-
         changeCurrentScreen(screens.menu)
 
         canvas.addEventListener('touchstart', function (event) {
@@ -83,14 +78,6 @@ async function initializeGame() {
         return
     }
     setTimeout(initializeGame)
-}
-
-function setAchievementUrl(result) {
-    if (cookieAchievement) {
-        achievementUrl = location.origin + `/achievement/`
-    } else {
-        achievementUrl = location.origin + `/achievement/?name=${result}&lang=${lang.currentLang}`
-    }
 }
 
 async function userInput(X, Y, key = undefined) {
@@ -173,9 +160,7 @@ async function userInput(X, Y, key = undefined) {
                 response = await response.json()
                 result = encodeURIComponent(response.result)
                 document.cookie = `achievement=${result};expires=${cookieExpires};`
-                cookieAchievement = getCookie("achievement")
-                setAchievementUrl(result)
-                location.href = achievementUrl
+                location.href = "/achievement"
                 return
             }
             window.alert(lang.invalid)
@@ -218,8 +203,8 @@ async function userInput(X, Y, key = undefined) {
             }
             return
         }
-        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && achievementUrl) {
-            location.href = achievementUrl
+        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && getCookie("achievement") != '') {
+            location.href = "/achievement"
         }
         return
     }
@@ -525,7 +510,7 @@ const screens = {
                 context.fillStyle = "#000000"
                 context.fillText(lang.press + " H", 65, 75)
             }
-            if (achievementUrl) {
+            if (getCookie("achievement") != '') {
                 context.font = "30px game"
                 context.fillStyle = "#fff"
                 context.fillRect(125, 205, 400, 40)
