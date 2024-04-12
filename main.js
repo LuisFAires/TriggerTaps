@@ -2,7 +2,7 @@
 This file is responsible for everything that happens into the main div
 */
 
-loadingOverlay.innerText = lang.loading
+loadingText.innerText = lang.loading
 rotateOverlay.innerText = lang.rotate
 
 const gameArea = document.querySelector("canvas")
@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
         if (gameAssetsLoaded) {
             clearInterval(loadingInterval)
             window.scrollTo(0, 0)
-            document.querySelector("#loadingOverlay").innerHTML = lang.ready
+            loadingText.innerHTML = lang.ready
             initializeGame()
             showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
             await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)

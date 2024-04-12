@@ -67,10 +67,10 @@
     <meta name="robots" content="max-image-preview:large">
     <meta name="theme-color" content="#deb887">
     <link rel="manifest" href="./manifest.json">
-    <link rel="prefetch" href="/PixelOperator-Bold.ttf" as="font">
-    <link rel="prefetch" href="/sound/gunfire.mp3" as="audio">
-    <link rel="prefetch" href="/sound/countdown.mp3" as="audio">
-    <link rel="prefetch" href="/img/sprites.webp" as="image">
+    <link rel="preload" href="/PixelOperator-Bold.ttf" as="font">
+    <link rel="preload" href="/sound/gunfire.mp3" as="audio">
+    <link rel="preload" href="/sound/countdown.mp3" as="audio">
+    <link rel="preload" href="/img/sprites.webp" as="image">
     <style>
         <?php require_once 'style.css'; ?>
     </style>
@@ -79,7 +79,10 @@
 
 <body>
     <div id="rotateOverlay"></div>
-    <div id="loadingOverlay"></div>
+    <div id="loadingOverlay">
+        <span id="loadingText"></span>
+        <img id="loadingImg" src="/img/CowBoyShoot.gif">
+    </div>
     <div id="main">
         <div id="upper">
             <div class="adContainer"></div>
