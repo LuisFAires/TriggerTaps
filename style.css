@@ -78,6 +78,7 @@ h1 {
 #creditBadge {
     width: 90%;
     max-width: 600px;
+    height: 60px;
     object-fit: contain;
 }
 
