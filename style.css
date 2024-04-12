@@ -28,6 +28,8 @@ body {
 }
 
 #loadingImg{
+    height: 250px;
+    width: 250px;
     max-width: 50%;
     max-height: 50%;
 }
