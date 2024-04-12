@@ -81,7 +81,7 @@
     <div id="rotateOverlay"></div>
     <div id="loadingOverlay">
         <span id="loadingText"></span>
-        <img id="loadingImg" src="/img/CowBoyShoot.gif">
+        <img id="loadingImg" src="/img/CowBoyShoot.gif" alt="loading">
     </div>
     <div id="main">
         <div id="upper">
