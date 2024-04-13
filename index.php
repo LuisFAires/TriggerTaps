@@ -74,14 +74,13 @@
     <style>
         <?php require_once 'style.css'; ?>
     </style>
-    <meta name="viewport" content="user-scalable=no, width=device-width">
+    <meta name="viewport" content="width=device-width">
 </head>
 
 <body>
     <div id="rotateOverlay"></div>
     <div id="loadingOverlay">
         <span id="loadingText"></span>
-        <img id="loadingImg" src="/img/CowBoyShoot.gif" alt="loading">
     </div>
     <div id="main">
         <div id="upper">
