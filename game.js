@@ -319,7 +319,7 @@ const levels = [
     { min: 75, max: 95 },//7
     { min: 60, max: 75 },//8
     { min: 50, max: 60 },//9
-    { min: 45, max: 40 }//10
+    { min: 40, max: 45 }//10
 ]
 
 const screens = {
