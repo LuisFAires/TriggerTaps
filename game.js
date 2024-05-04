@@ -24,7 +24,7 @@ context.textAlign = "center"
 let currentScreen
 let mode
 let remainingTimer
-let currentLevel
+let currentLevel = 0
 let timerUpdateInterval
 let frameUpdateInterval
 let playersUpdateInterval
@@ -168,7 +168,6 @@ async function userInput(X, Y, key = undefined) {
         return
     }
     if (currentScreen.name == "menu") {
-        currentLevel = 0
         if ((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")) {
             mode = "single"
             await waitForInteractionLeave()
@@ -329,6 +328,10 @@ const screens = {
             drawables.EveryFrameObjects()
             drawables.Timer()
             context.font = "24px game"
+            context.fillStyle = "#5e4700"
+            if (mode == "single"){
+                context.fillText(lang.lvl + (currentLevel + 1), 325, 215)
+            }
             if (players.first.stuck) {
                 drawables.StuckMsg()
                 context.fillText(lang.stuck, 75, 75)
@@ -348,6 +351,9 @@ const screens = {
             }
         },
         onchange() {
+            clearInterval(timerUpdateInterval)
+            clearInterval(frameUpdateInterval)
+            clearInterval(playersUpdateInterval)
             players.reset(players.first)
             players.reset(players.second)
             countdown.currentTime = 0
@@ -364,15 +370,12 @@ const screens = {
                 currentScreen.update()
             }, 2000)
             setTimeout(() => {
-                clearInterval(timerUpdateInterval)
                 timerUpdateInterval = setInterval(() => {
                     remainingTimer = timerEnd - Date.now()
                 })
-                clearInterval(frameUpdateInterval)
                 frameUpdateInterval = setInterval(() => {
                     currentScreen.update()
                 }, 16)
-                clearInterval(playersUpdateInterval)
                 playersUpdateInterval = setInterval(() => {
                     if (remainingTimer < 100) {
                         if (!players.first.stuck) players.doWithdraw(players.first)
