@@ -44,6 +44,7 @@
                     <a href="https://linkedin.com/in/luisfaires/" target="_blank">
                         <img src="/img/badges/Luis_Fillipe-Software_Developer.svg" alt="LinkedIn - Luis Fillipe Aires Souza" id="creditBadge" loading="lazy">
                     </a>
+                    Assets:
                     <span class="creditSpan">Samuel Lee <a href="https://samuellee.itch.io/cow-boy-animated-pixel-art" target="_blank" class="anchor">Cowboy (Animated Pixel Art)</a></span>
                     <span class="creditSpan">CraftPix <a href="https://free-game-assets.itch.io/free-rpg-desert-tileset" target="_blank" class="anchor">RPG Desert Tileset</a></span>
                     <span class="creditSpan">KuraiWolf <a href="https://opengameart.org/content/light-machine-gun" target="_blank" class="anchor">Light Machine Gun</a></span>
@@ -59,14 +60,6 @@
                     <img src="/img/badges/HTML5.svg" class="badges" alt="HTML5" loading="lazy">
                     <img src="/img/badges/CSS3.svg" class="badges" alt="CSS3" loading="lazy">
                     <img src="/img/badges/gimp.svg" class="badges" alt="Gimp" loading="lazy">
-                </section>
-            </li>
-            <li>
-                <h2>{$lang['inspired']}</h2>
-                <section>
-                    <a href="https://www.youtube.com/playlist?list=PLTcmLKdIkOWmeNferJ292VYKBXydGeDej" target="_blank">
-                        <img src="/img/badges/Playlist_Flappy_bird.svg" class="badges" alt="Playlist Flappy bird - Dev Soutinho - YouTube" loading="lazy">
-                    </a>
                 </section>
             </li>
             <li>
