@@ -175,7 +175,7 @@ function insertAds() {
 }
 
 function updateAds() {
-    if (new Date() - lastAdUpdate > 60000 && currentScreen.name == "menu") {
+    if (new Date() - lastAdUpdate > 10000) {
         insertAds()
     }
     waitForInteractionWithElement(gameArea, ["mousedown", "touchstart"], updateAds, true)
