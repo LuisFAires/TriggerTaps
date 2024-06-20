@@ -48,6 +48,12 @@ window.addEventListener("load", () => {
     })
 })
 
+//prevents scroll with space bar
+
+window.onkeydown = function (e) {
+    return !(e.keyCode == 32 && e.target == document.body);
+};
+
 if ("serviceWorker" in navigator) {
     window.addEventListener("beforeinstallprompt", definePrompt = (ev) => {
         ev.preventDefault()
