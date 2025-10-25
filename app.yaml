@@ -1,0 +1,15 @@
+runtime: php81
+
+handlers:
+  # Permite acesso direto a arquivos PHP
+  - url: /(.*\.php)
+    script: \1
+
+  # Permite acesso a arquivos estáticos (CSS, JS, imagens, etc.)
+  - url: /(.+\.*)
+    static_files: \1
+    upload: .+\.*
+
+  # Redireciona todas as outras requisições para index.php
+  - url: /.*
+    script: index.php
