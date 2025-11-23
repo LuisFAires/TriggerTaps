@@ -1,26 +1,19 @@
-<?php
-require_once '../redirect.php';
-require_once 'lang.php';
-require_once 'read.php';
-
-$title =  $lang['achievementTitle'] . $result;
-?>
 <!DOCTYPE html>
-<html lang="<?= $lang['currentLang']; ?>" translate="no">
+<html translate="no">
 
 <head>
     <meta charset="UTF-8">
-    <title><?= $title ?></title>
+    <title></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="application-name" content="TriggerTaps">
     <meta name="creator" content="Luis Fillipe Aires Souza">
-    <meta name="description" content="<?= $result . $lang['achievement']; ?>">
+    <meta name="description" content="">
     <meta name="twitter:card" content="summary">
-    <meta property="og:title" content="<?= $title ?>">
+    <meta property="og:title" content="">
     <meta property="og:type" content="game">
-    <meta property="og:description" content="<?= $result . $lang['achievement']; ?>">
+    <meta property="og:description" content="">
     <meta property="og:image" content="https://triggertaps.top/img/CowBoyShoot.gif">
-    <meta property="og:url" content="https://triggertaps.top/achievement/?name=<?= $achievementValue . '&lang=' . $lang['currentLang'] ?>">
+    <meta property="og:url" content="">
     <link rel="apple-touch-icon" href="https://triggertaps.top/img/ios/192.png">
     <link rel="icon" href="https://triggertaps.top/img/CowBoyShoot.gif">
     <meta name="theme-color" content="#deb887">
@@ -131,24 +124,62 @@ $title =  $lang['achievementTitle'] . $result;
         <img id="gif" src="../img/CowBoyShoot.gif">
         <div id="textContainer">
             <div>
-                <span id="name"><?= $result; ?></span>
-                <span id="text"><?= $lang['achievement']; ?></span>
+                <span id="name"></span>
+                <span id="text"></span>
             </div>
             <div>
-                <button id="share" onclick="share()"><?= $lang['share']; ?></button>
-                <button id="play" onclick="playButtonClick()"><?= $lang['play']; ?></button>
+                <button id="share" onclick="share()"></button>
+                <button id="play" onclick="playButtonClick()"></button>
             </div>
             <div>
-                <?php require_once '../badges.php' ?>
+                <img class="storeBadge" src="/img/play-badgeLang.png" alt="Google Play"
+                    onclick="promotionAction('Android', 'https://play.google.com/store/apps/details?id=triggertaps.twa', undefined)"
+                    loading="lazy">
+                <img class="storeBadge" src="/img/microsoft-badgeLang.png" alt="Microsoft Store"
+                    onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')"
+                    loading="lazy">
+                <!--<img class="storeBadge" src="/img/apple-badgeLang.svg" alt="App Store" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/', undefined)" loading="lazy">-->
             </div>
         </div>
     </div>
+    <script src="../lang.js"></script>
+    <script src="../storeBadges.js"></script>
+    <script src="utils.js"></script>
     <script>
+        var toDecrypt = "";
+        (async () => {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name')
+            if (name) {
+                toDecrypt = name
+                result = await decryptAchievement(toDecrypt)
+            } else if (getCookie('achievement')) {
+                toDecrypt = getCookie('achievement')
+                result = await decryptAchievement(toDecrypt)
+            } else {
+                location.href = location.origin
+            }
+
+            document.documentElement.setAttribute('lang', lang.currentLang);
+            title = lang.achievementTitle + result;
+            document.title = title;
+            document.querySelector("meta[property='og:title']").setAttribute("content", title);
+            document.querySelector("meta[name='description']").setAttribute("content", result + lang.achievement);
+            document.querySelector("meta[property='og:description']").setAttribute("content", result + lang.achievement);
+            document.querySelector("meta[property='og:url']").setAttribute("content", "https://triggertaps.top/achievement/?name=" + name + "&lang=" + lang.currentLang);
+            document.getElementById('name').textContent = result;
+            document.getElementById('text').textContent = lang.achievement;
+            document.getElementById('share').textContent = lang.share;
+            document.getElementById('play').textContent = lang.play;
+
+        })();
+
         function playButtonClick() {
             if (location.href.includes("?name=")) {
                 try {
                     gtag('event', 'playFromAchievement')
-                } catch {}
+                } catch { }
             }
             location.href = location.origin
         }
@@ -170,11 +201,11 @@ $title =  $lang['achievementTitle'] . $result;
         function share() {
             try {
                 gtag('event', 'shareFromAchievement')
-            } catch {}
+            } catch { }
             let dataToShare = {
                 title: document.title,
-                text: "<?= $result; ?>" + text.innerHTML,
-                url: "https://triggertaps.top/achievement/?name=<?= $achievementValue . '&lang=' . $lang['currentLang'] ?>"
+                text: result + text.innerHTML,
+                url: `${location.origin}/achievement/?name=${toDecrypt}`
             }
             if (navigator.canShare(dataToShare)) {
                 navigator.share(dataToShare)
@@ -210,6 +241,8 @@ $title =  $lang['achievementTitle'] . $result;
                 playButton.style.transform = "scale(1)"
             }, 525);
         }, 1000);
+
     </script>
 </body>
+
 </html>

@@ -7,9 +7,7 @@ rotateOverlay.innerText = lang.rotate
 
 const gameArea = document.querySelector("canvas")
 const upper = document.getElementById("upper")
-const left = document.getElementById("left")
-const center = document.getElementById("center")
-const right = document.getElementById("right")
+const bottom = document.getElementById("bottom")
 const promotion = document.getElementById("promotion")
 const touchDevice = navigator.maxTouchPoints > 0 ? true : false
 const isInIframe = window.self !== window.top
@@ -26,17 +24,16 @@ window.addEventListener("load", () => {
     let loadingInterval = setInterval(async () => {
         if (gameAssetsLoaded) {
             clearInterval(loadingInterval)
-            window.scrollTo(0, 0)
             loadingText.innerHTML = lang.ready
             initializeGame()
             showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
             await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
-            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
-            document.getElementsByTagName('body')[0].style.overflow = 'unset'
+            window.scrollTo(0, 0)
+            loadingOverlay.style.display = "none"
+            gameContainer.style.display = "block"
             await fullScreenOrientationLock()
             await showRotateOverlay()
             await calculateDivs()
-            loadingOverlay.style.display = "none"
             updateAds()
             screen.orientation.addEventListener("change", showRotateOverlay)
             window.addEventListener("resize", showRotateOverlay)
@@ -141,21 +138,9 @@ function calculateDivs() {
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null && !isInIframe) return
 
-    let sideDivWidth = parseInt((bottom.clientWidth - center.clientWidth) / 2)
-    left.style.width = right.style.width = (sideDivWidth >= 0 ? sideDivWidth : 0) + "px"
-
     promotion.style.display = (window.innerHeight >= gameArea.height + 50 && showPromotion) ? "flex" : "none"
 
-    //Bottom row divs must have zero height so the upper div height can be evaluated without intervention when screen is downsized
-    left.style.height = center.style.height = right.style.height = 0
-
-    if (window.innerHeight >= (showPromotion ? 350 : 300)) {
-        upper.style.height = (window.innerHeight - (showPromotion ? 300 : 250)) + "px"
-    } else {
-        upper.style.height = 0
-    }
-
-    left.style.height = center.style.height = right.style.height = window.innerHeight - upper.clientHeight + "px"
+    upper.style.height =  window.innerHeight - bottom.clientHeight + "px"
 
     lastWidth = window.innerWidth
     lastHeigth = window.innerHeight

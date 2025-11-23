@@ -7,7 +7,6 @@
 body {
     font-family: game;
     color: #000000;
-    overflow: hidden;
     margin: 0;
     background-color: #deb887;
     user-select: none;
@@ -15,9 +14,6 @@ body {
 
 #loadingOverlay,
 #rotateOverlay {
-    position: fixed;
-    left: 0;
-    top: 0;
     width: 96%;
     height: 100%;
     background-color: #deb887;
@@ -28,6 +24,16 @@ body {
 
 #main {
     flex-direction: column;
+    height: 100vh;
+}
+
+#gameContainer {
+    display: none;
+}
+
+canvas {
+    width: 98vw;
+    aspect-ratio: 2.6 / 1;
 }
 
 #article {
@@ -74,7 +80,7 @@ h1 {
     object-fit: contain;
 }
 
-.creditSpan{
+.creditSpan {
     font-size: 25px;
 }
 
@@ -126,31 +132,19 @@ button {
 #rotateOverlay,
 #loadingOverlay,
 #bottom,
-#center,
 #promotion,
-#upper,
-#left,
-#right {
+#upper {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-#rotateOverlay{
-    display: none;
-}
-
-#upper {
-    max-height: 30vh;
-}
-
-#center {
+#bottom {
+    width: 100%;
     flex-direction: column;
 }
-
-#left,
-#right {
-    min-height: 250px;
+#rotateOverlay {
+    display: none;
 }
 
 .adContainer {
@@ -171,7 +165,7 @@ button {
     max-width: 650px;
 }
 
-#promotionLabel{
+#promotionLabel {
     font-size: 23px;
     text-align: center;
     max-width: 50%;

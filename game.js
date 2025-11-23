@@ -30,6 +30,7 @@ let frameUpdateInterval
 let playersUpdateInterval
 let canvasBoudingsTimeout
 let physicalKeyboard
+let gamepadConnected = false
 let touchPressed = false
 let touchEventHasBeenTriggered = false
 let cookieExpires = new Date()
@@ -75,6 +76,61 @@ async function initializeGame() {
         window.addEventListener('keydown', function (event) {
             userInput(undefined, undefined, event.key)
         });
+        // Listen for when a gamepad connects
+        window.addEventListener("gamepadconnected", (event) => {
+            console.log("Gamepad connected:", event.gamepad);
+            gamepadConnected = true
+            currentScreen.update()
+
+            // Start polling the gamepad state
+            pollGamepad();
+            async function pollGamepad() {
+                const gamepads = navigator.getGamepads();
+                if (!gamepads) return;
+
+                const gp = gamepads[0]
+                let actionDone = false;
+                if (gp) {
+                    const buttons = gp.buttons;
+                    const a = buttons[0];
+                    const b = buttons[1];
+                    const lt = buttons[6];
+                    const rt = buttons[7];
+                    const back = buttons[8];
+                    const start = buttons[9];
+
+                    if (a.pressed && currentScreen.name != "game") {
+                        userInput(undefined, undefined, "f")
+                        actionDone = true
+                    }
+                    if (b.pressed && currentScreen.name != "game") {
+                        userInput(undefined, undefined, "j")
+                        actionDone = true
+                    }
+                    if (back.pressed) {
+                        location.href = "#main"
+                    }
+                    if (start.pressed) {
+                        userInput(undefined, undefined, "h")
+                        actionDone = true
+                    }
+                    if (lt.pressed && lt.value > 0.5) {
+                        userInput(undefined, undefined, "f")
+                        actionDone = true
+                    }
+                    if (rt.pressed && rt.value > 0.5) {
+                        userInput(undefined, undefined, "j")
+                        actionDone = true
+                    }
+                }
+
+                //prevent multiple calls
+                if (actionDone) await new Promise(r => setTimeout(r, 300));
+
+                // Keep polling
+                requestAnimationFrame(pollGamepad);
+            }
+        });
         return
     }
     setTimeout(initializeGame)
@@ -82,8 +138,9 @@ async function initializeGame() {
 
 async function userInput(X, Y, key = undefined) {
     let boundingClientRect = canvas.getBoundingClientRect()
-    X -= boundingClientRect.x
-    Y -= boundingClientRect.y
+    X = canvas.width / boundingClientRect.width * (X - boundingClientRect.x)
+    Y = canvas.height / boundingClientRect.height * (Y - boundingClientRect.y)
+    console.log(X, Y, key)
     let leftSideinput
     let rightSideinput
     if (X < 125 || (mode == "single" && key != undefined) || ((mode == "multi") && (key == "f" || key == "F"))) leftSideinput = true
@@ -92,15 +149,36 @@ async function userInput(X, Y, key = undefined) {
         if (leftSideinput && !isPlayerAlreadyStuck(players.first) && remainingTimer <= 0 && players.first.status != "dead") {
             players.first.reactionTime = -remainingTimer
             players.action(players.first, players.second)
+            try {
+                navigator.getGamepads()[0].vibrationActuator.playEffect("dual-rumble", {
+                    duration: 150,
+                    strongMagnitude: 1.0,
+                    weakMagnitude: 0.3
+                });
+            } catch { }
             changeCurrentScreen(screens.end)
             return
         }
         if (rightSideinput && !isPlayerAlreadyStuck(players.second) && remainingTimer <= 0 && players.second.status != "dead") {
             players.second.reactionTime = -remainingTimer
             players.action(players.second, players.first)
+            try {
+                navigator.getGamepads()[0].vibrationActuator.playEffect("dual-rumble", {
+                    duration: 150,
+                    strongMagnitude: 1.0,
+                    weakMagnitude: 0.3
+                });
+            } catch { }
             changeCurrentScreen(screens.end)
             return
         }
+        try {
+            navigator.getGamepads()[0].vibrationActuator.playEffect("dual-rumble", {
+                duration: 1500,
+                strongMagnitude: 1.0,
+                weakMagnitude: 1
+            });
+        } catch { }
         return
     }
     if (currentScreen.name == "end") {
@@ -154,11 +232,7 @@ async function userInput(X, Y, key = undefined) {
                 gtag('event', 'achievementGenerated')
             } catch { }
             if (name != null && name != "" && name.length < 40) {
-                let data = new FormData()
-                data.append('encrypt', name)
-                let response = await fetch(location.origin + "/achievement/generate.php", { method: 'POST', body: data })
-                response = await response.json()
-                result = encodeURIComponent(response.result)
+                result = await encryptAchievement(name)
                 document.cookie = `achievement=${result};expires=${cookieExpires};`
                 location.href = "/achievement"
                 return
@@ -168,6 +242,7 @@ async function userInput(X, Y, key = undefined) {
         return
     }
     if (currentScreen.name == "menu") {
+        currentLevel = 0
         if ((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")) {
             mode = "single"
             await waitForInteractionLeave()
@@ -329,7 +404,7 @@ const screens = {
             drawables.Timer()
             context.font = "24px game"
             context.fillStyle = "#5e4700"
-            if (mode == "single"){
+            if (mode == "single") {
                 context.fillText(lang.lvl + (currentLevel + 1), 325, 215)
             }
             if (players.first.stuck) {
@@ -389,6 +464,13 @@ const screens = {
                     players.second.reactionTime = -remainingTimer
                     if (players.second.status != "dead") {
                         players.action(players.second, players.first)
+                        try {
+                            navigator.getGamepads()[0].vibrationActuator.playEffect("dual-rumble", {
+                                duration: 1500,
+                                strongMagnitude: 1.0,
+                                weakMagnitude: 1
+                            });
+                        } catch { }
                         changeCurrentScreen(screens.end)
                     }
                 }, 3000 + enemyTrigger)
@@ -491,10 +573,10 @@ const screens = {
         update() {
             drawables.EveryFrameObjects()
             context.fillStyle = "#000000"
-            context.drawImage(sprites, 500, 400, 100, 100, 35, 25, 45, 45)
+            context.drawImage(sprites, 500, 400, 100, 100, 35, 15, 45, 45)
             context.font = "50px game"
-            context.fillText("?", 85, 63)
-            context.drawImage(sprites, 500, 300, 100, 100, 565, 25, 55, 55)
+            context.fillText("?", 85, 53)
+            context.drawImage(sprites, 500, 300, 100, 100, 565, 15, 55, 55)
             context.fillStyle = "#fff"
             context.fillRect(125, 50, 400, 150)
             context.fillStyle = "#5e4700"
@@ -511,7 +593,27 @@ const screens = {
                 context.fillText(lang.press + " F", 225, 170)
                 context.fillText(lang.press + " J", 425, 170)
                 context.fillStyle = "#000000"
-                context.fillText(lang.press + " H", 65, 75)
+                context.fillText(lang.press + " H", 65, 65)
+            }
+            if (gamepadConnected) {
+                context.beginPath();
+                context.arc(264, 182, 10, 0, Math.PI * 2);
+                context.fillStyle = "#0f0";
+                context.fill();
+                context.strokeStyle = "black";
+                context.stroke();
+                context.beginPath();
+                context.arc(464, 182, 10, 0, Math.PI * 2);
+                context.fillStyle = "#f00";
+                context.fill();
+                context.strokeStyle = "black";
+                context.stroke();
+                context.fillStyle = "#fff"
+                context.font = "16px  game"
+                context.fillText(lang.press + "  A", 225, 187)
+                context.fillText(lang.press + "  B", 425, 187)
+                context.fillStyle = "#000000"
+                context.fillText(lang.press + " ▶", 65, 82)
             }
             if (getCookie("achievement") != '') {
                 context.font = "30px game"
