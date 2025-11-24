@@ -106,7 +106,7 @@
                 <div class="adContainer"></div>
             </div>
             <div id="bottom">
-                <canvas width="650" height="250" id="gameArea">
+                <canvas width="1950" height="750" id="gameArea">
                     Browser unsupported
                 </canvas>
                 <div id="promotion" style="display: none;" onclick="installPrompt()">
@@ -124,7 +124,9 @@
         </div>
     </div>
     <article id="article">
-        <button id="backToGame" onclick="location.hash = '';location.hash = '#main'"></button>
+        <button id="backToGame" onclick="location.hash = '';location.hash = '#main'">
+            <img src="./img/buttonView.png" class="controllerButton" alt="Back to game">
+        </button>
         <h1>TriggerTaps</h1>
         <figure>
             <img id="logo" src="./img/CowBoyShoot.gif" alt="TriggerTaps character shooting">
@@ -143,7 +145,15 @@
                 <h2 id="howToPlay"></h2>
                 <section>
                     <p class="articleParagraph" id="howToPlayText"></p>
-                    <p class="articleParagraph" id="keyboardMapping"></p>
+                    <p class="articleParagraph keyboardMapping" id="keyboardMapping"></p>
+                    <br>
+                    <span class="articleParagraph keyboardMapping" id="keyboardMappingP1"></span>
+                    <img src="./img/keyF.png" alt="Key F" class="keyboardMapping" loading="lazy">
+                    <img src="./img/buttonLT.png" alt="Button LT" class="controllerButton" loading="lazy">
+                    <br>
+                    <span class="articleParagraph keyboardMapping" id="keyboardMappingP2"></span>
+                    <img src="./img/keyJ.png" alt="Key J" class="keyboardMapping" loading="lazy">
+                    <img src="./img/buttonRT.png" alt="Button RT" class="controllerButton" loading="lazy">
                 </section>
             </li>
             <li>
@@ -220,36 +230,26 @@
         document.querySelector("meta[name='keywords']").setAttribute("content", lang.description);
         document.querySelector("meta[property='og:description']").setAttribute("content", lang.description);
 
-        document.getElementById('promotionLabel').textContent = lang.install;
-        document.getElementById("backToGame").innerText = lang.back
-        document.getElementById("languageSwitcherHeading").innerText = lang.lang
-        document.getElementById("howToPlay").innerText = lang.howToPlay
-        document.getElementById("howToPlayText").innerText = lang.howToPlayText
-        document.getElementById("keyboardMapping").innerText = lang.keyboardMapping
-        document.getElementById("modes").innerText = lang.modes
-        document.getElementById("modesText").innerText = lang.modesText
-        document.getElementById("about").innerText = lang.about
-        document.getElementById("aboutText").innerText = lang.aboutText
-        document.getElementById("credits").innerText = lang.credits
-        document.getElementById("developedWith").innerText = lang.developedWith
-        document.getElementById("privacy").innerText = lang.privacy
-        document.getElementById("privacyText").innerText = lang.privacyText
-        document.getElementById("cookies").innerText = lang.cookiesPolicy
-        document.getElementById("cookiesText").innerText = lang.cookiesPolicyText
-        document.getElementById("userCommitment").innerText = lang.userCommitment
-        document.getElementById("userCommitmentText").innerText = lang.userCommitmentText
-
-        checkPhysicalKeyboard()
-        async function checkPhysicalKeyboard() {
-            let keyboard = {}
-            try {
-                keyboard = await navigator.keyboard.getLayoutMap()
-            } catch {
-                keyboard.size = 1
-            }
-            physicalKeyboard = keyboard.size == 0 ? false : true
-            keyboardMapping.style.display = physicalKeyboard ? "block" : "none"
-        }
+        document.getElementById('promotionLabel').innerHTML = lang.install;
+        document.getElementById("backToGame").innerHTML = document.getElementById("backToGame").innerHTML + lang.back
+        document.getElementById("languageSwitcherHeading").innerHTML = lang.lang
+        document.getElementById("howToPlay").innerHTML = lang.howToPlay
+        document.getElementById("howToPlayText").innerHTML = lang.howToPlayText
+        document.getElementById("keyboardMapping").innerHTML = lang.keyboardMapping
+        document.getElementById("keyboardMappingP1").innerHTML = lang.keyboardMappingP1
+        document.getElementById("keyboardMappingP2").innerHTML = lang.keyboardMappingP2
+        document.getElementById("modes").innerHTML = lang.modes
+        document.getElementById("modesText").innerHTML = lang.modesText
+        document.getElementById("about").innerHTML = lang.about
+        document.getElementById("aboutText").innerHTML = lang.aboutText
+        document.getElementById("credits").innerHTML = lang.credits
+        document.getElementById("developedWith").innerHTML = lang.developedWith
+        document.getElementById("privacy").innerHTML = lang.privacy
+        document.getElementById("privacyText").innerHTML = lang.privacyText
+        document.getElementById("cookies").innerHTML = lang.cookiesPolicy
+        document.getElementById("cookiesText").innerHTML = lang.cookiesPolicyText
+        document.getElementById("userCommitment").innerHTML = lang.userCommitment
+        document.getElementById("userCommitmentText").innerHTML = lang.userCommitmentText
 
         backToGame.style.opacity = 0
         window.addEventListener("scroll", () => {
@@ -257,10 +257,10 @@
                 backToGame.style.display = "none"
                 backToGame.style.opacity = 0
             } else if (scrollY < 150) {
-                backToGame.style.display = "block"
+                backToGame.style.display = "flex"
                 backToGame.style.opacity = ((scrollY - 50) / 150);
             } else {
-                backToGame.style.display = "block"
+                backToGame.style.display = "flex"
                 backToGame.style.opacity = 1
             }
         })

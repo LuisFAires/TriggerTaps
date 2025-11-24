@@ -63,7 +63,7 @@ if (currentLang == 'en') {
             
             If you like western games and want to have fun alone or with your friends, don't waste your time and play TriggerTaps, the addictive duel game set in the Wild West!
             `,
-        'back': ' ◀ Back to game',
+        'back': ' Back to game',
         'cookiesPolicy': 'Cookie Policy',
         'cookiesPolicyText': `
             What are cookies?
@@ -107,10 +107,9 @@ if (currentLang == 'en') {
         'install': 'Download the app and play whenever you want',
         'keyboardMapping': `
             Keyboard mapping:
-            Singleplayer: Any key
-            Multiplayer player1:F
-            Multiplayer player2:J
-            `,
+            Singleplayer: Any key`,
+        'keyboardMappingP1': `Multiplayer player1: `,
+        'keyboardMappingP2': `Multiplayer player2: `,
         'lang': 'Language settings:',
         'modes': 'Game modes:',
         'modesText': `
@@ -194,7 +193,7 @@ if (currentLang == 'en') {
     
             Si te gustan los juegos occidentales y quieres divertirte solo o con tus amigos, no pierdas el tiempo y juega a TriggerTaps, ¡el adictivo juego de duelo ambientado en el Salvaje Oeste!
             `,
-        'back': ' ◀ Volver al juego',
+        'back': ' Volver al juego',
         'cookiesPolicy': 'Política de cookies',
         'cookiesPolicyText': `
             ¿Qué son las cookies?
@@ -238,10 +237,9 @@ if (currentLang == 'en') {
         'howToPlay': '¿Cómo jugar?',
         'keyboardMapping': `
             Disposición de teclas:
-            1 Jugador: Cualquier llave
-            2 Jugadores Jugador 1: F
-            2 Jugadores Jugador 2: J
-            `,
+            1 Jugador: Cualquier llave`,
+        'keyboardMappingP1': `2 Jugadores Jugador 1: `,
+        'keyboardMappingP2': `2 Jugadores Jugador 2: `,
         'lang': 'Configuración de idioma:',
         'modes': 'Modos de juego:',
         'modesText': `
@@ -325,7 +323,7 @@ if (currentLang == 'en') {
             
             Se você gosta de jogos de faroeste e quer se divertir sozinho ou com seus amigos, não perca tempo e jogue TriggerTaps, o jogo viciante de duelo no Velho Oeste!        
             `,
-        'back': ' ◀ Voltar ao jogo',
+        'back': ' Voltar ao jogo',
         'cookiesPolicy': 'Política de Cookies',
         'cookiesPolicyText': `
             O que são cookies?
@@ -369,10 +367,9 @@ if (currentLang == 'en') {
         'install': 'Baixe o app e jogue quando quiser',
         'keyboardMapping': `
             Disposição das teclas:
-            1 Jogador: Qualquer tecla
-            2 Jogadores Jogador 1: F
-            2 Jogadores Jogador 2: J
-            `,
+            1 Jogador: Qualquer tecla            `,
+        'keyboardMappingP1': `2 Jogadores Jogador 1: `,
+        'keyboardMappingP2': `2 Jogadores Jogador 2: `,
         'lang': 'Configuração de idioma:',
         'modes': 'Modos de jogo:',
         'modesText': `

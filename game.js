@@ -80,6 +80,7 @@ async function initializeGame() {
         window.addEventListener("gamepadconnected", (event) => {
             console.log("Gamepad connected:", event.gamepad);
             gamepadConnected = true
+            document.querySelectorAll(".controllerButton").forEach(el => el.style.display = "inline-block")
             currentScreen.update()
 
             // Start polling the gamepad state
@@ -143,8 +144,8 @@ async function userInput(X, Y, key = undefined) {
     console.log(X, Y, key)
     let leftSideinput
     let rightSideinput
-    if (X < 125 || (mode == "single" && key != undefined) || ((mode == "multi") && (key == "f" || key == "F"))) leftSideinput = true
-    if (mode == "multi" && (X > 525 || key == "j" || key == "J")) rightSideinput = true
+    if (X < 375 || (mode == "single" && key != undefined) || ((mode == "multi") && (key == "f" || key == "F"))) leftSideinput = true
+    if (mode == "multi" && (X > 1575 || key == "j" || key == "J")) rightSideinput = true
     if (currentScreen.name == "game") {
         if (leftSideinput && !isPlayerAlreadyStuck(players.first) && remainingTimer <= 0 && players.first.status != "dead") {
             players.first.reactionTime = -remainingTimer
@@ -193,7 +194,7 @@ async function userInput(X, Y, key = undefined) {
             return
         }
         if (remainingTimer >= -500) return
-        if ((X > 125 && X < 525 && Y > 50 && Y < 200) || key != undefined) {
+        if ((X > 375 && X < 1575 && Y > 150 && Y < 600) || key != undefined) {
             if (players.first.status == "dead" && mode == "single") {
                 try {
                     gtag('event', 'wasted')
@@ -226,7 +227,7 @@ async function userInput(X, Y, key = undefined) {
             changeCurrentScreen(screens.game)
             return
         }
-        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && currentLevel == 9 && players.first.status != "dead") {
+        if ((X > 375 && X < 1575 && Y > 615 && Y < 735) && currentLevel == 9 && players.first.status != "dead") {
             let name = window.prompt(lang.achievementPrompt)
             try {
                 gtag('event', 'achievementGenerated')
@@ -243,24 +244,24 @@ async function userInput(X, Y, key = undefined) {
     }
     if (currentScreen.name == "menu") {
         currentLevel = 0
-        if ((X > 125 && X < 325 && Y > 50 && Y < 200) || (key == "f" || key == "F")) {
+        if ((X > 375 && X < 975 && Y > 150 && Y < 600) || (key == "f" || key == "F")) {
             mode = "single"
             await waitForInteractionLeave()
             changeCurrentScreen(screens.game)
             return
         }
-        if ((X > 325 && X < 525 && Y > 50 && Y < 200) || (key == "j" || key == "J")) {
+        if ((X > 975 && X < 1575 && Y > 150 && Y < 600) || (key == "j" || key == "J")) {
             mode = "multi"
             await waitForInteractionLeave()
             changeCurrentScreen(screens.game)
             return
         }
-        if ((X > 0 && X < 100 && Y > 0 && Y < 80) || (key == "h" || key == "H")) {
+        if ((X > 0 && X < 300 && Y > 0 && Y < 240) || (key == "h" || key == "H")) {
             location.hash = ""
             location.hash = "#article"
             return
         }
-        if (X > 550 && X < 650 && Y > 0 && Y < 80) {
+        if (X > 1650 && X < 1950 && Y > 0 && Y < 240) {
             await waitForInteractionLeave()
             try {
                 gtag('event', 'shareFromMenu')
@@ -277,7 +278,7 @@ async function userInput(X, Y, key = undefined) {
             }
             return
         }
-        if ((X > 125 && X < 525 && Y > 205 && Y < 245) && getCookie("achievement") != '') {
+        if ((X > 375 && X < 1575 && Y > 615 && Y < 735) && getCookie("achievement") != '') {
             location.href = "/achievement"
         }
         return
@@ -290,7 +291,7 @@ const players = {
         status: "standing",
         sourceX: 0,
         sourceY: 0,
-        positionX: 25,
+        positionX: 75,
         initialsourceY: 0,
         moving: false,
         stuck: false,
@@ -300,9 +301,9 @@ const players = {
     second: {
         status: "standing",
         sourceX: 0,
-        sourceY: 100,
-        positionX: 525,
-        initialsourceY: 100,
+        sourceY: 300,
+        positionX: 1575,
+        initialsourceY: 300,
         moving: false,
         stuck: false,
         unstuckTimeout: undefined,
@@ -312,9 +313,9 @@ const players = {
         context.drawImage(
             sprites,
             player.sourceX, player.sourceY, //Sprite start position
-            100, 100, //Sprite size
-            player.positionX, 75, //On frame position
-            100, 100 //On frame size
+            300, 300, //Sprite size
+            player.positionX, 225, //On frame position
+            300, 300 //On frame size
         )
     },
     reset(player) {
@@ -327,8 +328,8 @@ const players = {
     },
     doWithdraw(player) {
         if (player.status == "standing") {
-            if (player.sourceX != 500) {
-                player.sourceX += 100
+            if (player.sourceX != 1500) {
+                player.sourceX += 300
                 player.moving = true
                 return
             }
@@ -339,7 +340,7 @@ const players = {
     undoWithdraw(player) {
         if (player.status == "withdraw") {
             if (player.sourceX != 0) {
-                player.sourceX -= 100
+                player.sourceX -= 300
                 player.moving = true
                 return
             }
@@ -351,14 +352,14 @@ const players = {
         if (shooter.status == "withdraw" || shooter.status == "standing") {
             shooter.status = "shooting"
             shooter.sourceX = 0
-            shooter.sourceY += 200
+            shooter.sourceY += 600
             shooter.moving = true
             return
         } else if (shooter.status == "shooting" && shooter.moving) {
-            shooter.sourceX += 100
-            if (shooter.sourceX == 400) {
-                shooter.sourceX += 100
-                shooter.sourceY -= 200
+            shooter.sourceX += 300
+            if (shooter.sourceX == 1200) {
+                shooter.sourceX += 300
+                shooter.sourceY -= 600
                 shooter.status = "withdraw"
                 shooter.moving = false
             }
@@ -368,13 +369,13 @@ const players = {
         if (dead.status == "withdraw" || dead.status == "standing") {
             dead.status = "dead"
             dead.sourceX = 0
-            dead.sourceY += 400
+            dead.sourceY += 1200
             dead.moving = true
             return
         }
         if (dead.status == "dead" && dead.moving) {
-            dead.sourceX += 100
-            if (dead.sourceX == 400) dead.moving = false
+            dead.sourceX += 300
+            if (dead.sourceX == 1200) dead.moving = false
         }
     },
     action(shooter, dead) {//Calls the shoot and die functions together so they do not conflict each other.
@@ -402,27 +403,27 @@ const screens = {
         update() {
             drawables.EveryFrameObjects()
             drawables.Timer()
-            context.font = "24px game"
+            context.font = "72px game"
             context.fillStyle = "#5e4700"
             if (mode == "single") {
-                context.fillText(lang.lvl + (currentLevel + 1), 325, 215)
+                context.fillText(lang.lvl + (currentLevel + 1), 975, 645)
             }
             if (players.first.stuck) {
                 drawables.StuckMsg()
-                context.fillText(lang.stuck, 75, 75)
+                context.fillText(lang.stuck, 225, 225)
             } else {
                 context.fillStyle = "#000000"
-                context.fillText((mode == "single" ? lang.you : lang.player + " 1"), 75, 75)
+                context.fillText((mode == "single" ? lang.you : lang.player + " 1"), 225, 225)
             }
             if (players.second.stuck) {
                 drawables.StuckMsg()
-                context.fillText(lang.stuck, 575, 75)
+                context.fillText(lang.stuck, 1725, 225)
             } else {
                 context.fillStyle = "#000000"
-                context.fillText((mode == "single" ? lang.enemy : lang.player + " 2"), 575, 75)
+                context.fillText((mode == "single" ? lang.enemy : lang.player + " 2"), 1725, 225)
             }
             if (mode == "single" && !players.first.stuck && remainingTimer <= 0 && parseInt(remainingTimer / 150) % 2 == 0) {
-                context.drawImage(sprites, 500, 200, 100, 100, 40, 120, 80, 80)
+                context.drawImage(sprites, 1500, 600, 300, 300, 120, 360, 240, 240)
             }
         },
         onchange() {
@@ -492,57 +493,57 @@ const screens = {
             }
             if (stuckReaction && parseInt(remainingTimer / 50) % 2 != 0) drawables.StuckMsg()
             context.fillStyle = "#fff"
-            context.fillRect(125, 50, 400, 150)
+            context.fillRect(375, 150, 1200, 450)
             context.fillStyle = "#5e4700"
-            context.fillRect(130, 55, 390, 140)
+            context.fillRect(390, 165, 1170, 420)
             context.fillStyle = "#fff"
-            context.font = "25px game"
+            context.font = "75px game"
             if (mode == "single") {
                 if (currentLevel != 9 || players.first.status == "dead") {
-                    context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl + (currentLevel + 1) + lang.completed), 325, 95)
-                    context.fillText(lang.taphere, 325, 125)
+                    context.fillText((players.first.status == "dead" ? lang.wasted : lang.lvl + (currentLevel + 1) + lang.completed), 975, 285)
+                    context.fillText(lang.taphere, 975, 375)
                 } else {
-                    context.font = "30px game"
-                    context.fillText(lang.gameCompleted1, 325, 85)
-                    context.fillText(lang.gameCompleted2, 325, 115)
-                    context.fillText(lang.gameCompleted3, 325, 140)
+                    context.font = "90px game"
+                    context.fillText(lang.gameCompleted1, 975, 255)
+                    context.fillText(lang.gameCompleted2, 975, 345)
+                    context.fillText(lang.gameCompleted3, 975, 420)
                     let colorsSwitch = parseInt(remainingTimer / 50) % 2 == 0 ? true : false
                     context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
-                    context.fillRect(125, 205, 400, 40)
+                    context.fillRect(375, 615, 1200, 120)
                     context.fillStyle = (colorsSwitch ? "#5e4700" : "#fff")
-                    context.fillRect(130, 210, 390, 30)
+                    context.fillRect(390, 630, 1170, 90)
                     context.fillStyle = (colorsSwitch ? "#fff" : "#5e4700")
-                    context.fillText(lang.shareAchievement, 325, 233)
+                    context.fillText(lang.shareAchievement, 975, 699)
                 }
-                context.font = "16px game"
+                context.font = "48px game"
                 context.fillStyle = "#fff"
                 if (players.first.stuck && players.first.reactionTime == undefined) {
-                    context.fillText(lang.you + lang.wasStuck, 325, 160)
+                    context.fillText(lang.you + lang.wasStuck, 975, 480)
                 } else if (players.first.reactionTime >= 0) {
-                    context.fillText(lang.yourReaction + players.first.reactionTime + "ms", 325, 160)
+                    context.fillText(lang.yourReaction + players.first.reactionTime + "ms", 975, 480)
                 }
                 if (players.second.reactionTime >= 0) {
-                    context.fillText(lang.enemyReaction + players.second.reactionTime + "ms", 325, 180)
+                    context.fillText(lang.enemyReaction + players.second.reactionTime + "ms", 975, 540)
                 }
             } else {
-                context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 325, 95)
-                context.fillText(lang.taphere, 325, 125)
-                context.font = "16px game"
+                context.fillText((players.first.status == "dead" ? lang.won2 : lang.won1), 975, 285)
+                context.fillText(lang.taphere, 975, 375)
+                context.font = "48px game"
                 if (players.first.stuck && players.first.reactionTime == undefined) {
-                    context.fillText(lang.player + " 1" + lang.wasStuck, 325, 160)
+                    context.fillText(lang.player + " 1" + lang.wasStuck, 975, 480)
                 } else if (players.first.reactionTime >= 0) {
                     if (players.first.status == "dead" && players.first.reactionTime == players.second.reactionTime) {
                         players.first.reactionTime += randomIntFromInterval(0, 5);
                     }
-                    context.fillText(lang.reaction1 + players.first.reactionTime + "ms", 325, 160)
+                    context.fillText(lang.reaction1 + players.first.reactionTime + "ms", 975, 480)
                 }
                 if (players.second.stuck && players.second.reactionTime == undefined) {
-                    context.fillText(lang.player + " 2 " + lang.wasStuck, 325, 180)
+                    context.fillText(lang.player + " 2 " + lang.wasStuck, 975, 540)
                 } else if (players.second.reactionTime >= 0) {
                     if (players.second.status == "dead" && players.first.reactionTime == players.second.reactionTime) {
                         players.second.reactionTime += randomIntFromInterval(0, 5);
                     }
-                    context.fillText(lang.reaction2 + players.second.reactionTime + "ms", 325, 180)
+                    context.fillText(lang.reaction2 + players.second.reactionTime + "ms", 975, 540)
                 }
             }
         },
@@ -573,56 +574,50 @@ const screens = {
         update() {
             drawables.EveryFrameObjects()
             context.fillStyle = "#000000"
-            context.drawImage(sprites, 500, 400, 100, 100, 35, 15, 45, 45)
-            context.font = "50px game"
-            context.fillText("?", 85, 53)
-            context.drawImage(sprites, 500, 300, 100, 100, 565, 15, 55, 55)
+            context.drawImage(sprites, 1500, 1200, 300, 300, 105, 45, 135, 135)
+            context.font = "150px game"
+            context.fillText("?", 255, 159)
+            context.drawImage(sprites, 1500, 900, 300, 300, 1695, 45, 165, 165)
             context.fillStyle = "#fff"
-            context.fillRect(125, 50, 400, 150)
+            context.fillRect(375, 150, 1200, 450)
             context.fillStyle = "#5e4700"
-            context.fillRect(130, 55, 190, 140)
-            context.fillRect(330, 55, 190, 140)
+            context.fillRect(390, 165, 570, 420)
+            context.fillRect(990, 165, 570, 420)
             context.fillStyle = "#fff"
-            context.font = "37px game"
-            context.fillText("1", 225, 120)
-            context.fillText("2", 425, 120)
-            context.fillText(lang.player, 225, 150)
-            context.fillText(lang.players, 425, 150)
+            context.font = "111px game"
+            context.fillText("1", 675, 360)
+            context.fillText("2", 1275, 360)
+            context.fillText(lang.player, 675, 450)
+            context.fillText(lang.players, 1275, 450)
             if (physicalKeyboard) {
-                context.font = "16px  game"
-                context.fillText(lang.press + " F", 225, 170)
-                context.fillText(lang.press + " J", 425, 170)
+                context.font = "48px  game"
+                context.fillText(lang.press + "  ", 675, 510)
+                context.fillText(lang.press + "  ", 1275, 510)
                 context.fillStyle = "#000000"
-                context.fillText(lang.press + " H", 65, 65)
+                context.fillText(lang.press + "  ", 195, 195)
+                context.drawImage(sprites, 1550, 1830, 100, 100, 770, 470, 50, 50)
+                context.drawImage(sprites, 1660, 1830, 100, 100, 1370, 470, 50, 50)
+                context.drawImage(sprites, 1550, 1940, 100, 100, 290, 150, 50, 50)
             }
             if (gamepadConnected) {
-                context.beginPath();
-                context.arc(264, 182, 10, 0, Math.PI * 2);
-                context.fillStyle = "#0f0";
-                context.fill();
-                context.strokeStyle = "black";
-                context.stroke();
-                context.beginPath();
-                context.arc(464, 182, 10, 0, Math.PI * 2);
-                context.fillStyle = "#f00";
-                context.fill();
-                context.strokeStyle = "black";
-                context.stroke();
                 context.fillStyle = "#fff"
-                context.font = "16px  game"
-                context.fillText(lang.press + "  A", 225, 187)
-                context.fillText(lang.press + "  B", 425, 187)
+                context.font = "48px  game"
+                context.fillText(lang.press + "   ", 675, 561)
+                context.fillText(lang.press + "   ", 1275, 561)
+                context.drawImage(sprites, 1550, 1500, 100, 100, 770, 525, 50, 50)
+                context.drawImage(sprites, 1660, 1500, 100, 100, 1370, 525, 50, 50)
                 context.fillStyle = "#000000"
-                context.fillText(lang.press + " ▶", 65, 82)
+                context.fillText(lang.press + "  ", 195, 246)
+                context.drawImage(sprites, 1660, 1610, 100, 100, 290, 210, 50, 50)
             }
             if (getCookie("achievement") != '') {
-                context.font = "30px game"
+                context.font = "90px game"
                 context.fillStyle = "#fff"
-                context.fillRect(125, 205, 400, 40)
+                context.fillRect(375, 615, 1200, 120)
                 context.fillStyle = "#5e4700"
-                context.fillRect(130, 210, 390, 30)
+                context.fillRect(390, 630, 1170, 90)
                 context.fillStyle = "#fff"
-                context.fillText(lang.shareAchievement, 325, 233)
+                context.fillText(lang.shareAchievement, 975, 699)
             }
         },
         onchange() {
@@ -644,47 +639,47 @@ const screens = {
 
 const drawables = {
     EveryFrameObjects() { //Backgorund and both characters.
-        context.clearRect(0, 0, 650, 250)
+        context.clearRect(0, 0, 1950, 750)
         context.fillStyle = "#deb887"
-        context.fillRect(0, 0, 650, 250)
-        context.drawImage(sprites, 0, 600, 455, 229, 100, 10, 455, 229)
+        context.fillRect(0, 0, 1950, 750)
+        context.drawImage(sprites, 0, 1800, 1365, 687, 300, 30, 1365, 687)
         players.draw(players.first)
         players.draw(players.second)
     },
     Timer() {
         if (remainingTimer <= -1000) return
         context.beginPath()
-        context.arc(325, 125, 50, 0, Math.PI * 2)
+        context.arc(975, 375, 150, 0, Math.PI * 2)
         context.closePath()
         if (remainingTimer <= 0) {
             context.fillStyle = "#f00"
             context.fill()
             context.fillStyle = "#fff"
-            context.font = "30px game"
-            context.fillText(lang.shoot, 325, 135)
+            context.font = "90px game"
+            context.fillText(lang.shoot, 975, 405)
             return
         }
         context.fillStyle = "#000"
         context.fill()
         context.fillStyle = "#fff"
-        context.font = "140px game"
+        context.font = "420px game"
         if (remainingTimer <= 1000) {
-            context.fillText("1", 325, 163)
+            context.fillText("1", 975, 489)
             return
         }
         if (remainingTimer <= 2000) {
-            context.fillText("2", 325, 163)
+            context.fillText("2", 975, 489)
             return
         }
         if (remainingTimer <= 3000) {
-            context.fillText("3", 325, 163)
+            context.fillText("3", 975, 489)
             return
         }
     },
     StuckMsg() {
         context.fillStyle = "#fff"
-        context.font = "23px game"
-        context.fillText(lang.stuckMsg, 325, 25)
+        context.font = "70px game"
+        context.fillText(lang.stuckMsg, 975, 75)
     }
 }
 
