@@ -111,12 +111,14 @@
                 </canvas>
                 <div id="promotion" style="display: none;" onclick="installPrompt()">
                     <span id="promotionLabel"></span>
-                    <img class="storeBadge" src="./img/play-badgeLang.png" alt="Google Play"
-                        onclick="promotionAction('Android', 'https://play.google.com/store/apps/details?id=triggertaps.twa', undefined)"
-                        loading="lazy">
+                    <img class="storeBadge" src="./img/pwa-badgeLang.png" alt="Progressive Web App"
+                        onclick="installPrompt()" loading="lazy">
                     <img class="storeBadge" src="./img/microsoft-badgeLang.png" alt="Microsoft Store"
                         onclick="promotionAction('Win', 'https://www.microsoft.com/store/apps/9NWKWXKQW468', 'ms-windows-store://pdp/?productid=9NWKWXKQW468')"
                         loading="lazy">
+                    <!--<img class="storeBadge" src="./img/play-badgeLang.png" alt="Google Play"
+                        onclick="promotionAction('Android', 'https://play.google.com/store/apps/details?id=triggertaps.twa', undefined)"
+                        loading="lazy">-->
                     <!--<img class="storeBadge" src="./img/apple-badgeLang.svg" alt="App Store" onclick="promotionAction('IOS', 'https://www.apple.com/app-store/', undefined)" loading="lazy">-->
                     <script src="storeBadges.js"></script>
                 </div>
