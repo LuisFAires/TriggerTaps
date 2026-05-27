@@ -27,7 +27,7 @@ window.addEventListener("load", () => {
             loadingText.innerHTML = lang.ready
             initializeGame()
             showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
-            await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
+            //await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
             window.scrollTo(0, 0)
             loadingOverlay.style.display = "none"
             gameContainer.style.display = "block"
