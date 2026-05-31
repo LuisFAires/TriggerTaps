@@ -135,6 +135,10 @@ ul {
     padding: 0 0 50px 20px;
 }
 
+ul ins.adsbygoogle{
+    text-align: center;
+}
+
 button {
     font-family: game;
     margin: 5px;
