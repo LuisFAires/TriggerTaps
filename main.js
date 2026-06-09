@@ -2,8 +2,7 @@
 This file is responsible for everything that happens into the main div
 */
 
-loadingText.innerText = lang.loading
-rotateOverlay.innerText = lang.rotate
+screenOverlay.innerText = lang.loading
 
 const gameArea = document.querySelector("canvas")
 const upper = document.getElementById("upper")
@@ -24,15 +23,12 @@ window.addEventListener("load", () => {
     let loadingInterval = setInterval(async () => {
         if (gameAssetsLoaded) {
             clearInterval(loadingInterval)
-            loadingText.innerHTML = lang.ready
+            await showRotateOverlay()
             initializeGame()
             showPromotion = (window.matchMedia("(display-mode: standalone)").matches || window.matchMedia("(display-mode: fullscreen)").matches || window.navigator.standalone) ? false : true
-            //await waitForInteractionWithElement(loadingOverlay, ["click"], undefined, true)
             window.scrollTo(0, 0)
-            loadingOverlay.style.display = "none"
             gameContainer.style.display = "block"
             await fullScreenOrientationLock()
-            await showRotateOverlay()
             await calculateDivs()
             updateAds()
             screen.orientation.addEventListener("change", showRotateOverlay)
@@ -99,7 +95,9 @@ function waitForInteractionWithElement(element, interactions, callback = undefin
 }
 
 function showRotateOverlay() {
-    rotateOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
+    if(!gameAssetsLoaded) return
+    screenOverlay.innerText  = lang.rotate
+    screenOverlay.style.display = (window.innerWidth > window.innerHeight || !touchDevice) ? "none" : "flex"
 }
 
 async function fullScreenOrientationLock() {
@@ -134,7 +132,7 @@ async function installPrompt() {
 }
 
 function calculateDivs() {
-    if (rotateOverlay.style.display != "none") return
+    if (screenOverlay.style.display != "none") return
     if (lastHeigth === window.innerHeight && lastWidth === window.innerWidth) return
     if (touchDevice && document.fullscreenElement === null && !isInIframe) return
 

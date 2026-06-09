@@ -12,14 +12,15 @@ body {
     user-select: none;
 }
 
-#loadingOverlay,
-#rotateOverlay {
+#screenOverlay{
     width: 96%;
     height: 100%;
     background-color: #deb887;
     font-size: 50px;
     padding: 0 2%;
     text-align: center;
+    position: fixed;
+    z-index: 999;
 }
 
 #main {
@@ -153,8 +154,7 @@ button {
     width: 150px;
 }
 
-#rotateOverlay,
-#loadingOverlay,
+#screenOverlay,
 #bottom,
 #promotion,
 #upper {
@@ -166,12 +166,6 @@ button {
 #bottom {
     width: 100%;
     flex-direction: column;
-}
-
-#rotateOverlay {
-    display: none;
-    position: fixed;
-    z-index: 999;
 }
 
 .adContainer {
